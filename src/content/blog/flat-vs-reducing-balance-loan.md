@@ -33,30 +33,30 @@ The **Flat Rate** method is often used by predatory lenders, auto financiers, an
 Under the Flat Rate method, the bank calculates interest on the *entire original loan amount* for the entire duration of the loan, completely ignoring the fact that you are paying the principal back every single month.
 
 ### Let's look at the math:
-Imagine you borrow **$10,000** at a **10% Flat Rate** for **5 years**.
-* The bank calculates 10% of $10,000 = $1,000 per year.
-* $1,000 x 5 years = $5,000 in total interest.
-* You pay back $15,000 total.
+Imagine you borrow **`CURRENCY:10000`** at a **10% Flat Rate** for **5 years**.
+* The bank calculates 10% of `CURRENCY:10000` = `CURRENCY:1000` per year.
+* `CURRENCY:1000` x 5 years = `CURRENCY:5000` in total interest.
+* You pay back `CURRENCY:15000` total.
 
-This sounds straightforward. But remember: by Year 4, you have already paid back most of the original $10,000! Yet the bank is *still charging you 10% interest as if you currently hold all $10,000 of their money*. 
+This sounds straightforward. But remember: by Year 4, you have already paid back most of the original `CURRENCY:10000`! Yet the bank is *still charging you 10% interest as if you currently hold all `CURRENCY:10000` of their money*. 
 
 ## The Head-to-Head Comparison
 
 To truly understand the trap, let's compare two loans head-to-head. 
 
-You need to borrow **$50,000 for 5 years**. You have two offers:
+You need to borrow **`CURRENCY:50000` for 5 years**. You have two offers:
 * **Lender A:** Offers a 10% Flat Rate.
 * **Lender B:** Offers a 15% Reducing Balance Rate.
 
 Your instinct is to go with Lender A, because 10% is lower than 15%. Let's see the reality:
 
 **Lender A (10% Flat Rate):**
-* Total Interest Paid: $25,000
-* Monthly EMI: $1,250
+* Total Interest Paid: `CURRENCY:25000`
+* Monthly EMI: `CURRENCY:1250`
 
 **Lender B (15% Reducing Balance):**
-* Total Interest Paid: ~$21,370
-* Monthly EMI: $1,189
+* Total Interest Paid: `CURRENCY:21370`
+* Monthly EMI: `CURRENCY:1189`
 
 Despite the advertised interest rate being massively higher (15% vs 10%), the Reducing Balance loan is significantly cheaper! 
 

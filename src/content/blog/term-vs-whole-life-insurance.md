@@ -30,39 +30,39 @@ Because they are "saving" money for you, the premiums for Whole Life policies ar
 
 ## The Head-to-Head Comparison
 
-Let's look at a realistic scenario. A 30-year-old wants **$1,000,000** in life insurance coverage to protect their family.
+Let's look at a realistic scenario. A 30-year-old wants **`CURRENCY:1000000`** in life insurance coverage to protect their family.
 
 **Option A: The Whole Life Policy**
-* Death Benefit: $1,000,000
-* Annual Premium: **$10,000** per year
+* Death Benefit: `CURRENCY:1000000`
+* Annual Premium: **`CURRENCY:10000`** per year
 * The Pitch: You are "forced to save," and the cash value grows tax-free.
 
 **Option B: "Buy Term and Invest the Rest"**
-* 30-Year Term Policy Death Benefit: $1,000,000
-* Annual Premium: **$600** per year
-* *The Strategy:* Take the $9,400 difference ($10,000 - $600) and invest it yourself in a standard S&P 500 index fund.
+* 30-Year Term Policy Death Benefit: `CURRENCY:1000000`
+* Annual Premium: **`CURRENCY:600`** per year
+* *The Strategy:* Take the `CURRENCY:9400` difference (`CURRENCY:10000` - `CURRENCY:600`) and invest it yourself in a standard S&P 500 index fund.
 
 ### The Math at Age 60 (30 Years Later)
 
 Let's fast-forward 30 years. Our hypothetical person is now 60 years old and retiring. What happens?
 
 **The Whole Life Reality:**
-After 30 years of paying $10,000 a year, they have paid $300,000 into the policy. The insurance company's internal returns are notoriously poor (often yielding an effective CAGR of 3-5%). Their cash value is likely around $500,000 to $600,000. 
+After 30 years of paying `CURRENCY:10000` a year, they have paid `CURRENCY:300000` into the policy. The insurance company's internal returns are notoriously poor (often yielding an effective CAGR of 3-5%). Their cash value is likely around `CURRENCY:500000` to `CURRENCY:600000`. 
 
 **The Term + Invest Reality:**
-Over 30 years, they paid $18,000 total for the term insurance. 
-Meanwhile, they invested $9,400 every single year into an index fund returning a conservative historical average of 8%.
-Using our [SIP / Investment Calculator](/calculators/sip-calculator), the invested money grew to roughly **$1,150,000**.
+Over 30 years, they paid `CURRENCY:18000` total for the term insurance. 
+Meanwhile, they invested `CURRENCY:9400` every single year into an index fund returning a conservative historical average of 8%.
+Using our [SIP / Investment Calculator](/calculators/sip-calculator), the invested money grew to roughly **`CURRENCY:1150000`**.
 
-Not only did they have the exact same $1,000,000 death protection for 30 years, but by decoupling the investment from the insurance, they ended up with almost double the cash at retirement.
+Not only did they have the exact same `CURRENCY:1000000` death protection for 30 years, but by decoupling the investment from the insurance, they ended up with almost double the cash at retirement.
 
 ## The Hidden Gotchas of Whole Life
 
 If the math strongly favors Term, why are Whole Life policies so popular? 
 
-1. **Massive Agent Commissions:** Insurance agents can make up to 100% of your first year's premium as a commission. If you buy a $10,000/year Whole Life policy, the agent gets a massive payday. If you buy a $600/year Term policy, they barely make anything. The incentive structure drives the aggressive sales pitches.
-2. **The "Surrender" Trap:** If you lose your job and can't afford the $10,000 premium in Year 4, the insurance company will cancel your policy. Not only do you lose your insurance, but due to exorbitant early "surrender fees," you will lose almost all the cash value you paid in.
-3. **The Death Benefit Illusion:** In many traditional Whole Life policies, if you die, your family gets the $1,000,000 death benefit—but the insurance company *keeps* the cash value you saved!
+1. **Massive Agent Commissions:** Insurance agents can make up to 100% of your first year's premium as a commission. If you buy a `CURRENCY:10000`/year Whole Life policy, the agent gets a massive payday. If you buy a `CURRENCY:600`/year Term policy, they barely make anything. The incentive structure drives the aggressive sales pitches.
+2. **The "Surrender" Trap:** If you lose your job and can't afford the `CURRENCY:10000` premium in Year 4, the insurance company will cancel your policy. Not only do you lose your insurance, but due to exorbitant early "surrender fees," you will lose almost all the cash value you paid in.
+3. **The Death Benefit Illusion:** In many traditional Whole Life policies, if you die, your family gets the `CURRENCY:1000000` death benefit—but the insurance company *keeps* the cash value you saved!
 
 ## When is Whole Life Actually Good?
 

@@ -57,7 +57,7 @@ If your target is a massive 6-month fund, you can keep 1-2 months in an instant-
 
 Saving 6 months of expenses is a daunting task that can take years. Do not let the massive final number paralyze you. Break it down into phases.
 
-* **Phase 1: The Starter Fund ($1,000 or ₹50,000).** Make this your absolute priority. Stop all investing and aggressively cut expenses until you hit this starter number. This alone will protect you from 90% of minor emergencies like a broken laptop or a flat tire.
+* **Phase 1: The Starter Fund (`CURRENCY:1000`).** Make this your absolute priority. Stop all investing and aggressively cut expenses until you hit this starter number. This alone will protect you from 90% of minor emergencies like a broken laptop or a flat tire.
 * **Phase 2: The 3-Month Fund.** Once you have your starter fund, you can resume normal investing (like maxing out an employer match on your 401(k)), while steadily funneling 10% of your paycheck into the emergency fund until you hit the 3-month mark.
 * **Phase 3: The 6-Month Fund.** Expand the fund slowly over time using "windfalls" like tax refunds, work bonuses, or monetary gifts. 
 

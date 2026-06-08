@@ -16,7 +16,7 @@ However, the way you measure that return can drastically alter your perception o
 
 Absolute return simply measures the total growth of an investment over a period, ignoring the time it took to achieve that growth. 
 
-For example, if you invested $10,000 and it grew to $15,000, your absolute return is 50%. While 50% sounds fantastic, context is everything. If it took 1 year to achieve that 50%, you've made an incredible investment. If it took 10 years, that 50% suddenly translates to a very mediocre, inflation-losing return of under 4.5% per year.
+For example, if you invested `CURRENCY:10000` and it grew to `CURRENCY:15000`, your absolute return is 50%. While 50% sounds fantastic, context is everything. If it took 1 year to achieve that 50%, you've made an incredible investment. If it took 10 years, that 50% suddenly translates to a very mediocre, inflation-losing return of under 4.5% per year.
 
 Because absolute returns ignore the element of time, they are virtually useless for comparing investments that have been held for different durations.
 

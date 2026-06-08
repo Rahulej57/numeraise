@@ -8,7 +8,7 @@ author: "Numeraise Education"
 
 # The Rule of 72: A Mental Math Trick Every Investor Needs to Know
 
-If you invest $10,000 today in a mutual fund returning 8% per year, how long will it take for your money to grow to $20,000? 
+If you invest `CURRENCY:10000` today in a mutual fund returning 8% per year, how long will it take for your money to grow to `CURRENCY:20000`? 
 
 You could bust out a complex financial calculator, use logarithmic algebra, or boot up a spreadsheet. Or, you could use a 500-year-old math shortcut that takes exactly two seconds to calculate in your head: **The Rule of 72**.
 
@@ -36,7 +36,7 @@ The beauty of the Rule of 72 is that the algebra works in reverse. If you have a
 **The Reverse Formula:**
 `72 ÷ Years to Double = Required Interest Rate`
 
-Let's say you have $50,000 today and you need it to be $100,000 in exactly **10 years** for your child's college tuition. 
+Let's say you have `CURRENCY:50000` today and you need it to be `CURRENCY:100000` in exactly **10 years** for your child's college tuition. 
 
 `72 ÷ 10 = 7.2`
 
@@ -46,17 +46,17 @@ You instantly know that you need to find an investment vehicle that yields at le
 
 The Rule of 72 perfectly illustrates why starting early is the most powerful financial decision you can make. 
 
-Let's look at a 25-year-old who invests a single, one-time lump sum of $10,000 in an index fund returning 10%. According to the Rule of 72, their money will double every **7.2 years**. 
+Let's look at a 25-year-old who invests a single, one-time lump sum of `CURRENCY:10000` in an index fund returning 10%. According to the Rule of 72, their money will double every **7.2 years**. 
 
-Here is what happens to that $10,000 as they age, assuming they never add another penny:
-* Age 25: $10,000
-* Age 32: $20,000
-* Age 39: $40,000
-* Age 46: $80,000
-* Age 54: $160,000
-* Age 61: $320,000
+Here is what happens to that `CURRENCY:10000` as they age, assuming they never add another penny:
+* Age 25: `CURRENCY:10000`
+* Age 32: `CURRENCY:20000`
+* Age 39: `CURRENCY:40000`
+* Age 46: `CURRENCY:80000`
+* Age 54: `CURRENCY:160000`
+* Age 61: `CURRENCY:320000`
 
-This is the power of compound interest. The first 7 years of waiting only earned them $10,000. But the final 7 years before retirement earned them $160,000!
+This is the power of compound interest. The first 7 years of waiting only earned them `CURRENCY:10000`. But the final 7 years before retirement earned them `CURRENCY:160000`!
 
 ## When is the Rule of 72 Inaccurate?
 
