@@ -1,6 +1,7 @@
 "use client";
 
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface CurrencyAwareMarkdownProps {
   content: string;
@@ -16,7 +17,7 @@ interface CurrencyAwareMarkdownProps {
 export function CurrencyAwareMarkdown({ content, className }: CurrencyAwareMarkdownProps) {
   return (
     <div className={className}>
-      <ReactMarkdown>{content}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
     </div>
   );
 }
