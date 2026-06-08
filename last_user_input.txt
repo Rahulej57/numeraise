@@ -1,0 +1,84 @@
+<USER_REQUEST>
+# Final Audit Report: Numeraise Finance Platform
+
+**Date:** June 8, 2026
+**Scope:** Full codebase analysis (build, lint, TypeScript, logic audit)
+**Status:** Build passes ✅ | 165 ESLint errors | 53 warnings | 0% test coverage
+
+---
+
+## 🔴 CRITICAL (will cause errors or broken UX for users)
+
+### C1. Category pages have broken template literals
+**File:** `src/app/(main)/calculators/category/[category]/page.tsx:23-25, 64-66`
+
+Uses `?{section.category}` instead of `${section.category}`. Every category page renders literal `?{section.category} Calculators` as its `<title>` and meta description. All SEO metadata for category pages is broken.
+
+### C2. Blog rewrite points to non-existent file
+**File:** `next.config.ts:7-10`
+
+Rewrite `/blog` → `/blog/index.html` but no `/blog` route or static file exists. Users visiting `/blog` get a 404.
+
+### C3. `/articles/[slug]` has zero content
+**File:** `src/content/` (empty), `src/lib/blog.ts`
+
+`src/content/blog/` doesn't exist. The `/articles` listing page shows hardcoded placeholder cards with fake titles. Dynamic article routes return null for every slug.
+
+### C4. Hydration mismatch risk on every calculator page
+**File:** `src/components/calculators/dynamic-calculator-client.tsx:239`
+
+`if (!isMounted) return null` prevents SSR from rendering anything, then client hydration renders the full UI. Causes layout shift on all ~30+ calculators.
+
+### C5. Rent Paid metric always shows zero
+**File:** `src/lib/comparison-engine.ts:163`
+
+"Rent Paid Over Tenure" is hardcoded to `0` with comment `// Simplified`. Misleading displayed value.
+
+---
+
+## 🟠 HIGH (functional/logical errors)
+
+### H1. Conditional `useMemo` breaks Rules of Hooks
+**File:** `src/components/compare/scenario-client.tsx:29-31`
+
+`if (!config) return null;` placed before `useMemo`. React requires hooks to always run in same order.
+
+### H2. CSV export produces malformed data
+**File:** `src/components/calculators/dynamic-calculator-client.tsx:198-208`
+
+`.replace(/,/g, '')` strips commas but keeps currency 
+<truncated 11313 bytes>
+scription**: The Related Calculators section utilizes a hardcoded string key:
+  ```typescript
+  <RelatedCalculators calculators={getRelatedCalculators("[category]")} />
+  ```
+  Since `"[category]"` is not a real slug, the helper returns an empty list, and the "Related Calculators" section on every single category directory page remains completely empty.
+
+---
+
+## 7. Incomplete Codebase Infrastructure
+
+* **Unconnected Database Layer**: A full PostgreSQL database schema is defined in `prisma/schema.prisma` (including User, Account, Post, and CalculationHistory), but the database connection is unused, and there is no prisma client setup inside `src/`.
+* **Sidebar Links pointing to 404s**: In [admin/layout.tsx](file:///c:/Users/rahul/OneDrive/Desktop/antigravity/finance-platform/src/app/%28admin%29/admin/layout.tsx#L14-L17), sidebar links to `/admin/calculators`, `/admin/blog`, `/admin/users`, and `/admin/settings` are present, but these routes are currently unimplemented in the codebase, causing 404 errors.
+* **Incorrect Validation Script**: The validator script `check-registry.py` only scans `calculator-engine.ts` for keys, ignoring dynamic registrations inside files like `calculators-investments.ts`. This causes false positives indicating that 35 calculators are unregistered.
+
+
+
+
+
+
+
+{
+  "artifactType": "ARTIFACT_TYPE_OTHER",
+  "summary": "A comprehensive audit report of the finance-platform website, documenting critical React hook issues, systemic string interpolation typos, broken links, SEO gaps, calculation bugs, and architectural discrepancies.",
+  "updatedAt": "2026-06-08T05:09:15.017058Z"
+}
+
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-08T11:00:47+05:30.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from Gemini 3.5 Flash (Medium) to Gemini 3.1 Pro (High). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>
