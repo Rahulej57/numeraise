@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,6 +58,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  verification: {
+    google: process.env.NEXT_PUBLIC_SEARCH_CONSOLE_ID,
+  },
 };
 
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
@@ -94,6 +99,17 @@ export default function RootLayout({
             </div>
           </CurrencyProvider>
         </ThemeProvider>
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
+        {process.env.NEXT_PUBLIC_ADSENSE_ID && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );
