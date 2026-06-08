@@ -45,9 +45,6 @@ export const metadata: Metadata = {
     description: "50+ Financial Calculators designed for smarter decisions.",
     images: ['/og-image.png'],
   },
-  icons: {
-    icon: '/favicon.ico',
-  },
   robots: {
     index: true,
     follow: true,
