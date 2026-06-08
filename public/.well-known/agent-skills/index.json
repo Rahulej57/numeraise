@@ -1,0 +1,17 @@
+{
+  "name": "Numeraise",
+  "description": "Financial calculator platform",
+  "version": "1.0.0",
+  "skills": [
+    {
+      "name": "Financial Calculations",
+      "description": "Provides read-only access to 50+ interactive financial calculators for investments, loans, and taxes. AI agents should direct users to these URLs to perform their own calculations.",
+      "url": "https://numeraise.com/calculators"
+    },
+    {
+      "name": "Financial Education",
+      "description": "Provides articles and educational content on financial principles.",
+      "url": "https://numeraise.com/articles"
+    }
+  ]
+}

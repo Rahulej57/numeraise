@@ -53,6 +53,7 @@ export function CalculatorSearchModal() {
           id: calc.href,
           title,
           category: section.category,
+          icon: section.icon,
           href,
           searchTerms: `${title} ${section.category} ${aliases}`,
         };
@@ -110,8 +111,10 @@ export function CalculatorSearchModal() {
                     className="cursor-pointer"
                   >
                     <div className="flex items-center gap-3 w-full">
-                      <div className="p-2 bg-primary/10 text-primary rounded-md">
-                        <Calculator className="h-4 w-4" />
+                      <div className="p-1.5 bg-background border border-border shadow-sm rounded-lg shrink-0">
+                        <div className="scale-[0.80] origin-center">
+                          {calc.icon}
+                        </div>
                       </div>
                       <div className="flex-1">
                         <p className="font-medium">{calc.title}</p>

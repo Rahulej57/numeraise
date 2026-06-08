@@ -16,7 +16,7 @@ export function RelatedCalculators({ calculators }: RelatedCalculatorsProps) {
   if (!calculators || calculators.length === 0) return null;
 
   return (
-    <div className="mt-16 w-full">
+    <div className="print:hidden mt-16 w-full">
       <h3 className="text-2xl font-bold mb-8 text-center">Related Calculators</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {calculators.map((calc, idx) => (

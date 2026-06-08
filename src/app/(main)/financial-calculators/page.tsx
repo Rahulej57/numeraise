@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, LayoutGrid } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { StructuredData } from "@/components/seo/structured-data";
 import { CalculatorSearchModal } from "@/components/layout/calculator-search-modal";
@@ -9,11 +9,12 @@ export default function FinancialCalculatorsHubPage() {
   return (
     <div className="container mx-auto px-4 py-16 max-w-7xl">
       <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-16">
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
-          <span className="text-5xl mr-2">🧮</span> The Ultimate Calculator Hub
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 sm:mb-6 flex items-center justify-center gap-3">
+          <LayoutGrid className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+          The Calculator Hub
         </h1>
-        <p className="text-xl text-muted-foreground mb-8">
-          Browse our complete directory of 50+ professional-grade financial calculators. Plan every aspect of your wealth journey.
+        <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-xl mx-auto px-4">
+          Explore our complete directory of 50+ professional calculators to plan your wealth journey.
         </p>
         <div className="w-full max-w-md">
           <CalculatorSearchModal />
@@ -32,9 +33,14 @@ export default function FinancialCalculatorsHubPage() {
                 <Link href={calc.href} key={cIdx} className="group">
                   <Card className="h-full hover:border-primary/50 hover:bg-muted/30 transition-colors">
                     <CardHeader className="p-5">
-                      <CardTitle className="text-lg group-hover:text-primary transition-colors flex items-center justify-between">
-                        {calc.name}
-                        <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 duration-300" />
+                      <CardTitle className="text-lg group-hover:text-primary transition-colors flex items-start justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="p-1.5 bg-background shadow-sm border border-border rounded-lg shrink-0">
+                            <div className="scale-[0.80] origin-center">{section.icon}</div>
+                          </div>
+                          <span>{calc.name}</span>
+                        </div>
+                        <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 duration-300 shrink-0 mt-1" />
                       </CardTitle>
                       <CardDescription className="text-sm mt-1">{calc.desc}</CardDescription>
                     </CardHeader>

@@ -12,16 +12,17 @@ interface RelatedArticlesProps {
 }
 
 export function RelatedArticles({ articles }: RelatedArticlesProps) {
-  if (!articles || articles.length === 0) return null;
+  const validArticles = articles?.filter(a => a.href && a.href !== "#") || [];
+  if (validArticles.length === 0) return null;
 
   return (
-    <div className="mt-12 w-full bg-muted/40 p-6 sm:p-8 rounded-2xl border border-border/50">
+    <div className="print:hidden mt-12 w-full bg-muted/40 p-6 sm:p-8 rounded-2xl border border-border/50">
       <div className="flex items-center gap-2 mb-6">
         <BookOpen className="w-6 h-6 text-primary" />
         <h3 className="text-2xl font-bold">Related Financial Guides</h3>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {articles.map((article, idx) => (
+        {validArticles.map((article, idx) => (
           <Link href={article.href} key={idx} className="group block">
             <Card className="bg-background border-border/50 hover:border-primary/40 transition-colors">
               <CardHeader className="p-4 flex flex-row items-center justify-between space-y-0">

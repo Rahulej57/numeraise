@@ -26,7 +26,7 @@ export function Navbar() {
   const isAllCalculators = pathname === '/calculators' || (pathname.startsWith('/calculators') && !pathname.includes('/category/') && !isInvestments && !isLoans && !isTax);
 
   return (
-    <header className={`sticky top-0 z-50 w-full border-b bg-background/95 ${mobileMenuOpen ? '' : 'backdrop-blur supports-[backdrop-filter]:bg-background/60'}`}>
+    <header className={`print:hidden sticky top-0 z-50 w-full border-b bg-background/95 ${mobileMenuOpen ? '' : 'backdrop-blur supports-[backdrop-filter]:bg-background/60'}`}>
       <div className="container mx-auto px-4 flex h-16 items-center justify-between gap-2 md:gap-4">
         
         {/* Brand */}
@@ -60,7 +60,7 @@ export function Navbar() {
         {/* Search & Actions */}
         <div className="flex items-center justify-end space-x-2 md:space-x-4 flex-1 lg:flex-none">
           <div className="flex-none sm:flex-1 w-auto sm:max-w-xs md:max-w-sm flex justify-end">
-            <CalculatorSearchModal />
+            {pathname !== '/' && <CalculatorSearchModal />}
           </div>
           
           <CurrencySelector />

@@ -43,7 +43,7 @@ export default async function CategorySlugPage({ params }: { params: Promise<{ c
         </h1>
       </div>
 
-      <DynamicCalculatorList calculators={section.calculators} variant="cards" />
+      <DynamicCalculatorList calculators={section.calculators} variant="cards" categoryIcon={section.icon} />
 
             <RelatedCalculators calculators={getRelatedCalculators(resolvedParams.category)} />
       <StructuredData 

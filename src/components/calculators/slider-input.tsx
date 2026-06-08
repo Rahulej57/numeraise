@@ -29,6 +29,10 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
   const cleanMax = sanitize(max);
   const cleanStep = sanitize(step) || 1;
 
+  const isLargeNumber = (cleanMax - cleanMin) > 50000;
+  const exponent = isLargeNumber ? 3 : 1; // Use cubic curve for large money sliders
+  const RESOLUTION = 10000; // High resolution track for smooth curved sliding
+
   const [localValue, setLocalValue] = useState(cleanValue);
   const [inputValue, setInputValue] = useState(cleanValue.toString());
   
@@ -64,7 +68,16 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
 
   const handleSliderChange = (vals: any) => {
     isDragging.current = true;
-    const newVal = Array.isArray(vals) ? vals[0] : (typeof vals === 'number' ? vals : min);
+    const rawPosition = Array.isArray(vals) ? vals[0] : (typeof vals === 'number' ? vals : 0);
+    
+    // Convert physical slider position back to real value using the curve
+    const ratio = rawPosition / RESOLUTION;
+    let newVal = cleanMin + (cleanMax - cleanMin) * Math.pow(ratio, exponent);
+    
+    if (cleanStep > 0) {
+      newVal = Math.round(newVal / cleanStep) * cleanStep;
+    }
+    newVal = Math.max(cleanMin, Math.min(cleanMax, newVal));
     
     // Instantly update the local UI (slider thumb and input text)
     setLocalValue(newVal);
@@ -86,7 +99,12 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
     }, 50); 
   };
 
-  const sliderValue = Math.max(cleanMin, Math.min(cleanMax, isNaN(localValue) ? cleanMin : localValue));
+  const getSliderPosition = (val: number) => {
+    if (cleanMax <= cleanMin) return 0;
+    const boundedVal = Math.max(cleanMin, Math.min(cleanMax, isNaN(val) ? cleanMin : val));
+    const ratio = (boundedVal - cleanMin) / (cleanMax - cleanMin);
+    return Math.pow(ratio, 1 / exponent) * RESOLUTION;
+  };
 
   return (
     <div className="space-y-2 lg:space-y-4">
@@ -104,12 +122,12 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
         </div>
       </div>
       <Slider
-        value={[sliderValue]}
-        min={cleanMin}
-        max={cleanMax}
-        step={cleanStep}
+        value={[getSliderPosition(localValue)]}
+        min={0}
+        max={RESOLUTION}
+        step={1}
         onValueChange={handleSliderChange}
-        className="py-4 touch-pan-y"
+        className="py-4 touch-pan-y print:hidden"
       />
     </div>
   );

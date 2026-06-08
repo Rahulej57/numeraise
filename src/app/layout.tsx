@@ -110,6 +110,30 @@ export default function RootLayout({
             strategy="afterInteractive"
           />
         )}
+        <Script id="global-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://numeraise.com/#organization",
+              "name": "Numeraise",
+              "url": "https://numeraise.com",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://numeraise.com/og-image.png"
+              }
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://numeraise.com/#website",
+              "url": "https://numeraise.com",
+              "name": "Numeraise",
+              "publisher": {
+                "@id": "https://numeraise.com/#organization"
+              }
+            }
+          ]
+        }) }} />
       </body>
     </html>
   );

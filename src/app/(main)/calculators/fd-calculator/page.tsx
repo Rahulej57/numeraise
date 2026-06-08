@@ -14,6 +14,7 @@ import { FAQAccordion, FAQ } from "@/components/calculators/faq-accordion";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
 import { RelatedArticles } from "@/components/calculators/related-articles";
 import { StructuredData } from "@/components/seo/structured-data";
+import { CalculatorHeader } from "@/components/calculators/calculator-header";
 
 export default function FDCalculatorPage() {
   const { format, currency } = useCurrency();
@@ -120,10 +121,7 @@ Calculate your own: ${shareUrl}`;
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-6xl">
-      <div className="mb-6 text-center md:text-left">
-        <h1 className="text-2xl md:text-4xl font-bold tracking-tight mb-2">Fixed Deposit Calculator</h1>
-        
-      </div>
+      <CalculatorHeader title="Fixed Deposit Calculator" />
 
       <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
         <div className="lg:col-span-6 space-y-6">

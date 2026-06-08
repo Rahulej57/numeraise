@@ -10,6 +10,7 @@ import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
 import { getRelatedCalculators } from "@/config/calculators";
+import { CalculatorHeader } from "@/components/calculators/calculator-header";
 
 export default function TermInsuranceCalculatorPage() {
   const { format, currency } = useCurrency();
@@ -34,10 +35,7 @@ export default function TermInsuranceCalculatorPage() {
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-6xl">
-      <div className="mb-6 text-center md:text-left">
-        <h1 className="text-2xl md:text-4xl font-bold tracking-tight mb-2">Term Insurance Calculator</h1>
-        
-      </div>
+      <CalculatorHeader title="Term Insurance Calculator" />
 
       <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
         <div className="lg:col-span-6 space-y-6">

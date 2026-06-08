@@ -31,7 +31,7 @@ export default function AllCalculatorsPage() {
               </div>
             </CardHeader>
             <CardContent className="p-0">
-              <DynamicCalculatorList calculators={category.calculators} variant="list" />
+              <DynamicCalculatorList calculators={category.calculators} variant="list" categoryIcon={category.icon} />
               <div className="p-4 border-t bg-muted/10 text-center">
                 <Link 
                   href={`/calculators/category/${category.slug}`}

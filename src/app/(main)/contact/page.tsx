@@ -37,15 +37,9 @@ export default function ContactPage() {
                 <p className="text-muted-foreground text-sm">support@Numeraise.com</p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-                <MapPin className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="font-medium">Headquarters</p>
-                <p className="text-muted-foreground text-sm">San Francisco, CA, USA</p>
-              </div>
-            </div>
+            <p className="text-sm border-l-4 border-primary pl-4 py-1 bg-muted/50 mt-6">
+              Please use the secure contact form below or email us directly. We prioritize messages sent through this portal.
+            </p>
           </div>
         </div>
 

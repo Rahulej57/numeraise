@@ -1,0 +1,26 @@
+# Numeraise - Smart Financial Calculators
+
+Numeraise is a comprehensive platform providing over 50+ free financial calculators designed for smarter decision making regarding investments, loans, taxes, and retirement planning.
+
+## Purpose
+The platform serves as an educational tool and calculation engine to help users optimize their financial strategies. It supports dynamic currency rendering, allowing users to calculate figures in USD, INR, EUR, GBP, and JPY.
+
+## Available Sections
+- **Calculators**: A vast array of calculators categorized into Investments, Loans, and Tax. Notable calculators include:
+  - SIP Calculator
+  - Lumpsum Calculator
+  - Home Loan EMI Calculator
+  - Income Tax Calculator (Old vs New Regime)
+  - Rent vs Buy Calculator
+- **Blog**: Educational content explaining complex financial topics such as CAGR, the Rule of 72, emergency funds, and the power of compounding.
+
+## Key URL Paths
+- `/`: Homepage with calculator categories
+- `/calculators`: Directory of all available calculators
+- `/articles`: Educational blog posts
+- `/calculators/[slug]`: Individual calculator tools
+
+## Contact and Socials
+Website: https://numeraise.com
+Twitter: @numeraise
+Contact: support@numeraise.com
