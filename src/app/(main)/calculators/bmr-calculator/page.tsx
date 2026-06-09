@@ -9,7 +9,7 @@ import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { getRelatedCalculators } from "@/config/calculators";
+import { getRelatedCalculators, CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 const selectClass = "flex h-12 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none";
 
@@ -28,6 +28,14 @@ export default function BMRCalculatorPage() {
   const [lbs, setLbs] = useState("165");
 
   const [activity, setActivity] = useState("1.2");
+
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("bmr-calculator"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
 
   const resultData = useMemo(() => {
     let weight = 0;
@@ -67,7 +75,7 @@ export default function BMRCalculatorPage() {
   }, [unitSystem, gender, age, cm, kg, feet, inches, lbs, activity]);
 
   return (
-    <CalculatorLayout title="BMR & TDEE Calculator" description="">
+    <CalculatorLayout title="BMR & TDEE Calculator" description="" icon={calculatorIcon ?? undefined}>
       <div className="grid lg:grid-cols-12 gap-2 lg:gap-8">
         
         {/* INPUTS SECTION */}

@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion, FAQ } from "@/components/calculators/faq-accordion";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
+import { getRelatedCalculators } from "@/config/calculators";
 import { RelatedArticles } from "@/components/calculators/related-articles";
 import { StructuredData } from "@/components/seo/structured-data";
 import { calculateEMI } from "@/lib/calculations/loan";
@@ -156,11 +157,7 @@ Calculate your own: ${shareUrl}`;
     }
   ];
 
-  const relatedCalcs = [
-    { title: "EMI Calculator", description: "Calculate standard auto loan EMIs.", href: "/calculators/emi-calculator" },
-    { title: "Net Worth Calculator", description: "See how cars affect your net worth.", href: "/calculators/net-worth-calculator" },
-    { title: "50/30/20 Budget", description: "See if you can afford this car payment.", href: "/calculators/budget-calculator" }
-  ];
+  const relatedCalcs = getRelatedCalculators("lease-vs-buy");
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-6xl">

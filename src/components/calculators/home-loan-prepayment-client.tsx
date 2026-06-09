@@ -3,9 +3,9 @@
 import { useState, useMemo } from "react";
 import { useCurrency } from "@/context/CurrencyContext";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { CalculatorLayout } from "@/components/calculators/calculator-layout";
 import { SliderInput } from "@/components/calculators/slider-input";
 import { Landmark, ArrowDownCircle } from "lucide-react";
+import { CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 export function HomeLoanPrepaymentClient() {
   const { format, currency } = useCurrency();
@@ -13,6 +13,14 @@ export function HomeLoanPrepaymentClient() {
   const [interestRate, setInterestRate] = useState(8.5);
   const [remainingTenure, setRemainingTenure] = useState(15); // in years
   const [prepaymentAmount, setPrepaymentAmount] = useState(500000 / 83);
+
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("home-loan-prepayment"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
 
   const results = useMemo(() => {
     const P = outstandingPrincipal;
@@ -57,9 +65,16 @@ export function HomeLoanPrepaymentClient() {
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-5xl">
-      <div className="mb-6 text-center md:text-left">
-        <h1 className="text-2xl md:text-4xl font-bold tracking-tight mb-2">Home Loan Prepayment</h1>
-        <p className="text-sm md:text-lg text-muted-foreground">Calculate interest savings and tenure reduction by making a part-payment.</p>
+      <div className="mb-6 text-center md:text-left flex flex-col md:flex-row items-center md:items-start gap-4">
+        {calculatorIcon && (
+          <div className="p-3 bg-background border shadow-sm rounded-xl shrink-0">
+            <div className="scale-[1.15] origin-center">{calculatorIcon}</div>
+          </div>
+        )}
+        <div>
+          <h1 className="text-2xl md:text-4xl font-bold tracking-tight mb-2">Home Loan Prepayment</h1>
+          <p className="text-sm md:text-lg text-muted-foreground">Calculate interest savings and tenure reduction by making a part-payment.</p>
+        </div>
       </div>
 
       <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">

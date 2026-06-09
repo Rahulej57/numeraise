@@ -10,13 +10,21 @@ import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { getRelatedCalculators } from "@/config/calculators";
+import { getRelatedCalculators, CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 export default function TipCalculatorPage() {
   const { format, currency } = useCurrency();
   const [bill, setBill] = useState("100");
   const [tipPercent, setTipPercent] = useState("15");
   const [people, setPeople] = useState("1");
+
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("tip-calculator"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
 
   const tipData = useMemo(() => {
     const b = Number(bill);
@@ -45,7 +53,7 @@ export default function TipCalculatorPage() {
   }, [bill, tipPercent, people]);
 
   return (
-    <CalculatorLayout title="Tip & Split Calculator" description="">
+    <CalculatorLayout title="Tip & Split Calculator" description="" icon={calculatorIcon ?? undefined}>
       <div className="grid lg:grid-cols-12 gap-2 lg:gap-8">
         
         {/* INPUTS SECTION */}

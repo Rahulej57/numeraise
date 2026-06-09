@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { CalculatorLayout } from "@/components/calculators/calculator-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,12 +8,20 @@ import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { getRelatedCalculators } from "@/config/calculators";
+import { getRelatedCalculators, CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 export default function BasicCalculatorPage() {
   const [display, setDisplay] = useState("0");
   const [equation, setEquation] = useState("");
   const [isScientific, setIsScientific] = useState(false);
+
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("basic-calculator"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
 
   const handleNum = (num: string) => {
     if (display === "0" || display === "Error") {
@@ -100,7 +108,7 @@ export default function BasicCalculatorPage() {
   };
 
   return (
-    <CalculatorLayout title="Scientific Calculator" description="">
+    <CalculatorLayout title="Scientific Calculator" description="" icon={calculatorIcon ?? undefined}>
       <div className="max-w-md mx-auto mt-4">
         
         <div className="flex justify-end mb-2">

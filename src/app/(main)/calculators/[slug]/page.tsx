@@ -32,13 +32,13 @@ export default async function DynamicCalculatorPage({ params }: { params: Promis
   const resolvedParams = await params;
   const meta = getCalculatorMetadata(resolvedParams.slug);
 
-  let relatedCalcs: { title: string; description: string; href: string }[] = [];
+  let relatedCalcs: { title: string; description: string; href: string; icon?: React.ReactNode }[] = [];
   const category = CALCULATOR_DIRECTORY.find(c => c.calculators.some(calc => calc.href.includes(resolvedParams.slug)));
   if (category) {
     relatedCalcs = category.calculators
       .filter(c => !c.href.includes(resolvedParams.slug))
       .slice(0, 3)
-      .map(c => ({ title: c.name, description: c.desc, href: c.href }));
+      .map(c => ({ title: c.name, description: c.desc, href: c.href, icon: c.icon }));
   }
 
   return (

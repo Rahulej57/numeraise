@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion, FAQ } from "@/components/calculators/faq-accordion";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
+import { getRelatedCalculators } from "@/config/calculators";
 import { RelatedArticles } from "@/components/calculators/related-articles";
 import { StructuredData } from "@/components/seo/structured-data";
 import { CalculatorHeader } from "@/components/calculators/calculator-header";
@@ -107,11 +108,7 @@ Calculate your own: ${shareUrl}`;
     }
   ];
 
-  const relatedCalcs = [
-    { title: "SIP Calculator", description: "Calculate returns for systematic investments.", href: "/calculators/sip-calculator" },
-    { title: "FD Calculator", description: "Calculate secure Fixed Deposit returns.", href: "/calculators/fd-calculator" },
-    { title: "Retirement Calculator", description: "Plan your retirement corpus.", href: "/calculators/retirement-calculator" }
-  ];
+  const relatedCalcs = getRelatedCalculators("lumpsum-calculator");
 
   const relatedGuides = [
     { title: "SIP vs Lumpsum: Which Strategy Wins?", href: "#" },

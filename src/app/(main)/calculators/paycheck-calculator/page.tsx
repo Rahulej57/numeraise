@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion, FAQ } from "@/components/calculators/faq-accordion";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
+import { getRelatedCalculators } from "@/config/calculators";
 import { RelatedArticles } from "@/components/calculators/related-articles";
 import { StructuredData } from "@/components/seo/structured-data";
 import { CalculatorHeader } from "@/components/calculators/calculator-header";
@@ -140,11 +141,7 @@ Calculate your own: ${shareUrl}`;
     }
   ];
 
-  const relatedCalcs = [
-    { title: "Income Tax Calculator", description: "Calculate exact tax brackets.", href: "/calculators/income-tax-calculator" },
-    { title: "401(k) Calculator", description: "See how pre-tax deductions grow.", href: "/calculators/401k-calculator" },
-    { title: "50/30/20 Budget", description: "Budget your new take-home pay.", href: "/calculators/budget-calculator" }
-  ];
+  const relatedCalcs = getRelatedCalculators("paycheck-calculator");
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-6xl">

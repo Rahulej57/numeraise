@@ -9,11 +9,19 @@ import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { getRelatedCalculators } from "@/config/calculators";
+import { getRelatedCalculators, CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 export default function AgeCalculatorPage() {
   const [dob, setDob] = useState("");
   const [targetDate, setTargetDate] = useState(() => new Date().toISOString().split("T")[0]);
+
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("age-calculator"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
 
   const ageData = useMemo(() => {
     if (!dob || !targetDate) return null;
@@ -49,7 +57,7 @@ export default function AgeCalculatorPage() {
   }, [dob, targetDate]);
 
   return (
-    <CalculatorLayout title="Age Calculator - Calculate Your Exact Age in Years, Months, Days" description="">
+    <CalculatorLayout title="Age Calculator - Calculate Your Exact Age in Years, Months, Days" description="" icon={calculatorIcon ?? undefined}>
       <div className="grid lg:grid-cols-12 gap-2 lg:gap-8">
         
         {/* INPUTS SECTION */}

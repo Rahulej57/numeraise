@@ -9,7 +9,7 @@ import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { getRelatedCalculators } from "@/config/calculators";
+import { getRelatedCalculators, CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 const CONVERSIONS: Record<string, Record<string, number>> = {
   Length: {
@@ -61,6 +61,14 @@ export default function MeasurementCalculatorPage() {
   
   const [inputValue, setInputValue] = useState<string>("1");
 
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("measurement-calculator"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
+
   // Reset units when category changes
   useEffect(() => {
     if (category === "Temperature") {
@@ -105,7 +113,7 @@ export default function MeasurementCalculatorPage() {
     : Object.keys(CONVERSIONS[category] || {});
 
   return (
-    <CalculatorLayout title="Measurement Converter" description="">
+    <CalculatorLayout title="Measurement Converter" description="" icon={calculatorIcon ?? undefined}>
       <div className="grid lg:grid-cols-12 gap-2 lg:gap-8">
         
         {/* INPUTS SECTION */}

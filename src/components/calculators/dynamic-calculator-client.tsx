@@ -12,12 +12,21 @@ import { CircularStatistics } from "@/components/calculators/circular-statistics
 import { getCalculatorConfig } from "@/lib/calculator-engine";
 import { useCurrency } from "@/context/CurrencyContext";
 import { IndiaOnlyGate } from "@/components/calculators/india-only-gate";
+import { CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 const INR_BASE_RATE = 83.00;
 
 export function DynamicCalculatorClient({ slug, name, children }: { slug: string, name: string, children?: React.ReactNode }) {
   const config = useMemo(() => getCalculatorConfig(slug, name), [slug, name]);
   const { currency, format, convert } = useCurrency();
+
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes(slug));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, [slug]);
 
   // Initialize state dynamically based on config defaults. All currency states are stored internally as USD.
   const [inputs, setInputs] = useState<Record<string, number | string>>(() => {
@@ -288,6 +297,7 @@ export function DynamicCalculatorClient({ slug, name, children }: { slug: string
     <CalculatorLayout 
       title={config.name} 
       description={config.description}
+      icon={calculatorIcon ?? undefined}
     >
       <div className="grid lg:grid-cols-12 gap-2 lg:gap-8">
         

@@ -9,7 +9,7 @@ import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { getRelatedCalculators } from "@/config/calculators";
+import { getRelatedCalculators, CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 export default function DateTimeCalculatorPage() {
   const [d1, setD1] = useState(() => new Date().toISOString().split("T")[0]);
@@ -24,6 +24,14 @@ export default function DateTimeCalculatorPage() {
   const [addMonths, setAddMonths] = useState("");
   const [addDays, setAddDays] = useState("30");
   const [op, setOp] = useState<"add"|"subtract">("add");
+
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("date-time-calculator"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
 
   const durationData = useMemo(() => {
     if (!d1 || !d2) return null;
@@ -81,7 +89,7 @@ export default function DateTimeCalculatorPage() {
   }, [baseDate, addYears, addMonths, addDays, op]);
 
   return (
-    <CalculatorLayout title="Date & Time Calculator" description="">
+    <CalculatorLayout title="Date & Time Calculator" description="" icon={calculatorIcon ?? undefined}>
       <div className="grid lg:grid-cols-2 gap-4 lg:gap-8 max-w-6xl mx-auto">
         
         {/* Mode 1 */}

@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion, FAQ } from "@/components/calculators/faq-accordion";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
+import { getRelatedCalculators } from "@/config/calculators";
 import { RelatedArticles } from "@/components/calculators/related-articles";
 import { StructuredData } from "@/components/seo/structured-data";
 import { CalculatorHeader } from "@/components/calculators/calculator-header";
@@ -131,11 +132,7 @@ Calculate your own: ${shareUrl}`;
     }
   ];
 
-  const relatedCalcs = [
-    { title: "Retirement Calculator", description: "Calculate your overall retirement corpus.", href: "/calculators/retirement-calculator" },
-    { title: "Net Worth Calculator", description: "Calculate your current financial health.", href: "/calculators/net-worth-calculator" },
-    { title: "FIRE Calculator", description: "Find out when you can retire early.", href: "/calculators/fire-calculator" }
-  ];
+  const relatedCalcs = getRelatedCalculators("401k-calculator");
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-6xl">

@@ -6,6 +6,7 @@ interface RelatedCalculator {
   title: string;
   description: string;
   href: string;
+  icon?: React.ReactNode;
 }
 
 interface RelatedCalculatorsProps {
@@ -23,9 +24,16 @@ export function RelatedCalculators({ calculators }: RelatedCalculatorsProps) {
           <Link href={calc.href} key={idx} className="group">
             <Card className="h-full border border-border transition-colors hover:border-primary/50 group-hover:shadow-sm">
               <CardHeader className="p-5 flex flex-row items-start justify-between space-y-0">
-                <div>
-                  <CardTitle className="text-lg group-hover:text-primary transition-colors">{calc.title}</CardTitle>
-                  <CardDescription className="mt-1.5">{calc.description}</CardDescription>
+                <div className="flex items-start gap-3">
+                  {calc.icon && (
+                    <div className="p-1.5 bg-background border border-border rounded-lg shrink-0 mt-0.5">
+                      <div className="scale-[0.85]">{calc.icon}</div>
+                    </div>
+                  )}
+                  <div>
+                    <CardTitle className="text-lg group-hover:text-primary transition-colors">{calc.title}</CardTitle>
+                    <CardDescription className="mt-1.5">{calc.description}</CardDescription>
+                  </div>
                 </div>
                 <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-transform group-hover:translate-x-1 flex-shrink-0 ml-2 mt-1" />
               </CardHeader>

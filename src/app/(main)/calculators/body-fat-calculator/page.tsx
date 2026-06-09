@@ -9,7 +9,7 @@ import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { getRelatedCalculators } from "@/config/calculators";
+import { getRelatedCalculators, CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 const selectClass = "flex h-12 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none";
 
@@ -28,6 +28,14 @@ export default function BodyFatCalculatorPage() {
   const [neckIn, setNeckIn] = useState("15.5");
   const [waistIn, setWaistIn] = useState("35.5");
   const [hipIn, setHipIn] = useState("39.5");
+
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("body-fat-calculator"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
 
   const resultData = useMemo(() => {
     let h = 0, n = 0, w = 0, hip = 0;
@@ -83,7 +91,7 @@ export default function BodyFatCalculatorPage() {
   }, [unitSystem, gender, cm, neckCm, waistCm, hipCm, heightIn, neckIn, waistIn, hipIn]);
 
   return (
-    <CalculatorLayout title="Body Fat Calculator" description="">
+    <CalculatorLayout title="Body Fat Calculator" description="" icon={calculatorIcon ?? undefined}>
       <div className="grid lg:grid-cols-12 gap-2 lg:gap-8">
         
         {/* INPUTS SECTION */}

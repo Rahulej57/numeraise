@@ -9,7 +9,7 @@ import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { getRelatedCalculators } from "@/config/calculators";
+import { getRelatedCalculators, CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 const selectClass = "flex h-14 w-full items-center justify-between rounded-md border border-input bg-background px-4 py-2 text-lg font-medium ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none";
 
@@ -20,6 +20,14 @@ export default function CurrencyConverterPage() {
   const [rates, setRates] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("currency-converter"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
 
   useEffect(() => {
     // Using Frankfurter API (Free, no API key, ECB rates)
@@ -75,7 +83,7 @@ export default function CurrencyConverterPage() {
   };
 
   return (
-    <CalculatorLayout title="Currency Converter - Live Exchange Rate Calculator" description="">
+    <CalculatorLayout title="Currency Converter - Live Exchange Rate Calculator" description="" icon={calculatorIcon ?? undefined}>
       <div className="grid lg:grid-cols-12 gap-2 lg:gap-8">
         
         {/* INPUTS SECTION */}

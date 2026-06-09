@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion, FAQ } from "@/components/calculators/faq-accordion";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
+import { getRelatedCalculators } from "@/config/calculators";
 import { RelatedArticles } from "@/components/calculators/related-articles";
 import { StructuredData } from "@/components/seo/structured-data";
 import { CalculatorHeader } from "@/components/calculators/calculator-header";
@@ -106,11 +107,7 @@ Calculate your own: ${shareUrl}`;
     }
   ];
 
-  const relatedCalcs = [
-    { title: "Lumpsum Calculator", description: "Compare FD returns vs Mutual Funds.", href: "/calculators/lumpsum-calculator" },
-    { title: "SIP Calculator", description: "Calculate monthly systematic investments.", href: "/calculators/sip-calculator" },
-    { title: "Income Tax Calculator", description: "Calculate your tax liability on FD interest.", href: "/calculators/income-tax-calculator" }
-  ];
+  const relatedCalcs = getRelatedCalculators("fd-calculator");
 
   const relatedGuides = [
     { title: "FD vs Debt Mutual Funds: Which is Better?", href: "#" },

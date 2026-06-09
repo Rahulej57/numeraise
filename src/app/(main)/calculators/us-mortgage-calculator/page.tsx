@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion, FAQ } from "@/components/calculators/faq-accordion";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
+import { getRelatedCalculators } from "@/config/calculators";
 import { RelatedArticles } from "@/components/calculators/related-articles";
 import { StructuredData } from "@/components/seo/structured-data";
 import { calculateEMI } from "@/lib/calculations/loan";
@@ -124,11 +125,7 @@ Calculate your own: ${shareUrl}`;
     }
   ];
 
-  const relatedCalcs = [
-    { title: "EMI Calculator", description: "Standard loan repayment calculator.", href: "/calculators/emi-calculator" },
-    { title: "Rent vs Buy", description: "Compare the financial impact of renting vs buying.", href: "/calculators/rent-vs-buy" },
-    { title: "Net Worth Calculator", description: "See how a home impacts your total net worth.", href: "/calculators/net-worth-calculator" }
-  ];
+  const relatedCalcs = getRelatedCalculators("us-mortgage-calculator");
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-6xl">

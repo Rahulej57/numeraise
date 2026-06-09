@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useCurrency } from "@/context/CurrencyContext";
 import { CalculatorLayout } from "@/components/calculators/calculator-layout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,7 +10,7 @@ import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { getRelatedCalculators } from "@/config/calculators";
+import { getRelatedCalculators, CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 export default function PercentageCalculatorPage() {
   const { currency } = useCurrency();
@@ -26,8 +26,16 @@ export default function PercentageCalculatorPage() {
   const [m3x, setM3x] = useState("");
   const [m3y, setM3y] = useState("");
 
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("percentage-calculator"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
+
   return (
-    <CalculatorLayout title="Percentage Calculator - Calculate Percentages and Changes" description="">
+    <CalculatorLayout title="Percentage Calculator - Calculate Percentages and Changes" description="" icon={calculatorIcon ?? undefined}>
       <div className="grid lg:grid-cols-3 gap-4 lg:gap-6 max-w-6xl mx-auto">
         
         {/* Mode 1 */}

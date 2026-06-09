@@ -8,6 +8,7 @@ interface CalculatorLink {
   name: string;
   desc: string;
   href: string;
+  icon?: React.ReactNode;
 }
 
 interface DynamicCalculatorListProps {
@@ -52,9 +53,9 @@ export function DynamicCalculatorList({ calculators, variant = "list", categoryI
             <div className="h-full rounded-xl border border-border bg-muted/40 p-4 md:p-5 hover:bg-muted transition-all duration-300">
               <h3 className="font-semibold text-base md:text-lg group-hover:text-primary transition-colors flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  {categoryIcon && (
+                  {(calc.icon || categoryIcon) && (
                     <div className="p-1.5 bg-background shadow-sm border border-border rounded-lg shrink-0">
-                      <div className="scale-[0.80] origin-center">{categoryIcon}</div>
+                      <div className="scale-[0.80] origin-center">{calc.icon || categoryIcon}</div>
                     </div>
                   )}
                   <span>{calc.name}</span>
@@ -78,9 +79,9 @@ export function DynamicCalculatorList({ calculators, variant = "list", categoryI
           className="p-4 hover:bg-primary/5 transition-colors group flex items-start gap-4"
         >
           <div className="mt-0.5 shrink-0 p-1.5 bg-background border border-border shadow-sm rounded-lg group-hover:bg-primary/5 transition-colors">
-            {categoryIcon ? (
+            {(calc.icon || categoryIcon) ? (
               <div className="scale-[0.85] opacity-90 group-hover:opacity-100 transition-opacity">
-                {categoryIcon}
+                {calc.icon || categoryIcon}
               </div>
             ) : (
               <Calculator className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />

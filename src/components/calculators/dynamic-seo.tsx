@@ -5,7 +5,7 @@ import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
 import { useCurrency } from "@/context/CurrencyContext";
 
-export function DynamicSEO({ slug, relatedCalculators }: { slug: string, relatedCalculators?: {title: string, description: string, href: string}[] }) {
+export function DynamicSEO({ slug, relatedCalculators }: { slug: string, relatedCalculators?: {title: string, description: string, href: string, icon?: React.ReactNode}[] }) {
   const { format, currency } = useCurrency();
   if (slug === "inflation-calculator") {
     return (

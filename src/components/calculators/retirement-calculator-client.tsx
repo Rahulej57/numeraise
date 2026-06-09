@@ -3,13 +3,12 @@
 import { useState, useMemo } from "react";
 import { useCurrency } from "@/context/CurrencyContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CalculatorLayout } from "@/components/calculators/calculator-layout";
 import { SliderInput } from "@/components/calculators/slider-input";
 import { HeartHandshake, ShieldAlert } from "lucide-react";
 import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { getRelatedCalculators } from "@/config/calculators";
+import { getRelatedCalculators, CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 export function RetirementCalculatorClient() {
   const { format, currency } = useCurrency();
@@ -19,6 +18,14 @@ export function RetirementCalculatorClient() {
   const [monthlyExpenses, setMonthlyExpenses] = useState(50000 / 83);
   const [inflation, setInflation] = useState(6);
   const [expectedReturn, setExpectedReturn] = useState(12); // Pre-retirement
+
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("retirement-calculator"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
   
   const results = useMemo(() => {
     const yearsToRetire = Math.max(0, retirementAge - currentAge);
@@ -63,9 +70,16 @@ export function RetirementCalculatorClient() {
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-5xl">
-      <div className="mb-6 text-center md:text-left">
-        <h1 className="text-2xl md:text-4xl font-bold tracking-tight mb-2">Retirement Calculator</h1>
-        <p className="text-sm md:text-lg text-muted-foreground">Calculate the corpus needed for a comfortable retirement.</p>
+      <div className="mb-6 text-center md:text-left flex flex-col md:flex-row items-center md:items-start gap-4">
+        {calculatorIcon && (
+          <div className="p-3 bg-background border shadow-sm rounded-xl shrink-0">
+            <div className="scale-[1.15] origin-center">{calculatorIcon}</div>
+          </div>
+        )}
+        <div>
+          <h1 className="text-2xl md:text-4xl font-bold tracking-tight mb-2">Retirement Calculator</h1>
+          <p className="text-sm md:text-lg text-muted-foreground">Calculate the corpus needed for a comfortable retirement.</p>
+        </div>
       </div>
 
       <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">

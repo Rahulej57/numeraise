@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion, FAQ } from "@/components/calculators/faq-accordion";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
+import { getRelatedCalculators } from "@/config/calculators";
 import { RelatedArticles } from "@/components/calculators/related-articles";
 import { StructuredData } from "@/components/seo/structured-data";
 import { CalculatorHeader } from "@/components/calculators/calculator-header";
@@ -106,11 +107,7 @@ Calculate your own: ${shareUrl}`;
     }
   ];
 
-  const relatedCalcs = [
-    { title: "EMI Calculator", description: "Calculate car and personal loan EMIs.", href: "/calculators/emi-calculator" },
-    { title: "SIP Calculator", description: "Invest the money you save from loan prepayments.", href: "/calculators/sip-calculator" },
-    { title: "FD Calculator", description: "Calculate returns on secure deposits.", href: "/calculators/fd-calculator" }
-  ];
+  const relatedCalcs = getRelatedCalculators("home-loan-calculator");
 
   const relatedGuides = [
     { title: "The Ultimate Guide to Prepaying Your Home Loan", href: "#" },

@@ -11,7 +11,7 @@ import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { getRelatedCalculators } from "@/config/calculators";
+import { getRelatedCalculators, CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 export default function RentVsBuyPage() {
   const { format, currency } = useCurrency();
@@ -24,6 +24,14 @@ export default function RentVsBuyPage() {
   const [currentRent, setCurrentRent] = useState("2000");
   const [rentIncrease, setRentIncrease] = useState("5");
   const [investmentReturn, setInvestmentReturn] = useState("12");
+
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("rent-vs-buy"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
 
   const results = useMemo(() => {
     const propVal = Number(propertyValue);
@@ -112,7 +120,7 @@ export default function RentVsBuyPage() {
   }, [propertyValue, downPayment, loanRate, tenure, propertyAppreciation, currentRent, rentIncrease, investmentReturn, format, currency.rate]);
 
   return (
-    <CalculatorLayout title="Rent vs Buy Calculator" description="Make the biggest financial decision of your life with mathematical certainty.">
+    <CalculatorLayout title="Rent vs Buy Calculator" description="Make the biggest financial decision of your life with mathematical certainty." icon={calculatorIcon ?? undefined}>
       <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 max-w-7xl mx-auto">
         
         {/* INPUTS */}

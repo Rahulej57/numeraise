@@ -11,13 +11,21 @@ import { CalculatorContent } from "@/components/calculators/calculator-content";
 import { FAQAccordion } from "@/components/calculators/faq-accordion";
 import { StructuredData } from "@/components/seo/structured-data";
 import { RelatedCalculators } from "@/components/calculators/related-calculators";
-import { getRelatedCalculators } from "@/config/calculators";
+import { getRelatedCalculators, CALCULATOR_DIRECTORY } from "@/config/calculators";
 
 export default function FlatVsReducingLoanPage() {
   const { format, currency } = useCurrency();
   const [amount, setAmount] = useState((500000 / 83).toString());
   const [rate, setRate] = useState("10");
   const [years, setYears] = useState("5");
+
+  const calculatorIcon = useMemo(() => {
+    for (const category of CALCULATOR_DIRECTORY) {
+      const calc = category.calculators.find(c => c.href.includes("flat-vs-reducing-loan"));
+      if (calc?.icon) return calc.icon;
+    }
+    return null;
+  }, []);
 
   const results = useMemo(() => {
     const p = Number(amount);
@@ -58,7 +66,7 @@ export default function FlatVsReducingLoanPage() {
   }, [amount, rate, years, format, currency.rate]);
 
   return (
-    <CalculatorLayout title="Flat vs Reducing Rate Loan" description="Understand the massive difference between Flat Rate and Reducing Balance interest calculations.">
+    <CalculatorLayout title="Flat vs Reducing Rate Loan" description="Understand the massive difference between Flat Rate and Reducing Balance interest calculations." icon={calculatorIcon ?? undefined}>
       <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 max-w-6xl mx-auto">
         
         {/* INPUTS */}
