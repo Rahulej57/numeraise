@@ -21,14 +21,6 @@ const nextConfig: NextConfig = {
         source: '/blog/:slug',
         destination: '/articles/:slug',
       },
-      {
-        source: '/calculators/sales-tax-calculator',
-        destination: '/calculators/gst-calculator',
-      },
-      {
-        source: '/calculators/vat-calculator',
-        destination: '/calculators/gst-calculator',
-      },
     ];
   },
 };

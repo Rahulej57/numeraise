@@ -2,6 +2,7 @@
 
 import { useCurrency } from "@/context/CurrencyContext";
 import { Info } from "lucide-react";
+import Link from "next/link";
 
 interface ArticleCurrencyNoticeProps {
   relatedCalculatorHref?: string;
@@ -26,16 +27,16 @@ export function ArticleCurrencyNotice({ relatedCalculatorHref, relatedCalculator
           {relatedCalculatorHref && relatedCalculatorName ? (
             <>
               {" "}Use our{" "}
-              <a
+              <Link
                 href={relatedCalculatorHref}
                 className="underline font-medium hover:text-amber-900 dark:hover:text-amber-200 transition-colors"
               >
                 {relatedCalculatorName}
-              </a>{" "}
+              </Link>{" "}
               to run the same calculations with your own numbers — it fully supports {currency.code}.
             </>
           ) : (
-            <> Use our <a href="/calculators" className="underline font-medium hover:text-amber-900 dark:hover:text-amber-200 transition-colors">calculators</a> to run these scenarios in {currency.code}.</>
+            <> Use our <Link href="/calculators" className="underline font-medium hover:text-amber-900 dark:hover:text-amber-200 transition-colors">calculators</Link> to run these scenarios in {currency.code}.</>
           )}
         </p>
       </div>

@@ -1,9 +1,9 @@
 ---
 title: "Rent vs Buy: The Ultimate Financial Decision"
-date: "2026-06-06"
+date: "2026-06-05"
 excerpt: 'In Indian society, buying a house is considered the ultimate milestone of financial success. The prevailing logic is: Renting is throwing money away...'
 readTime: "3 min read"
-author: "Numeraise Financial Experts"
+author: "Numeraise Team"
 ---
 
 ## Introduction
@@ -18,14 +18,14 @@ Let's analyze a highly realistic scenario using the exact same apartment. We wil
 
 - **Home Price:** `CURRENCY:120482`
 - **Down Payment:** `CURRENCY:24096` (20%)
-- **Home Loan:** `CURRENCY:96386` at 8.5% for 20 years
+- **Home Loan:** `CURRENCY:96386` at `RATE:HOMELOAN`% for 20 years
 - **Monthly EMI:** `CURRENCY:836`
 - **Monthly Rent:** `CURRENCY:361` (increases 5% yearly)
-- **Investment Return:** 12% (Equity Mutual Funds)
+- **Investment Return:** `RATE:EQUITY`% (Equity Mutual Funds)
 
 ## The "Rent and Reinvest" Strategy
 
-The mathematical counter-argument to buying a house is the "Rent and Reinvest" strategy. If a renter takes the `CURRENCY:24096` down payment, plus the monthly difference between the high EMI (`CURRENCY:836`) and the low Rent (`CURRENCY:361`), and invests it systematically into an index fund yielding 12%, their stock portfolio can theoretically outgrow the value of the real estate asset.
+The mathematical counter-argument to buying a house is the "Rent and Reinvest" strategy. If a renter takes the `CURRENCY:24096` down payment, plus the monthly difference between the high EMI (`CURRENCY:836`) and the low Rent (`CURRENCY:361`), and invests it systematically into an index fund yielding `RATE:EQUITY`%, their stock portfolio can theoretically outgrow the value of the real estate asset.
 
 ## Rent vs Buy Comparison Table
 
@@ -55,3 +55,5 @@ The mathematical success of renting relies on one crucial variable: **Discipline
 > 
 > [→ Use the Rent vs Buy Calculator](/calculators/rent-vs-buy)
 > [→ Use the Home Loan Calculator](/calculators/home-loan-calculator)
+
+> **Try our free tool:** Crunch your own numbers using the [Rent vs Buy Calculator](/calculators/rent-vs-buy).

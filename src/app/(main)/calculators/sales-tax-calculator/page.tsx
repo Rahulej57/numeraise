@@ -19,9 +19,7 @@ export default function GSTCalculatorPage() {
   const [amount, setAmount] = useState(10000 / 83);
   const [taxRate, setTaxRate] = useState(18);
   const [mode, setMode] = useState<'exclusive' | 'inclusive'>('exclusive');
-  const taxName = 'GST';
-
-  const isIndian = currency.code === 'INR';
+  const taxName = 'Sales Tax';
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -37,48 +35,14 @@ export default function GSTCalculatorPage() {
     if (params.has('rate') && !window.history.state?.initialized) {
       setTaxRate(Number(params.get('rate')));
     } else {
-      switch (currency.code) {
-        case 'INR':
-          setTaxRate(18);
-          break;
-        case 'AUD':
-          setTaxRate(10);
-          break;
-        case 'SGD':
-          setTaxRate(9);
-          break;
-        case 'CAD':
-          setTaxRate(13);
-          break;
-        case 'NZD':
-          setTaxRate(15);
-          break;
-        default:
-          setTaxRate(18);
-      }
+      setTaxRate(8); // Default US Sales Tax
     }
 
     // Mark as initialized so URL params don't override future currency switches
     window.history.replaceState({ ...window.history.state, initialized: true }, '');
   }, [currency.code]);
 
-  const getPresets = () => {
-    switch (currency.code) {
-      case 'INR':
-        return [5, 12, 18, 28]; // Indian GST slabs
-      case 'AUD':
-        return [10]; // Australia GST
-      case 'SGD':
-        return [9]; // Singapore GST
-      case 'CAD':
-        return [5, 13, 15]; // Canada GST/HST
-      case 'NZD':
-        return [15]; // New Zealand GST
-      default:
-        return [5, 12, 18, 28]; // Default to most complex (India)
-    }
-  };
-  const presets = getPresets();
+  const presets = [4, 6, 8, 10]; // Common US state sales tax rates
 
   const taxAmount = mode === 'exclusive' ? (amount * taxRate) / 100 : amount - amount * (100 / (100 + taxRate));
 
@@ -187,23 +151,6 @@ Calculate your own: ${shareUrl}`;
                 </div>
               </div>
 
-              {isIndian && (
-                <div className="bg-background rounded-xl border p-4 space-y-3 text-sm">
-                  <div className="flex justify-between items-center text-muted-foreground">
-                    <span>Central GST (CGST)</span>
-                    <span className="font-medium text-foreground">
-                      {format(Math.round(taxAmount / 2))} ({taxRate / 2}%)
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center text-muted-foreground">
-                    <span>State GST (SGST)</span>
-                    <span className="font-medium text-foreground">
-                      {format(Math.round(taxAmount / 2))} ({taxRate / 2}%)
-                    </span>
-                  </div>
-                </div>
-              )}
-
               <div className="mt-6">
                 <ResultActions shareUrl={shareUrl} copyPayload={copyPayload} />
               </div>
@@ -214,15 +161,15 @@ Calculate your own: ${shareUrl}`;
 
       <div className="mt-12">
         <CalculatorContent>
-          <h2>What is a GST Calculator?</h2>
+          <h2>What is a Sales Tax Calculator?</h2>
           <p>
-            A GST (Goods and Services Tax) calculator is an essential utility for businesses and consumers in countries
-            like India, Australia, Singapore, and Canada. It instantly computes the exact amount of tax applied to a
-            purchase, allowing you to seamlessly add GST to a net price for invoicing, or extract the hidden GST from a
-            gross receipt for accounting.
+            A Sales Tax calculator is an essential utility for consumers and businesses in regions like the United
+            States, where prices on the shelf are typically displayed *without* tax. It instantly computes the exact
+            amount of retail sales tax that will be added at checkout, allowing you to seamlessly calculate your final
+            net price.
           </p>
-          <h2>How Does the GST Engine Work?</h2>
-          <p>The calculator supports the two primary GST calculation methods required for standard commerce:</p>
+          <h2>How Does the Sales Tax Engine Work?</h2>
+          <p>The calculator supports the two primary calculation methods required for US commerce:</p>
 
           <h3>1. Exclusive (Add Tax)</h3>
           <p>Use this when you know the base price of an item and need to know the final price at checkout.</p>
@@ -248,65 +195,65 @@ Calculate your own: ${shareUrl}`;
           <ul>
             <li>
               <strong>Invoicing:</strong> Freelancers and business owners use the 'Exclusive' mode to accurately add the
-              legally required tax amount to client invoices, ensuring their{' '}
+              legally required state tax amount to client invoices, which helps when calculating total{' '}
               <Link href="/calculators/income-tax-calculator" className="text-primary hover:underline font-medium">
                 income tax
               </Link>{' '}
-              liability is properly accounted for at the end of the financial year.
+              liability.
             </li>
             <li>
               <strong>Accounting:</strong> Bookkeepers use the 'Inclusive' mode to extract the exact tax amount from
-              mixed receipts for tax write-offs and returns. This is crucial for maintaining an accurate{' '}
+              mixed receipts for tax write-offs. This tracking is important for anyone closely monitoring their{' '}
               <Link href="/calculators/net-worth-calculator" className="text-primary hover:underline font-medium">
                 net worth
               </Link>
               .
             </li>
             <li>
-              <strong>Consumer Budgeting:</strong> Whether you are utilizing a{' '}
+              <strong>Consumer Budgeting:</strong> If you are relying on a{' '}
               <Link href="/calculators/budget-calculator" className="text-primary hover:underline font-medium">
                 budget calculator
               </Link>{' '}
-              for daily expenses or using an{' '}
+              for household expenses or an{' '}
               <Link href="/calculators/emi-calculator" className="text-primary hover:underline font-medium">
                 EMI calculator
               </Link>{' '}
-              to finance a new car, knowing the exact final price is vital in countries where prices are displayed
-              without tax.
+              for a large purchase like a car, knowing the exact final checkout price is essential in the US since shelf
+              prices exclude tax.
             </li>
           </ul>
         </CalculatorContent>
         <FAQAccordion
           faqs={[
             {
-              question: "Why can't I just subtract the GST percentage from the final price in Inclusive mode?",
-              answer: `This is the most common accounting error! If a ${currency.symbol}100 item gets 18% GST added, it becomes ${currency.symbol}118. If you later subtract 18% from ${currency.symbol}118, you get ${currency.symbol}96.76, not ${currency.symbol}100. To find the original pre-GST cost, you must divide the final price by 1.18.`,
+              question: "Why can't I just subtract the Sales Tax percentage from the final price in Inclusive mode?",
+              answer: `This is a very common mathematical error! If a ${currency.symbol}100 item gets 8% Sales Tax added, it becomes ${currency.symbol}108. If you later subtract 8% from ${currency.symbol}108, you get ${currency.symbol}99.36, not ${currency.symbol}100. To find the original pre-tax cost, you must divide the final price by 1.08.`,
             },
             {
-              question: 'Why does the calculator split GST into CGST and SGST for India (INR)?',
+              question: 'How does US Sales Tax differ from VAT or GST?',
               answer:
-                'India operates on a dual-GST model. For intra-state sales, the total Goods and Services Tax is split equally between the Central Government (CGST) and the State Government (SGST). For example, an 18% GST slab is split into 9% CGST and 9% SGST. Our calculator handles this split automatically when INR is selected.',
+                'Sales Tax in the US is a single-stage tax, meaning it is only collected once at the final point of retail sale to the end consumer. GST and VAT, on the other other hand, are value-added taxes collected at every single stage of the supply chain.',
             },
             {
-              question: 'Can I claim GST back on business purchases?',
+              question: 'Why do prices in the US not include tax?',
               answer:
-                'Yes, registered businesses in most GST jurisdictions can claim an Input Tax Credit (ITC) for the GST paid on eligible business purchases. This offsets the total GST they must remit to the government.',
+                'Unlike Europe or Australia, the United States does not have a federal or national sales tax. Instead, sales tax is levied at the state, county, and even city level. Because these local rates vary wildly from zip code to zip code, it is nearly impossible for national retailers to print uniform "tax-inclusive" price tags.',
             },
             {
-              question: 'What is the Reverse Charge Mechanism (RCM) in GST?',
+              question: 'Are grocery items subject to Sales Tax?',
               answer:
-                'Under standard rules, the supplier collects and pays the GST. Under the Reverse Charge Mechanism, the liability to pay GST shifts to the buyer or receiver of the goods/services.',
+                'It depends entirely on the state. Many states exempt unprepared groceries and prescription medications from sales tax entirely, while others tax them at a heavily reduced rate.',
             },
           ]}
         />
 
-        <RelatedCalculators calculators={getRelatedCalculators('gst-calculator')} />
+        <RelatedCalculators calculators={getRelatedCalculators('sales-tax-calculator')} />
         <StructuredData
           type="Calculator"
           data={{
-            name: 'GST Calculator',
+            name: 'Sales Tax Calculator',
             description:
-              'Calculate Goods and Services Tax (GST) easily. Add exclusive GST to a net price or extract inclusive GST from a gross amount. Supports CGST and SGST splits.',
+              'Calculate US retail sales tax instantly. Easily add state and local tax to a shelf price or extract sales tax from a final receipt.',
           }}
         />
       </div>

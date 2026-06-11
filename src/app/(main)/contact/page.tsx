@@ -1,13 +1,13 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Mail, MapPin } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Mail, MapPin } from 'lucide-react';
 
 export const metadata = {
-  title: "Contact Numeraise - Get Support",
-  description: "Get in touch with the Numeraise team for support, feature requests, or business inquiries.",
+  title: 'Contact Numeraise - Get Support',
+  description: 'Get in touch with the Numeraise team for support, feature requests, or business inquiries.',
 };
 
 export default function ContactPage() {
@@ -24,9 +24,10 @@ export default function ContactPage() {
         <div>
           <h2 className="text-2xl font-bold mb-6">Get In Touch</h2>
           <p className="text-muted-foreground mb-8">
-            Whether you want to report a bug, request a new calculator, or inquire about partnerships, our team is ready to assist you.
+            Whether you want to report a bug, request a new calculator, or inquire about partnerships, our team is ready
+            to assist you.
           </p>
-          
+
           <div className="space-y-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
@@ -34,11 +35,12 @@ export default function ContactPage() {
               </div>
               <div>
                 <p className="font-medium">Email Us</p>
-                <p className="text-muted-foreground text-sm">support@Numeraise.com</p>
+                <p className="text-muted-foreground text-sm">support@numeraise.com</p>
               </div>
             </div>
             <p className="text-sm border-l-4 border-primary pl-4 py-1 bg-muted/50 mt-6">
-              Please use the secure contact form below or email us directly. We prioritize messages sent through this portal.
+              Please use the secure contact form below or email us directly. We prioritize messages sent through this
+              portal.
             </p>
           </div>
         </div>

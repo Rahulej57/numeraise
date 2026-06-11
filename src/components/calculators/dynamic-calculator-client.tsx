@@ -18,7 +18,7 @@ const INR_BASE_RATE = 83.00;
 
 export function DynamicCalculatorClient({ slug, name, children }: { slug: string, name: string, children?: React.ReactNode }) {
   const config = useMemo(() => getCalculatorConfig(slug, name), [slug, name]);
-  const { currency, format, convert } = useCurrency();
+  const { currency, format, convert, economicRates } = useCurrency();
 
   const calculatorIcon = useMemo(() => {
     for (const category of CALCULATOR_DIRECTORY) {
@@ -28,6 +28,19 @@ export function DynamicCalculatorClient({ slug, name, children }: { slug: string
     return null;
   }, [slug]);
 
+  // Map input IDs to global economic rates
+  const getDynamicDefault = (id: string, currentDefault: number, type: string) => {
+    if (type !== "percentage") return currentDefault;
+    const lower = id.toLowerCase();
+    if (lower.includes("inflation")) return economicRates.inflation;
+    if (lower.includes("tax") || lower.includes("gst") || lower.includes("vat")) return economicRates.tax;
+    if (lower.includes("loan") || lower.includes("mortgage") || lower.includes("emi")) return economicRates.homeLoan;
+    if (lower.includes("debt") || lower.includes("fd") || lower.includes("rd")) return economicRates.debt;
+    // Default to equity return for generic "rate" or "return" fields if they seem like investment returns
+    if (lower === "rate" || lower.includes("return") || lower.includes("cagr") || lower.includes("sip")) return economicRates.equity;
+    return currentDefault;
+  };
+
   // Initialize state dynamically based on config defaults. All currency states are stored internally as USD.
   const [inputs, setInputs] = useState<Record<string, number | string>>(() => {
     const initialState: Record<string, number | string> = {};
@@ -35,7 +48,7 @@ export function DynamicCalculatorClient({ slug, name, children }: { slug: string
       if (input.type === "currency") {
         initialState[input.id] = (input.default as number) / INR_BASE_RATE;
       } else {
-        initialState[input.id] = input.default;
+        initialState[input.id] = getDynamicDefault(input.id, input.default, input.type);
       }
     });
     return initialState;
@@ -75,12 +88,21 @@ export function DynamicCalculatorClient({ slug, name, children }: { slug: string
       let changed = false;
       config.inputs.forEach(input => {
         const override = input.currencyOverrides?.[currency.code];
+        
+        // Handle explicit overrides defined in the config
         if (override?.default !== undefined) {
            const newDefault = override.default;
            const internalVal = input.type === "currency" ? newDefault / currency.rate : newDefault;
-           // Only update if it's significantly different (to avoid floating point jitter)
            if (Math.abs(Number(newState[input.id]) - internalVal) > 0.001) {
              newState[input.id] = internalVal;
+             changed = true;
+           }
+        } 
+        // Handle global economic rate defaults
+        else if (input.type === "percentage") {
+           const dynamicVal = getDynamicDefault(input.id, input.default, input.type);
+           if (dynamicVal !== input.default && newState[input.id] !== dynamicVal) {
+             newState[input.id] = dynamicVal;
              changed = true;
            }
         }
@@ -88,7 +110,7 @@ export function DynamicCalculatorClient({ slug, name, children }: { slug: string
       return changed ? newState : prev;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currency.code]); // Intentional: only trigger when the user actually changes the currency code
+  }, [currency.code, economicRates]); // Trigger when the user actually changes the currency code or rates
 
   const handleInputChange = (id: string, value: number | string) => {
     setInputs(prev => ({ ...prev, [id]: value }));

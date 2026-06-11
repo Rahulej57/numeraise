@@ -24,6 +24,7 @@ import { useCurrency } from "@/context/CurrencyContext";
 
 export function CalculatorSearchModal() {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const router = useRouter();
 
   const { currency } = useCurrency();
@@ -39,18 +40,10 @@ export function CalculatorSearchModal() {
         if (slug === "gst-calculator") {
           // Provide aliases so searching "Sales Tax", "VAT", or "GST" always works
           aliases = "Sales Tax VAT GST";
-          
-          if (currency.code === "USD") {
-            title = "Sales Tax Calculator";
-            href = "/calculators/sales-tax-calculator";
-          } else if (["EUR", "GBP"].includes(currency.code)) {
-            title = "VAT Calculator";
-            href = "/calculators/vat-calculator";
-          }
         }
 
         return {
-          id: calc.href,
+          id: `${calc.href}-${calc.name}`,
           title,
           category: section.category,
           icon: section.icon,
@@ -60,6 +53,22 @@ export function CalculatorSearchModal() {
       })
     );
   }, [currency.code]);
+
+  const filteredCalculators = useMemo(() => {
+    if (!search.trim()) return ALL_CALCULATORS.slice(0, 6);
+    
+    const lowerSearch = search.toLowerCase();
+    
+    return ALL_CALCULATORS
+      .filter(calc => calc.searchTerms.toLowerCase().includes(lowerSearch))
+      .sort((a, b) => {
+        const aStarts = a.title.toLowerCase().startsWith(lowerSearch);
+        const bStarts = b.title.toLowerCase().startsWith(lowerSearch);
+        if (aStarts && !bStarts) return -1;
+        if (!aStarts && bStarts) return 1;
+        return 0;
+      });
+  }, [search, ALL_CALCULATORS]);
 
   // Keyboard shortcut cmd+k
   useEffect(() => {
@@ -98,33 +107,66 @@ export function CalculatorSearchModal() {
           <VisuallyHidden>
             <DialogTitle>Search Calculators</DialogTitle>
           </VisuallyHidden>
-          <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-6 [&_[cmdk-input-wrapper]_svg]:w-6 [&_[cmdk-input]]:h-14 [&_[cmdk-input]]:text-lg [&_[cmdk-item]]:px-3 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-            <CommandInput placeholder="Type a calculator name or category..." />
+          <Command shouldFilter={false} className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-6 [&_[cmdk-input-wrapper]_svg]:w-6 [&_[cmdk-input]]:h-14 [&_[cmdk-input]]:text-lg [&_[cmdk-item]]:px-3 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+            <CommandInput 
+              placeholder="Type a calculator name or category..." 
+              value={search}
+              onValueChange={setSearch}
+            />
             <CommandList className="max-h-[400px]">
               <CommandEmpty>No calculators found.</CommandEmpty>
-              <CommandGroup heading="Suggestions">
-                {ALL_CALCULATORS.map((calc) => (
-                  <CommandItem
-                    key={calc.id}
-                    value={calc.searchTerms}
-                    onSelect={() => runCommand(() => router.push(calc.href))}
-                    className="cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3 w-full">
-                      <div className="p-1.5 bg-background border border-border shadow-sm rounded-lg shrink-0">
-                        <div className="scale-[0.80] origin-center">
-                          {calc.icon}
+              
+              {!search.trim() ? (
+                CALCULATOR_DIRECTORY.map((section) => (
+                  <CommandGroup key={section.slug} heading={section.category}>
+                    {section.calculators.map((calc) => (
+                      <CommandItem
+                        key={`${calc.href}-${calc.name}`}
+                        value={`${calc.name} ${section.category}`}
+                        onSelect={() => runCommand(() => router.push(calc.href))}
+                        className="cursor-pointer"
+                      >
+                        <div className="flex items-center gap-3 w-full">
+                          <div className="p-1.5 bg-background border border-border shadow-sm rounded-lg shrink-0">
+                            <div className="scale-[0.80] origin-center">
+                              {calc.icon}
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-medium">{calc.name}</p>
+                            <p className="text-xs text-muted-foreground">{section.category}</p>
+                          </div>
+                          <ArrowRight className="h-4 w-4 text-muted-foreground opacity-50" />
                         </div>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                ))
+              ) : (
+                <CommandGroup heading="Search Results">
+                  {filteredCalculators.map((calc) => (
+                    <CommandItem
+                      key={calc.id}
+                      value={calc.searchTerms}
+                      onSelect={() => runCommand(() => router.push(calc.href))}
+                      className="cursor-pointer"
+                    >
+                      <div className="flex items-center gap-3 w-full">
+                        <div className="p-1.5 bg-background border border-border shadow-sm rounded-lg shrink-0">
+                          <div className="scale-[0.80] origin-center">
+                            {calc.icon}
+                          </div>
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-medium">{calc.title}</p>
+                          <p className="text-xs text-muted-foreground">{calc.category}</p>
+                        </div>
+                        <ArrowRight className="h-4 w-4 text-muted-foreground opacity-50" />
                       </div>
-                      <div className="flex-1">
-                        <p className="font-medium">{calc.title}</p>
-                        <p className="text-xs text-muted-foreground">{calc.category}</p>
-                      </div>
-                      <ArrowRight className="h-4 w-4 text-muted-foreground opacity-50" />
-                    </div>
-                  </CommandItem>
-                ))}
-              </CommandGroup>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
             </CommandList>
           </Command>
         </DialogContent>

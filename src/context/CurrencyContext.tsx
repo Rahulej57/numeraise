@@ -8,6 +8,25 @@ type Currency = {
   rate: number;
 };
 
+export type EconomicRates = {
+  inflation: number;
+  equity: number;
+  debt: number;
+  homeLoan: number;
+  tax: number;
+};
+
+export const GLOBAL_RATES: Record<string, EconomicRates> = {
+  USD: { inflation: 3, equity: 10, debt: 5, homeLoan: 7, tax: 24 },
+  INR: { inflation: 6, equity: 12, debt: 7, homeLoan: 8.5, tax: 18 },
+  GBP: { inflation: 4, equity: 8, debt: 5, homeLoan: 6, tax: 20 },
+  EUR: { inflation: 3, equity: 8, debt: 4, homeLoan: 5, tax: 21 },
+  CAD: { inflation: 3, equity: 8, debt: 5, homeLoan: 6, tax: 15 },
+  AUD: { inflation: 4, equity: 9, debt: 5, homeLoan: 6, tax: 30 },
+  SGD: { inflation: 3, equity: 8, debt: 4, homeLoan: 4, tax: 17 },
+  AED: { inflation: 2, equity: 7, debt: 4, homeLoan: 4, tax: 9 },
+};
+
 // Fallback rates used when offline or API unavailable
 const FALLBACK_RATES: Record<string, number> = {
   USD: 1.00,
@@ -72,6 +91,7 @@ interface CurrencyContextType {
   format: (amountInUSD: number) => string;
   availableCurrencies: Record<string, Currency>;
   ratesLoading: boolean;
+  economicRates: EconomicRates;
 }
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
@@ -131,6 +151,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const currency = currencies[currencyCode] ?? currencies['USD'];
+  const economicRates = GLOBAL_RATES[currencyCode] ?? GLOBAL_RATES['USD'];
 
   const setCurrency = (code: string) => {
     if (CURRENCY_META[code]) {
@@ -158,7 +179,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <CurrencyContext.Provider value={{ currency, setCurrency, convert, format, availableCurrencies: currencies, ratesLoading }}>
+    <CurrencyContext.Provider value={{ currency, setCurrency, convert, format, availableCurrencies: currencies, ratesLoading, economicRates }}>
       {children}
     </CurrencyContext.Provider>
   );

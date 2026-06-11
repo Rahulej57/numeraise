@@ -49,7 +49,7 @@ export const GrowthChart = memo(function GrowthChart({ data, xAxisKey, areas }: 
         />
         <Tooltip 
           formatter={(value: any) => format(Number(value))}
-          contentStyle={{ backgroundColor: 'hsl(var(--background))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
+          contentStyle={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)', borderRadius: '8px' }}
         />
         <Legend />
         {areas.map((area) => (

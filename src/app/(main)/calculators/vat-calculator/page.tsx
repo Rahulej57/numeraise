@@ -18,10 +18,8 @@ export default function GSTCalculatorPage() {
   const { format, currency } = useCurrency();
   const [amount, setAmount] = useState(10000 / 83);
   const [taxRate, setTaxRate] = useState(18);
-  const [mode, setMode] = useState<'exclusive' | 'inclusive'>('exclusive');
-  const taxName = 'GST';
-
-  const isIndian = currency.code === 'INR';
+  const [mode, setMode] = useState<'exclusive' | 'inclusive'>('inclusive');
+  const taxName = 'VAT';
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -37,48 +35,14 @@ export default function GSTCalculatorPage() {
     if (params.has('rate') && !window.history.state?.initialized) {
       setTaxRate(Number(params.get('rate')));
     } else {
-      switch (currency.code) {
-        case 'INR':
-          setTaxRate(18);
-          break;
-        case 'AUD':
-          setTaxRate(10);
-          break;
-        case 'SGD':
-          setTaxRate(9);
-          break;
-        case 'CAD':
-          setTaxRate(13);
-          break;
-        case 'NZD':
-          setTaxRate(15);
-          break;
-        default:
-          setTaxRate(18);
-      }
+      setTaxRate(20); // Default UK/EU VAT
     }
 
     // Mark as initialized so URL params don't override future currency switches
     window.history.replaceState({ ...window.history.state, initialized: true }, '');
   }, [currency.code]);
 
-  const getPresets = () => {
-    switch (currency.code) {
-      case 'INR':
-        return [5, 12, 18, 28]; // Indian GST slabs
-      case 'AUD':
-        return [10]; // Australia GST
-      case 'SGD':
-        return [9]; // Singapore GST
-      case 'CAD':
-        return [5, 13, 15]; // Canada GST/HST
-      case 'NZD':
-        return [15]; // New Zealand GST
-      default:
-        return [5, 12, 18, 28]; // Default to most complex (India)
-    }
-  };
-  const presets = getPresets();
+  const presets = [5, 12, 19, 20, 21]; // Common UK and EU VAT rates
 
   const taxAmount = mode === 'exclusive' ? (amount * taxRate) / 100 : amount - amount * (100 / (100 + taxRate));
 
@@ -187,23 +151,6 @@ Calculate your own: ${shareUrl}`;
                 </div>
               </div>
 
-              {isIndian && (
-                <div className="bg-background rounded-xl border p-4 space-y-3 text-sm">
-                  <div className="flex justify-between items-center text-muted-foreground">
-                    <span>Central GST (CGST)</span>
-                    <span className="font-medium text-foreground">
-                      {format(Math.round(taxAmount / 2))} ({taxRate / 2}%)
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center text-muted-foreground">
-                    <span>State GST (SGST)</span>
-                    <span className="font-medium text-foreground">
-                      {format(Math.round(taxAmount / 2))} ({taxRate / 2}%)
-                    </span>
-                  </div>
-                </div>
-              )}
-
               <div className="mt-6">
                 <ResultActions shareUrl={shareUrl} copyPayload={copyPayload} />
               </div>
@@ -214,15 +161,15 @@ Calculate your own: ${shareUrl}`;
 
       <div className="mt-12">
         <CalculatorContent>
-          <h2>What is a GST Calculator?</h2>
+          <h2>What is a VAT Calculator?</h2>
           <p>
-            A GST (Goods and Services Tax) calculator is an essential utility for businesses and consumers in countries
-            like India, Australia, Singapore, and Canada. It instantly computes the exact amount of tax applied to a
-            purchase, allowing you to seamlessly add GST to a net price for invoicing, or extract the hidden GST from a
-            gross receipt for accounting.
+            A VAT (Value Added Tax) calculator is a vital tool for consumers and businesses operating in the UK, Europe,
+            and many other global jurisdictions. Because VAT is typically "baked into" the final shelf price of an item,
+            it can be difficult to know exactly how much tax you are paying. This calculator easily lets you extract the
+            hidden VAT from a receipt or add VAT to a wholesale price.
           </p>
-          <h2>How Does the GST Engine Work?</h2>
-          <p>The calculator supports the two primary GST calculation methods required for standard commerce:</p>
+          <h2>How Does the VAT Engine Work?</h2>
+          <p>The calculator supports the two primary calculation methods required for B2B and B2C commerce:</p>
 
           <h3>1. Exclusive (Add Tax)</h3>
           <p>Use this when you know the base price of an item and need to know the final price at checkout.</p>
@@ -247,66 +194,66 @@ Calculate your own: ${shareUrl}`;
           <h2>Common Uses for Tax Calculation</h2>
           <ul>
             <li>
-              <strong>Invoicing:</strong> Freelancers and business owners use the 'Exclusive' mode to accurately add the
-              legally required tax amount to client invoices, ensuring their{' '}
+              <strong>Invoicing:</strong> Freelancers and B2B entities use the 'Exclusive' mode to accurately add the
+              legally required VAT to commercial invoices, ensuring their corporate{' '}
               <Link href="/calculators/income-tax-calculator" className="text-primary hover:underline font-medium">
                 income tax
               </Link>{' '}
-              liability is properly accounted for at the end of the financial year.
+              and VAT returns are perfectly aligned.
             </li>
             <li>
-              <strong>Accounting:</strong> Bookkeepers use the 'Inclusive' mode to extract the exact tax amount from
-              mixed receipts for tax write-offs and returns. This is crucial for maintaining an accurate{' '}
+              <strong>Accounting:</strong> Bookkeepers use the 'Inclusive' mode to extract the exact VAT amount from
+              inclusive retail receipts to reclaim VAT. This precision is key when assessing a company's true{' '}
               <Link href="/calculators/net-worth-calculator" className="text-primary hover:underline font-medium">
                 net worth
               </Link>
               .
             </li>
             <li>
-              <strong>Consumer Budgeting:</strong> Whether you are utilizing a{' '}
+              <strong>Consumer Budgeting:</strong> While European shelf prices include VAT, using a{' '}
               <Link href="/calculators/budget-calculator" className="text-primary hover:underline font-medium">
                 budget calculator
               </Link>{' '}
-              for daily expenses or using an{' '}
+              or an{' '}
               <Link href="/calculators/emi-calculator" className="text-primary hover:underline font-medium">
                 EMI calculator
               </Link>{' '}
-              to finance a new car, knowing the exact final price is vital in countries where prices are displayed
-              without tax.
+              often requires knowing exactly how much of your monthly payment is going toward the actual asset versus
+              government tax.
             </li>
           </ul>
         </CalculatorContent>
         <FAQAccordion
           faqs={[
             {
-              question: "Why can't I just subtract the GST percentage from the final price in Inclusive mode?",
-              answer: `This is the most common accounting error! If a ${currency.symbol}100 item gets 18% GST added, it becomes ${currency.symbol}118. If you later subtract 18% from ${currency.symbol}118, you get ${currency.symbol}96.76, not ${currency.symbol}100. To find the original pre-GST cost, you must divide the final price by 1.18.`,
+              question: "Why can't I just subtract the VAT percentage from the final price in Inclusive mode?",
+              answer: `This is a very common accounting error! If a ${currency.symbol}100 item gets 20% VAT added, it becomes ${currency.symbol}120. If you later subtract 20% from ${currency.symbol}120, you get ${currency.symbol}96, not ${currency.symbol}100. To find the original pre-VAT cost, you must divide the final price by 1.20.`,
             },
             {
-              question: 'Why does the calculator split GST into CGST and SGST for India (INR)?',
+              question: 'How does VAT differ from US Sales Tax?',
               answer:
-                'India operates on a dual-GST model. For intra-state sales, the total Goods and Services Tax is split equally between the Central Government (CGST) and the State Government (SGST). For example, an 18% GST slab is split into 9% CGST and 9% SGST. Our calculator handles this split automatically when INR is selected.',
+                'Value Added Tax (VAT) is collected at every single stage of the supply chain whenever value is added (manufacturing, wholesale, retail). US Sales Tax is only collected once at the final point of retail sale to the end consumer.',
             },
             {
-              question: 'Can I claim GST back on business purchases?',
+              question: 'Why do prices in the UK/EU include tax?',
               answer:
-                'Yes, registered businesses in most GST jurisdictions can claim an Input Tax Credit (ITC) for the GST paid on eligible business purchases. This offsets the total GST they must remit to the government.',
+                'Unlike the United States, consumer protection laws in the UK and European Union mandate that the price displayed to a consumer must be the final price they pay. Therefore, the VAT is legally required to be "baked in" to the sticker price.',
             },
             {
-              question: 'What is the Reverse Charge Mechanism (RCM) in GST?',
+              question: 'Can businesses reclaim VAT?',
               answer:
-                'Under standard rules, the supplier collects and pays the GST. Under the Reverse Charge Mechanism, the liability to pay GST shifts to the buyer or receiver of the goods/services.',
+                'Yes, registered B2B entities can generally reclaim the VAT they pay on business expenses by deducting it from the VAT they charge their own customers when filing their VAT returns.',
             },
           ]}
         />
 
-        <RelatedCalculators calculators={getRelatedCalculators('gst-calculator')} />
+        <RelatedCalculators calculators={getRelatedCalculators('vat-calculator')} />
         <StructuredData
           type="Calculator"
           data={{
-            name: 'GST Calculator',
+            name: 'VAT Calculator',
             description:
-              'Calculate Goods and Services Tax (GST) easily. Add exclusive GST to a net price or extract inclusive GST from a gross amount. Supports CGST and SGST splits.',
+              'Calculate UK & EU Value Added Tax instantly. Easily extract hidden VAT from an inclusive receipt or add exclusive VAT to a B2B invoice.',
           }}
         />
       </div>

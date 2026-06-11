@@ -1,13 +1,13 @@
-import { Metadata } from "next";
-import { CALCULATOR_DIRECTORY } from "@/config/calculators";
+import { Metadata } from 'next';
+import { CALCULATOR_DIRECTORY } from '@/config/calculators';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const slug = "date-time-calculator";
-  let name = slug.replace(/-/g, " ");
-  let desc = "Financial Calculator";
-  
+  const slug = 'date-time-calculator';
+  let name = slug.replace(/-/g, ' ');
+  let desc = 'Financial Calculator';
+
   for (const category of CALCULATOR_DIRECTORY) {
-    const calc = category.calculators.find(c => c.href.includes(slug));
+    const calc = category.calculators.find((c) => c.href.includes(slug));
     if (calc) {
       name = calc.name;
       desc = calc.desc;
@@ -19,8 +19,8 @@ export async function generateMetadata(): Promise<Metadata> {
     title: `${name} | Numeraise`,
     description: desc,
     alternates: {
-      canonical: `/calculators/${slug}`
-    }
+      canonical: `/calculators/${slug}`,
+    },
   };
 }
 

@@ -1,6 +1,6 @@
 ---
 title: "The Ultimate Guide to Tax Planning in 2026"
-date: "2026-06-08"
+date: "2026-06-07"
 excerpt: "Don't wait until tax season to start thinking about your taxes. Discover the most powerful strategies to legally reduce your tax burden, optimize your deductions, and keep more of your hard-earned money this year."
 readTime: "8 min read"
 category: "Tax"
@@ -71,7 +71,7 @@ If you have optimized the Big Three and are still losing too much money to the t
 Under Section 80CCD(1B), you can claim an *additional* `CURRENCY:50000` deduction by investing in the NPS. This is above and beyond the `CURRENCY:150000` limit of Section 80C! The catch? Your money is locked until you reach age 60, making it a pure retirement play.
 
 ### Tax-Loss Harvesting
-If you invest in stocks or mutual funds, you will inevitably have some winners and some losers. Tax-loss harvesting is the practice of strategically selling your losing investments to offset the capital gains taxes you owe on your winning investments. 
+If you invest in stocks or mutual funds, you will inevitably have some winners and some losers. Tax-loss harvesting is the practice of strategically selling your losing investments to offset the [capital gains tax](/calculators/capital-gains-tax)es you owe on your winning investments. 
 
 For example, if you sell Stock A for a `CURRENCY:100000` profit, you owe capital gains tax. But if you also sell Stock B for a `CURRENCY:50000` loss, you only pay tax on the net `CURRENCY:50000` gain. You can immediately reinvest the money from Stock B into a similar asset so your portfolio remains balanced.
 
@@ -84,3 +84,6 @@ Tax planning is not a mystical art; it is a mathematical formula. Follow this ch
 3.  **March:** If you have chosen the Old Regime and haven't maxed out your 80C limit, invest the remainder in an ELSS fund before the financial year ends. 
 
 Remember, a penny saved in taxes is a penny earned—and when invested correctly, that penny can compound into a fortune. Use our free suite of [Tax Calculators](/financial-calculators) to run your specific numbers today.
+
+
+> **Try our free tool:** Crunch your own numbers using the [Income Tax Calculator](/calculators/income-tax-calculator).

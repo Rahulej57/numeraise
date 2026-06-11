@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { ArrowRight, LayoutGrid } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { StructuredData } from "@/components/seo/structured-data";
-import { CalculatorSearchModal } from "@/components/layout/calculator-search-modal";
-import { CALCULATOR_DIRECTORY } from "@/config/calculators";
+import Link from 'next/link';
+import { ArrowRight, LayoutGrid } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { StructuredData } from '@/components/seo/structured-data';
+import { CalculatorSearchModal } from '@/components/layout/calculator-search-modal';
+import { CALCULATOR_DIRECTORY } from '@/config/calculators';
 
 export default function FinancialCalculatorsHubPage() {
   return (
@@ -52,13 +52,13 @@ export default function FinancialCalculatorsHubPage() {
         ))}
       </div>
 
-      <StructuredData 
-        type="WebSite" 
+      <StructuredData
+        type="WebSite"
         data={{
-          name: "Numeraise Calculator Hub",
-          description: "Directory of all financial calculators on Numeraise.",
-          url: "https://Numeraise.com/financial-calculators"
-        }} 
+          name: 'Numeraise Calculator Hub',
+          description: 'Directory of all financial calculators on Numeraise.',
+          url: 'https://Numeraise.com/financial-calculators',
+        }}
       />
     </div>
   );

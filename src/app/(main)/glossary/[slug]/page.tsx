@@ -1,7 +1,7 @@
-import { GLOSSARY_TERMS } from "@/config/glossary";
-import { BookOpen, ChevronLeft, Lightbulb, Calculator, ExternalLink } from "lucide-react";
-import Link from "next/link";
-import { notFound } from "next/navigation";
+import { GLOSSARY_TERMS } from '@/config/glossary';
+import { BookOpen, ChevronLeft, Lightbulb, Calculator, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 export async function generateStaticParams() {
   return GLOSSARY_TERMS.map((term) => ({
@@ -11,9 +11,9 @@ export async function generateStaticParams() {
 
 export default async function GlossarySlugPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  
-  const termData = GLOSSARY_TERMS.find(t => t.slug === resolvedParams.slug);
-  
+
+  const termData = GLOSSARY_TERMS.find((t) => t.slug === resolvedParams.slug);
+
   if (!termData) {
     notFound();
   }
@@ -21,7 +21,10 @@ export default async function GlossarySlugPage({ params }: { params: Promise<{ s
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl min-h-[70vh]">
       <div className="mb-6">
-        <Link href="/glossary" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors">
+        <Link
+          href="/glossary"
+          className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors"
+        >
           <ChevronLeft className="w-4 h-4 mr-1" />
           Back to Glossary
         </Link>
@@ -32,9 +35,7 @@ export default async function GlossarySlugPage({ params }: { params: Promise<{ s
           <BookOpen className="w-4 h-4" />
           Glossary Term
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-          {termData.term}
-        </h1>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">{termData.term}</h1>
         <p className="text-xl text-muted-foreground leading-relaxed border-l-4 border-primary pl-4">
           {termData.shortDef}
         </p>
@@ -90,9 +91,9 @@ export default async function GlossarySlugPage({ params }: { params: Promise<{ s
           <section className="pt-6">
             <h2 className="text-xl font-semibold mb-4 text-muted-foreground">Related Terms</h2>
             <div className="flex flex-wrap gap-3">
-              {termData.relatedTerms.map(related => (
-                <Link 
-                  key={related.slug} 
+              {termData.relatedTerms.map((related) => (
+                <Link
+                  key={related.slug}
                   href={`/glossary/${related.slug}`}
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-muted hover:bg-primary hover:text-primary-foreground transition-colors"
                 >

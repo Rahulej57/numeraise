@@ -1,9 +1,9 @@
 ---
 title: "How to Build a Bulletproof Emergency Fund"
-date: "2026-06-08"
+date: "2026-06-02"
 excerpt: "An emergency fund is your financial shock absorber. Learn exactly how much you need to save and where you should store it to protect yourself from life's unexpected surprises."
 readTime: "5 min read"
-author: "Numeraise Planning"
+author: "Numeraise Team"
 ---
 
 # How to Build a Bulletproof Emergency Fund

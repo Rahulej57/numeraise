@@ -78,6 +78,7 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
       newVal = Math.round(newVal / cleanStep) * cleanStep;
     }
     newVal = Math.max(cleanMin, Math.min(cleanMax, newVal));
+    newVal = sanitize(newVal);
     
     // Instantly update the local UI (slider thumb and input text)
     setLocalValue(newVal);

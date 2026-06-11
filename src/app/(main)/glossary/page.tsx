@@ -1,10 +1,11 @@
-import { glossaryData } from "@/data/glossary";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { glossaryData } from '@/data/glossary';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 export const metadata = {
-  title: "Financial Glossary - Numeraise",
-  description: "A comprehensive dictionary of financial terms, definitions, and acronyms to help you understand investing, loans, taxes, and personal finance.",
+  title: 'Financial Glossary - Numeraise',
+  description:
+    'A comprehensive dictionary of financial terms, definitions, and acronyms to help you understand investing, loans, taxes, and personal finance.',
 };
 
 export default function GlossaryPage() {
@@ -26,7 +27,9 @@ export default function GlossaryPage() {
             <CardHeader className="pb-2">
               <div className="flex justify-between items-start gap-4">
                 <CardTitle className="text-xl text-primary">{item.term}</CardTitle>
-                <Badge variant="outline" className="shrink-0">{item.category}</Badge>
+                <Badge variant="outline" className="shrink-0">
+                  {item.category}
+                </Badge>
               </div>
             </CardHeader>
             <CardContent>

@@ -1,33 +1,32 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { CurrencyProvider } from "@/context/CurrencyContext";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import Script from "next/script";
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
+import './globals.css';
+import { ThemeProvider } from '@/components/theme-provider';
+import { CurrencyProvider } from '@/context/CurrencyContext';
+import { Navbar } from '@/components/layout/navbar';
+import { Footer } from '@/components/layout/footer';
+import { GoogleAnalytics } from '@next/third-parties/google';
+import Script from 'next/script';
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "Numeraise | Smart Financial Calculators & Planning Tools",
-  description: "Plan investments, loans, taxes, retirement, and wealth creation using our powerful suite of 50+ financial calculators designed for smarter decisions.",
+  title: 'Numeraise | Smart Financial Calculators & Planning Tools',
+  description:
+    'Plan investments, loans, taxes, retirement, and wealth creation using our powerful suite of 50+ financial calculators designed for smarter decisions.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://numeraise.com'),
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
-    title: "Numeraise | Smart Financial Calculators",
-    description: "Plan investments, loans, taxes, retirement, and wealth creation using our powerful suite of 50+ financial calculators.",
+    title: 'Numeraise | Smart Financial Calculators',
+    description:
+      'Plan investments, loans, taxes, retirement, and wealth creation using our powerful suite of 50+ financial calculators.',
     url: 'https://numeraise.com',
     siteName: 'Numeraise',
     locale: 'en_IN',
@@ -43,8 +42,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Numeraise | Smart Financial Calculators",
-    description: "50+ Financial Calculators designed for smarter decisions.",
+    title: 'Numeraise | Smart Financial Calculators',
+    description: '50+ Financial Calculators designed for smarter decisions.',
     images: ['/og-image.png'],
   },
   robots: {
@@ -63,13 +62,13 @@ export const metadata: Metadata = {
   },
 };
 
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
-import { QuickLauncher } from "@/components/layout/quick-launcher";
+import { Breadcrumbs } from '@/components/layout/breadcrumbs';
+import { QuickLauncher } from '@/components/layout/quick-launcher';
 
-import type { Viewport } from "next";
+import type { Viewport } from 'next';
 
 export const viewport: Viewport = {
-  width: "device-width",
+  width: 'device-width',
   initialScale: 1,
 };
 
@@ -80,13 +79,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col antialiased bg-background text-foreground overscroll-x-none`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col antialiased bg-background text-foreground overscroll-x-none`}
+      >
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
           <CurrencyProvider>
             <div className="relative flex min-h-screen flex-col">
               <Navbar />
@@ -99,9 +95,7 @@ export default function RootLayout({
             </div>
           </CurrencyProvider>
         </ThemeProvider>
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-        )}
+        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
         {process.env.NEXT_PUBLIC_ADSENSE_ID && (
           <Script
             async
@@ -110,30 +104,36 @@ export default function RootLayout({
             strategy="afterInteractive"
           />
         )}
-        <Script id="global-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@graph": [
-            {
-              "@type": "Organization",
-              "@id": "https://numeraise.com/#organization",
-              "name": "Numeraise",
-              "url": "https://numeraise.com",
-              "logo": {
-                "@type": "ImageObject",
-                "url": "https://numeraise.com/og-image.png"
-              }
-            },
-            {
-              "@type": "WebSite",
-              "@id": "https://numeraise.com/#website",
-              "url": "https://numeraise.com",
-              "name": "Numeraise",
-              "publisher": {
-                "@id": "https://numeraise.com/#organization"
-              }
-            }
-          ]
-        }) }} />
+        <Script
+          id="global-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@graph': [
+                {
+                  '@type': 'Organization',
+                  '@id': 'https://numeraise.com/#organization',
+                  name: 'Numeraise',
+                  url: 'https://numeraise.com',
+                  logo: {
+                    '@type': 'ImageObject',
+                    url: 'https://numeraise.com/og-image.png',
+                  },
+                },
+                {
+                  '@type': 'WebSite',
+                  '@id': 'https://numeraise.com/#website',
+                  url: 'https://numeraise.com',
+                  name: 'Numeraise',
+                  publisher: {
+                    '@id': 'https://numeraise.com/#organization',
+                  },
+                },
+              ],
+            }),
+          }}
+        />
       </body>
     </html>
   );

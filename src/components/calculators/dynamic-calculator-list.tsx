@@ -25,15 +25,6 @@ export function DynamicCalculatorList({ calculators, variant = "list", categoryI
     .map((calc) => {
       const slug = calc.href.split('/').pop() || "";
       
-      // Dynamically rename and re-link GST calculator based on currency
-      if (slug === "gst-calculator") {
-        if (currency.code === "USD") {
-          return { ...calc, name: "Sales Tax Calculator", href: "/calculators/sales-tax-calculator" };
-        } else if (["EUR", "GBP"].includes(currency.code)) {
-          return { ...calc, name: "VAT Calculator", href: "/calculators/vat-calculator" };
-        }
-      }
-      
       return calc;
     });
 
@@ -49,7 +40,7 @@ export function DynamicCalculatorList({ calculators, variant = "list", categoryI
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {visibleCalculators.map((calc, idx) => (
-          <Link href={calc.href} key={idx} className="group">
+          <Link href={calc.href} key={calc.name} className="group">
             <div className="h-full rounded-xl border border-border bg-muted/40 p-4 md:p-5 hover:bg-muted transition-all duration-300">
               <h3 className="font-semibold text-base md:text-lg group-hover:text-primary transition-colors flex items-start justify-between">
                 <div className="flex items-center gap-3">
@@ -74,7 +65,7 @@ export function DynamicCalculatorList({ calculators, variant = "list", categoryI
     <div className="flex flex-col divide-y divide-border">
       {visibleCalculators.map((calc) => (
         <Link 
-          key={calc.href} 
+          key={calc.name} 
           href={calc.href}
           className="p-4 hover:bg-primary/5 transition-colors group flex items-start gap-4"
         >

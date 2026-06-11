@@ -13,13 +13,16 @@ export function CalculatorHeader({ title }: { title: string }) {
     : slug;
 
   const category = CALCULATOR_DIRECTORY.find(c => c.calculators.some(calc => calc.href.includes(lookupSlug)));
+  const specificCalc = category?.calculators.find(calc => calc.href.includes(lookupSlug));
   
+  const displayIcon = specificCalc?.icon || category?.icon;
+
   return (
     <div className="mb-6 text-center md:text-left flex flex-col md:flex-row items-center md:items-start gap-4">
-      {category?.icon && (
+      {displayIcon && (
         <div className="p-3 bg-background border shadow-sm rounded-xl shrink-0">
           <div className="scale-[1.15] origin-center">
-            {category.icon}
+            {displayIcon}
           </div>
         </div>
       )}

@@ -1,9 +1,9 @@
 ---
 title: "The Rule of 72: A Mental Math Trick Every Investor Needs to Know"
-date: "2026-06-08"
+date: "2026-06-07"
 excerpt: "Want to know exactly when your money will double? You don't need a spreadsheet, you just need to know the Rule of 72."
 readTime: "3 min read"
-author: "Numeraise Education"
+author: "Numeraise Team"
 ---
 
 # The Rule of 72: A Mental Math Trick Every Investor Needs to Know

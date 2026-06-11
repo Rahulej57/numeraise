@@ -65,7 +65,9 @@ export const CALCULATOR_DIRECTORY = [
     calculators: [
       { name: "Paycheck Estimator", desc: "Calculate take-home net pay.", href: "/calculators/paycheck-calculator", icon: <Banknote className="w-5 h-5 text-rose-500" /> },
       { name: "Income Tax Calculator", desc: "Old vs New Regime tax liability.", href: "/calculators/income-tax-calculator", icon: <ReceiptText className="w-5 h-5 text-rose-500" /> },
-      { name: "GST Calculator", desc: "Goods and Services Tax.", href: "/calculators/gst-calculator", icon: <Receipt className="w-5 h-5 text-rose-500" /> },
+      { name: "GST Calculator", desc: "Calculate Goods & Services Tax.", href: "/calculators/gst-calculator", icon: <Receipt className="w-5 h-5 text-rose-500" /> },
+      { name: "Sales Tax Calculator", desc: "Calculate retail sales tax.", href: "/calculators/sales-tax-calculator", icon: <Receipt className="w-5 h-5 text-rose-500" /> },
+      { name: "VAT Calculator", desc: "Value Added Tax calculations.", href: "/calculators/vat-calculator", icon: <Receipt className="w-5 h-5 text-rose-500" /> },
       { name: "HRA Exemption", desc: "House Rent Allowance deduction.", href: "/calculators/hra-exemption", icon: <Home className="w-5 h-5 text-rose-500" /> },
       { name: "Capital Gains Tax", desc: "STCG and LTCG on investments.", href: "/calculators/capital-gains-tax", icon: <TrendingUp className="w-5 h-5 text-rose-500" /> },
       { name: "TDS Calculator", desc: "Tax Deducted at Source estimation.", href: "/calculators/tds-calculator", icon: <FileText className="w-5 h-5 text-rose-500" /> },
@@ -136,7 +138,8 @@ export const CALCULATOR_DIRECTORY = [
     icon: <Activity className="w-6 h-6 text-pink-500" />,
     calculators: [
       { name: "BMI Calculator", desc: "Calculate Body Mass Index (BMI).", href: "/calculators/bmi-calculator", icon: <Activity className="w-5 h-5 text-pink-500" /> },
-      { name: "BMR & TDEE", desc: "Basal metabolic rate & daily calories.", href: "/calculators/bmr-calculator", icon: <Heart className="w-5 h-5 text-pink-500" /> },
+      { name: "BMR Calculator", desc: "Calculate your Basal Metabolic Rate.", href: "/calculators/bmr-calculator", icon: <Heart className="w-5 h-5 text-pink-500" /> },
+      { name: "TDEE Calculator", desc: "Total daily energy expenditure.", href: "/calculators/bmr-calculator", icon: <Heart className="w-5 h-5 text-pink-500" /> },
       { name: "Body Fat", desc: "Estimate body fat percentage.", href: "/calculators/body-fat-calculator", icon: <Calculator className="w-5 h-5 text-pink-500" /> },
       { name: "Pregnancy Due Date", desc: "Estimate conception & due dates.", href: "/calculators/pregnancy-due-date", icon: <Baby className="w-5 h-5 text-pink-500" /> },
     ]

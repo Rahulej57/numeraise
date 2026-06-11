@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { CALCULATOR_DIRECTORY } from '@/config/calculators';
 import { getAllPosts } from '@/lib/blog';
+import { GLOSSARY_TERMS } from '@/config/glossary';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://numeraise.com';
@@ -31,6 +32,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const glossaryUrls = GLOSSARY_TERMS.map((term) => ({
+    url: `${baseUrl}/glossary/${term.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+
   return [
     {
       url: baseUrl,
@@ -50,8 +58,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'daily',
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/glossary`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
     ...categoryUrls,
     ...calculatorUrls,
     ...blogUrls,
+    ...glossaryUrls,
   ];
 }

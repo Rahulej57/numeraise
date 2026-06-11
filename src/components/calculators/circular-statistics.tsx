@@ -50,14 +50,14 @@ export function CircularStatistics({ data, title }: CircularStatisticsProps) {
             <Tooltip
               formatter={(value: any) => [formatTooltipValue(value as number), ""]}
               contentStyle={{
-                backgroundColor: "hsl(var(--card))",
-                borderColor: "hsl(var(--border))",
+                backgroundColor: "var(--card)",
+                borderColor: "var(--border)",
                 borderRadius: "8px",
-                color: "hsl(var(--card-foreground))",
+                color: "var(--card-foreground)",
                 fontSize: "14px",
                 boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
               }}
-              itemStyle={{ color: "hsl(var(--foreground))" }}
+              itemStyle={{ color: "var(--foreground)" }}
             />
             <Legend 
               verticalAlign="bottom" 

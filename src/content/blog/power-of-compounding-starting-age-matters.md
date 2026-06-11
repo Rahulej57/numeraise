@@ -1,9 +1,9 @@
 ---
 title: "The Unstoppable Power of Compounding: Why Starting at 25 vs 35 vs 45 Matters"
-date: "2026-06-06"
+date: "2026-06-04"
 excerpt: 'Albert Einstein reportedly called compound interest the eighth wonder of the world. He who understands it, earns it; he who does not, pays it...'
 readTime: "3 min read"
-author: "Numeraise Financial Experts"
+author: "Numeraise Team"
 ---
 
 ## Introduction
@@ -18,7 +18,7 @@ The formula for compound interest is an exponential function. This means growth 
 
 ## The Tale of Three Investors
 
-To illustrate this, let’s look at three friends—Arjun, Rohan, and Vikram. They all have the exact same goal: retire at age 60. They all invest in the exact same index fund generating a realistic 12% annualized return. The only difference is the age at which they start.
+To illustrate this, let’s look at three friends—Arjun, Rohan, and Vikram. They all have the exact same goal: retire at age 60. They all invest in the exact same index fund generating a realistic `RATE:EQUITY`% annualized return. The only difference is the age at which they start.
 
 - **Arjun (Starts at 25):** Invests `CURRENCY:120` per month.
 - **Rohan (Starts at 35):** Invests `CURRENCY:120` per month.

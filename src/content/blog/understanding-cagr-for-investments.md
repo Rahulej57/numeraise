@@ -3,7 +3,7 @@ title: "Understanding CAGR: The Gold Standard for Measuring Investment Returns"
 date: "2026-06-08"
 excerpt: "Absolute returns can be misleading. Discover why Compound Annual Growth Rate (CAGR) is the only metric you should trust when evaluating long-term investments."
 readTime: "4 min read"
-author: "Numeraise Research"
+author: "Numeraise Team"
 ---
 
 # Understanding CAGR: The Gold Standard for Measuring Investment Returns
@@ -65,3 +65,6 @@ While CAGR is the gold standard for long-term growth measurement, it does have t
 The next time a financial advisor or a real estate broker pitches you an investment based on its "total return," ask them for the CAGR. It is the great equalizer of personal finance, stripping away deceptive marketing and revealing exactly how hard your money is working for you.
 
 To see how different CAGR rates impact your wealth over decades, try plugging some numbers into our [Lumpsum Calculator](/calculators/lumpsum-calculator).
+
+
+> **Try our free tool:** Crunch your own numbers using the [CAGR Calculator](/calculators/cagr-calculator).

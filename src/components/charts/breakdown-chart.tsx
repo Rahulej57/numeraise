@@ -28,7 +28,10 @@ export const BreakdownChart = memo(function BreakdownChart({ data }: BreakdownCh
             <Cell key={`cell-${index}`} fill={entry.color} />
           ))}
         </Pie>
-        <Tooltip formatter={(value: any) => format(Number(value))} />
+        <Tooltip 
+          formatter={(value: any) => format(Number(value))} 
+          contentStyle={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)', borderRadius: '8px' }}
+        />
         <Legend />
       </RechartsPieChart>
     </ResponsiveContainer>

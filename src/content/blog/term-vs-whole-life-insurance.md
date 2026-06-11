@@ -1,9 +1,9 @@
 ---
 title: "Term vs Whole Life Insurance: Why Mixing Insurance and Investment is a Trap"
-date: "2026-06-08"
+date: "2026-06-06"
 excerpt: "Insurance agents love selling Endowment and Whole Life policies because of the massive commissions. Discover why pure Term Insurance is mathematically superior."
 readTime: "6 min read"
-author: "Numeraise Insurance"
+author: "Numeraise Team"
 ---
 
 # Term vs Whole Life Insurance: Why Mixing Insurance and Investment is a Trap
@@ -71,3 +71,6 @@ To be fair, Whole Life insurance is not a scam; it is just a highly specialized 
 * You have a lifelong disabled dependent who will need guaranteed cash the day you die, whether you die at age 40 or age 95.
 
 For everyone else, the strategy is simple: Calculate exactly how much protection your family needs using our [Life Insurance Calculator](/calculators/life-insurance-calculator), buy a cheap Term policy, and invest the rest of your money in the market.
+
+
+> **Try our free tool:** Crunch your own numbers using the [Term Insurance Calculator](/calculators/term-insurance-calculator).
