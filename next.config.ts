@@ -5,26 +5,19 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: '/blog/:slug.html',
-        destination: '/articles/:slug',
+        source: '/articles/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+      },
+      {
+        source: '/articles',
+        destination: '/blog',
         permanent: true,
       },
       {
         source: '/home',
         destination: '/',
         permanent: true,
-      },
-    ];
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/blog',
-        destination: '/articles',
-      },
-      {
-        source: '/blog/:slug',
-        destination: '/articles/:slug',
       },
     ];
   },
