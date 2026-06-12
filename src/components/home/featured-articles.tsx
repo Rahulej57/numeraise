@@ -6,12 +6,12 @@ export function FeaturedArticles() {
   const articles = [
     {
       title: "SIP vs Fixed Deposit",
-      href: "/articles/sip-vs-fd",
+      href: "/blog/sip-vs-fd",
       category: "Investing",
     },
     {
       title: "The Power of Compound Interest",
-      href: "/articles/compound-interest-guide",
+      href: "/blog/compound-interest-guide",
       category: "Wealth",
     }
   ];
@@ -24,7 +24,7 @@ export function FeaturedArticles() {
             <BookOpen className="w-5 h-5 text-primary" />
             Latest Guides
           </h2>
-          <Link href="/articles" className="text-primary text-sm hover:underline font-medium">
+          <Link href="/blog" className="text-primary text-sm hover:underline font-medium">
             View All &rarr;
           </Link>
         </div>

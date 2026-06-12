@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   title: 'Financial Learning Center | Numeraise',
   description:
     'Deep-dive guides, analysis and expert advice on investing, loans, taxes, and wealth creation. Free financial education by Numeraise.',
-  alternates: { canonical: '/articles' },
+  alternates: { canonical: '/blog' },
   openGraph: {
     title: 'Financial Learning Center | Numeraise',
     description: 'Expert guides on SIP, EMI, tax planning, rent vs buy and more.',
-    url: 'https://www.numeraise.com/articles',
+    url: 'https://www.numeraise.com/blog',
     type: 'website',
   },
 };
@@ -45,7 +45,7 @@ export default function ArticlesPage() {
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
-            <Link key={post.slug} href={`/articles/${post.slug}`} className="group">
+            <Link key={post.slug} href={`/blog/${post.slug}`} className="group">
               <Card className="h-full border border-border/50 bg-muted/20 hover:bg-muted/40 transition-all duration-300 shadow-none flex flex-col">
                 <CardHeader className="p-5 flex-1 flex flex-col justify-between">
                   <div>

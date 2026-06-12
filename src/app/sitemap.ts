@@ -26,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const blogPosts = getAllPosts();
 
   const blogUrls = blogPosts.map((post) => ({
-    url: `${baseUrl}/articles/${post.slug}`,
+    url: `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date(post.date),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
@@ -53,7 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/articles`,
+      url: `${baseUrl}/blog`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,

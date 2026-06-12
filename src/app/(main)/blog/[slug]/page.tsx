@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Newspaper, Calendar, User, Clock, ChevronLeft } from 'lucide-react';
 import { getPostBySlug, getAllPosts } from '@/lib/blog';
 import type { Metadata } from 'next';
-import { CurrencyAwareMarkdown } from '@/components/articles/currency-aware-markdown';
+import { CurrencyAwareMarkdown } from '@/components/blog/currency-aware-markdown';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.numeraise.com';
 
@@ -16,11 +16,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${post.title} | Numeraise`,
     description: post.excerpt,
-    alternates: { canonical: `/articles/${post.slug}` },
+    alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `${BASE_URL}/articles/${post.slug}`,
+      url: `${BASE_URL}/blog/${post.slug}`,
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],
@@ -63,7 +63,7 @@ export default async function ArticleSlugPage({ params }: { params: Promise<{ sl
       name: 'Numeraise',
       url: BASE_URL,
     },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE_URL}/articles/${post.slug}` },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE_URL}/blog/${post.slug}` },
     image: `${BASE_URL}/og-image.png`,
   };
 
@@ -73,7 +73,7 @@ export default async function ArticleSlugPage({ params }: { params: Promise<{ sl
 
       <div className="mb-6">
         <Link
-          href="/articles"
+          href="/blog"
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors"
         >
           <ChevronLeft className="w-4 h-4" />
