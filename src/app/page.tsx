@@ -7,6 +7,9 @@ export const metadata = {
   title: 'Numeraise - Free Financial Calculators for Investment, Loans & Tax',
   description:
     'Plan investments, loans, taxes, retirement, and wealth creation using our powerful suite of 50+ financial calculators designed for smarter decisions.',
+  alternates: {
+    canonical: '/',
+  },
 };
 
 export default function HomePage() {
