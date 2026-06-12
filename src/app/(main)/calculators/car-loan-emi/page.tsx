@@ -36,7 +36,7 @@ export default function CalculatorPage() {
           data={{
             name: meta.name,
             description: meta.desc,
-            url: `https://www.numeraise.com/calculators/${slug}`,
+            url: `https://numeraise.com/calculators/${slug}`,
           }}
         />
       </DynamicCalculatorClient>

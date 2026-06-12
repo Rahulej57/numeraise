@@ -15,7 +15,7 @@ export function StructuredData({ type, data }: StructuredDataProps) {
       "@type": "WebSite",
       "name": data.name,
       "description": data.description,
-      "url": "https://www.numeraise.com"
+      "url": "https://numeraise.com"
     };
   }
 

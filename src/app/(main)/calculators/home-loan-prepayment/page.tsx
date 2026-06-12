@@ -96,7 +96,7 @@ export default function HomeLoanPrepaymentPage() {
         data={{
           name: 'Home Loan Prepayment Calculator',
           description: 'Calculate interest savings from loan prepayments.',
-          url: 'https://www.numeraise.com/calculators/home-loan-prepayment',
+          url: 'https://numeraise.com/calculators/home-loan-prepayment',
         }}
       />
     </>

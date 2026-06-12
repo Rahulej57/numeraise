@@ -51,7 +51,7 @@ export default async function CategorySlugPage({ params }: { params: Promise<{ c
         data={{
           name: `${section.category} Calculators`,
           description: `Collection of ${section.category.toLowerCase()} calculators.`,
-          url: `https://www.numeraise.com/calculators/category/${section.slug}`,
+          url: `https://numeraise.com/calculators/category/${section.slug}`,
         }}
       />
     </div>

@@ -21,7 +21,7 @@ export default function CagrCalculatorPage() {
         data={{
           name: 'CAGR Calculator',
           description: 'Calculate the Compound Annual Growth Rate of investments.',
-          url: 'https://www.numeraise.com/calculators/cagr-calculator',
+          url: 'https://numeraise.com/calculators/cagr-calculator',
         }}
       />
     </>
