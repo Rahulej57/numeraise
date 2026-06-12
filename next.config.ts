@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         destination: '/articles/:slug',
         permanent: true,
       },
+      {
+        source: '/home',
+        destination: '/',
+        permanent: true,
+      },
     ];
   },
   async rewrites() {
