@@ -29,7 +29,6 @@ export const metadata: Metadata = {
       'Plan investments, loans, taxes, retirement, and wealth creation using our powerful suite of 50+ financial calculators.',
     url: 'https://numeraise.com',
     siteName: 'Numeraise',
-    locale: 'en_US',
     type: 'website',
     images: [
       {
