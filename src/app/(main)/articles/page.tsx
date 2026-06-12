@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Financial Learning Center | Numeraise',
     description: 'Expert guides on SIP, EMI, tax planning, rent vs buy and more.',
-    url: 'https://numeraise.com/articles',
+    url: 'https://www.numeraise.com/articles',
     type: 'website',
   },
 };

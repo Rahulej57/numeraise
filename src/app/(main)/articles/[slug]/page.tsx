@@ -5,7 +5,7 @@ import { getPostBySlug, getAllPosts } from '@/lib/blog';
 import type { Metadata } from 'next';
 import { CurrencyAwareMarkdown } from '@/components/articles/currency-aware-markdown';
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://numeraise.com';
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.numeraise.com';
 
 // Fix 4: Dynamic metadata per article
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
