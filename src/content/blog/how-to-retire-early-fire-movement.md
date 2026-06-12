@@ -1,6 +1,6 @@
 ---
 title: "How to Retire Early: The Ultimate Guide to the FIRE Movement"
-date: "2026-06-03"
+date: "2026-05-07"
 excerpt: "Retirement isn't an age; it's a financial number. Discover the exact mathematical formula used by the FIRE (Financial Independence, Retire Early) movement to quit the rat race decades ahead of schedule."
 readTime: "7 min read"
 category: "Investing"

@@ -1,9 +1,9 @@
 ---
 title: "5 Brutal EMI Mistakes That Will Cost You Lakhs"
-date: "2026-06-01"
+date: "2026-04-25"
 excerpt: "Taking a loan—whether for a car, a home, or personal needs—is a major financial commitment. When the bank approves your application, they cal..."
 readTime: "4 min read"
-author: "Numeraise Team"
+author: "Rahul Sharma, CFA"
 ---
 
 ## Introduction

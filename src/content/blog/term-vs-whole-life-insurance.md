@@ -1,9 +1,9 @@
 ---
 title: "Term vs Whole Life Insurance: Why Mixing Insurance and Investment is a Trap"
-date: "2026-06-06"
+date: "2026-05-27"
 excerpt: "Insurance agents love selling Endowment and Whole Life policies because of the massive commissions. Discover why pure Term Insurance is mathematically superior."
 readTime: "6 min read"
-author: "Numeraise Team"
+author: "Rahul Sharma, CFA"
 ---
 
 # Term vs Whole Life Insurance: Why Mixing Insurance and Investment is a Trap

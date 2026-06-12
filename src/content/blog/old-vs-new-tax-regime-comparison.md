@@ -1,9 +1,9 @@
 ---
 title: "Old vs New Tax Regime 2026: Which Saves More for Your Income?"
-date: "2026-06-03"
+date: "2026-05-11"
 excerpt: "One of the most complex financial decisions salaried individuals in India face every financial year is choosing between the Old Tax Regime an..."
 readTime: "3 min read"
-author: "Numeraise Team"
+author: "Rahul Sharma, CFA"
 ---
 
 ## Introduction
