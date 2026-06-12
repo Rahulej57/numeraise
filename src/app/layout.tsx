@@ -22,12 +22,12 @@ export const metadata: Metadata = {
   title: 'Numeraise | Smart Financial Calculators & Planning Tools',
   description:
     'Plan investments, loans, taxes, retirement, and wealth creation using our powerful suite of 50+ financial calculators designed for smarter decisions.',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://numeraise.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://www.numeraise.com'),
   openGraph: {
     title: 'Numeraise | Smart Financial Calculators',
     description:
       'Plan investments, loans, taxes, retirement, and wealth creation using our powerful suite of 50+ financial calculators.',
-    url: 'https://numeraise.com',
+    url: 'https://www.numeraise.com',
     siteName: 'Numeraise',
     type: 'website',
     images: [
@@ -112,21 +112,21 @@ export default function RootLayout({
               '@graph': [
                 {
                   '@type': 'Organization',
-                  '@id': 'https://numeraise.com/#organization',
+                  '@id': 'https://www.numeraise.com/#organization',
                   name: 'Numeraise',
-                  url: 'https://numeraise.com',
+                  url: 'https://www.numeraise.com',
                   logo: {
                     '@type': 'ImageObject',
-                    url: 'https://numeraise.com/og-image.png',
+                    url: 'https://www.numeraise.com/og-image.png',
                   },
                 },
                 {
                   '@type': 'WebSite',
-                  '@id': 'https://numeraise.com/#website',
-                  url: 'https://numeraise.com',
+                  '@id': 'https://www.numeraise.com/#website',
+                  url: 'https://www.numeraise.com',
                   name: 'Numeraise',
                   publisher: {
-                    '@id': 'https://numeraise.com/#organization',
+                    '@id': 'https://www.numeraise.com/#organization',
                   },
                 },
               ],

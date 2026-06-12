@@ -57,7 +57,7 @@ export default function FinancialCalculatorsHubPage() {
         data={{
           name: 'Numeraise Calculator Hub',
           description: 'Directory of all financial calculators on Numeraise.',
-          url: 'https://numeraise.com/financial-calculators',
+          url: 'https://www.numeraise.com/financial-calculators',
         }}
       />
     </div>
