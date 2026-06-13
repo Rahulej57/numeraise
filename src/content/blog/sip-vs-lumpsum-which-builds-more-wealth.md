@@ -1,5 +1,5 @@
 ---
-title: "[SIP vs Lumpsum](/calculators/sip-vs-lumpsum): Which Builds More Wealth Over Time?"
+title: "SIP vs Lumpsum: Which Builds More Wealth Over Time?"
 date: "2026-05-23"
 excerpt: "When starting your wealth creation journey, you face a critical decision: should you invest a large amount of money all at once (Lumpsum), or..."
 readTime: "10 min read"
