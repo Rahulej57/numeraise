@@ -65,19 +65,26 @@ function buildCurrencies(rates: Record<string, number>): Record<string, Currency
 async function fetchLiveRates(): Promise<Record<string, number> | null> {
   try {
     // Check localStorage cache first (1-hour TTL)
-    const cached = localStorage.getItem(CACHE_KEY);
-    if (cached) {
-      const { rates, timestamp } = JSON.parse(cached);
-      if (Date.now() - timestamp < CACHE_TTL_MS) return rates;
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const { rates, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < CACHE_TTL_MS) return rates;
+      }
     }
     // Frankfurter API — completely free, no API key, CORS-safe
     const res = await fetch(
       'https://api.frankfurter.app/latest?from=USD&to=INR,GBP,EUR,CAD,AUD,SGD,AED'
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
+    ).catch(() => null);
+    
+    if (!res || !res.ok) return null;
+    const data = await res.json().catch(() => null);
+    if (!data || !data.rates) return null;
+    
     const rates: Record<string, number> = { USD: 1.00, ...data.rates };
-    localStorage.setItem(CACHE_KEY, JSON.stringify({ rates, timestamp: Date.now() }));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ rates, timestamp: Date.now() }));
+    }
     return rates;
   } catch {
     return null;
