@@ -1,17 +1,16 @@
 import Link from 'next/link';
 import { Newspaper } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { getAllPosts } from '@/lib/blog';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Financial Learning Center | Numeraise',
+  title: 'The Numeraise Blog | Numeraise',
   description:
-    'Deep-dive guides, analysis and expert advice on investing, loans, taxes, and wealth creation. Free financial education by Numeraise.',
+    'Actionable financial advice, guides on using our tools, and strategies for accelerating your wealth creation.',
   alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'Financial Learning Center | Numeraise',
-    description: 'Expert guides on SIP, EMI, tax planning, rent vs buy and more.',
+    title: 'The Numeraise Blog | Numeraise',
+    description: 'Actionable financial advice, guides on using our tools, and strategies for accelerating your wealth creation.',
     url: 'https://www.numeraise.com/blog',
     type: 'website',
   },
@@ -20,61 +19,56 @@ export const metadata: Metadata = {
 export default function ArticlesPage() {
   const posts = getAllPosts();
 
-  const getCategory = (slug: string) => {
-    if (slug.includes('tax')) return 'Taxes';
-    if (slug.includes('emi') || slug.includes('loan')) return 'Loans';
-    if (slug.includes('sip') || slug.includes('compounding') || slug.includes('wealth')) return 'Investing';
-    if (slug.includes('rent-vs-buy')) return 'Housing';
-    return 'Financial Guide';
-  };
-
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12 max-w-5xl min-h-[70vh]">
-      <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-2 flex items-center gap-2">Learning Center</h1>
-        <p className="text-muted-foreground text-sm">
-          Deep-dive guides, analysis, and expert advice to optimize your personal finance decisions.
+    <div className="container mx-auto px-4 py-12 max-w-4xl min-h-[70vh]">
+      <div className="mb-12">
+        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4 text-foreground">
+          The Numeraise Blog
+        </h1>
+        <p className="text-muted-foreground text-base md:text-lg max-w-3xl leading-relaxed">
+          Actionable financial advice, guides on using our tools, and strategies for accelerating your wealth creation.
         </p>
       </div>
 
       {posts.length === 0 ? (
-        <div className="text-center py-12">
+        <div className="text-center py-16 border rounded-xl bg-muted/10">
           <Newspaper className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
           <p className="text-muted-foreground">No articles published yet. Check back soon!</p>
         </div>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="space-y-10">
           {posts.map((post) => (
-            <Link key={post.slug} href={`/blog/${post.slug}`} className="group">
-              <Card className="h-full border border-border/50 bg-muted/20 hover:bg-muted/40 transition-all duration-300 shadow-none flex flex-col">
-                <CardHeader className="p-5 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="text-xs font-bold text-primary uppercase tracking-wider mb-2">
-                      {getCategory(post.slug)}
-                    </div>
-                    <CardTitle className="text-base md:text-lg group-hover:text-primary transition-colors line-clamp-2 leading-snug">
-                      {post.title}
-                    </CardTitle>
-                    {post.excerpt && (
-                      <CardDescription className="text-sm mt-2 line-clamp-3 text-muted-foreground">
-                        {post.excerpt}
-                      </CardDescription>
-                    )}
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-4 pt-4 border-t border-border/30 flex items-center gap-2">
-                    <span>{post.readTime}</span>
-                    <span>•</span>
-                    <span>
-                      {new Date(post.date).toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                      })}
-                    </span>
-                  </div>
-                </CardHeader>
-              </Card>
-            </Link>
+            <div key={post.slug} className="pb-10 border-b border-border/60 last:border-0 last:pb-0">
+              <Link href={`/blog/${post.slug}`} className="group block space-y-3">
+                <h2 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors leading-snug">
+                  {post.title}
+                </h2>
+                
+                <div className="text-xs md:text-sm text-muted-foreground flex items-center gap-2">
+                  <span>
+                    {new Date(post.date).toLocaleDateString('en-US', {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })}
+                  </span>
+                  <span>•</span>
+                  <span>{post.readTime}</span>
+                </div>
+
+                {post.excerpt && (
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                )}
+
+                <div className="pt-2">
+                  <span className="text-sm md:text-base font-semibold text-blue-600 dark:text-blue-400 group-hover:underline inline-flex items-center gap-1">
+                    Read article <span className="transition-transform group-hover:translate-x-1">→</span>
+                  </span>
+                </div>
+              </Link>
+            </div>
           ))}
         </div>
       )}
