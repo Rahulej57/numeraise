@@ -7,18 +7,28 @@ import { CurrencyAwareMarkdown } from '@/components/blog/currency-aware-markdown
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.numeraise.com';
 
-// Fix 4: Dynamic metadata per article
+// Fix 4: Dynamic metadata per article with title length constraint
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const post = getPostBySlug(resolvedParams.slug);
   if (!post) return { title: 'Article Not Found | Numeraise' };
 
+  // Shorten title if it is too long (keep title + " | Numeraise" <= 65 chars, or use title as is if already short)
+  const suffix = " | Numeraise";
+  let metaTitle = post.title;
+  if (metaTitle.length + suffix.length > 68) {
+    // Try to truncate title nicely or use a shortened version
+    const maxTitleLen = 65 - suffix.length;
+    metaTitle = metaTitle.substring(0, maxTitleLen).trim() + "...";
+  }
+  const titleWithSuffix = `${metaTitle}${suffix}`;
+
   return {
-    title: `${post.title} | Numeraise`,
+    title: titleWithSuffix,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
-      title: post.title,
+      title: titleWithSuffix,
       description: post.excerpt,
       url: `${BASE_URL}/blog/${post.slug}`,
       type: 'article',
@@ -28,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
+      title: titleWithSuffix,
       description: post.excerpt,
       images: ['/og-image.png'],
     },
@@ -66,6 +76,15 @@ export default async function ArticleSlugPage({ params }: { params: Promise<{ sl
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE_URL}/blog/${post.slug}` },
     image: `${BASE_URL}/og-image.png`,
   };
+
+  // Check if markdown content starts with a header matching the title or a generic h1
+  // We can strip the first h1/h2 header if it exists in markdown to avoid duplicate h1 tags on page.
+  // Many markdown posts have "# Title" as their first line.
+  let cleanContent = post.content.trim();
+  const titleHeadingRegex = /^(?:#\s+.*|##\s+.*)\n+/i;
+  if (titleHeadingRegex.test(cleanContent)) {
+    cleanContent = cleanContent.replace(titleHeadingRegex, '');
+  }
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-3xl min-h-[70vh]">
@@ -106,7 +125,7 @@ export default async function ArticleSlugPage({ params }: { params: Promise<{ sl
       </div>
 
       <CurrencyAwareMarkdown
-        content={post.content}
+        content={cleanContent}
         className="prose prose-base md:prose-lg dark:prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-slate-900 dark:prose-headings:text-slate-100 prose-p:text-slate-700 dark:prose-p:text-slate-300 prose-p:leading-relaxed prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline prose-table:border prose-table:border-border prose-th:bg-muted/50 prose-th:font-medium prose-th:p-3 prose-td:p-3 prose-td:border-t prose-blockquote:not-italic prose-blockquote:bg-muted/50 prose-blockquote:border-none prose-blockquote:rounded-xl prose-blockquote:px-5 prose-blockquote:py-4 prose-blockquote:text-sm prose-img:rounded-xl"
       />
     </div>

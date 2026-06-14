@@ -19,6 +19,11 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/calculators/income-tax-old-vs-new-regime',
+        destination: '/calculators/income-tax-calculator',
+        permanent: true,
+      },
     ];
   },
 };
