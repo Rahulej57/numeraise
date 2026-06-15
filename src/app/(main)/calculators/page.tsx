@@ -3,6 +3,15 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { CALCULATOR_DIRECTORY } from '@/config/calculators';
 import { ChevronRight, Calculator } from 'lucide-react';
 import { DynamicCalculatorList } from '@/components/calculators/dynamic-calculator-list';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'All Financial Calculators | Numeraise',
+  description: 'Explore our collection of 50+ premium financial calculators designed to help you make smarter money decisions.',
+  alternates: {
+    canonical: '/calculators',
+  },
+};
 
 export default function AllCalculatorsPage() {
   return (

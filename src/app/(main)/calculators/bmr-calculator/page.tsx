@@ -28,7 +28,7 @@ export default function BMRCalculatorPage() {
   const [inches, setInches] = useState('9');
   const [lbs, setLbs] = useState('165');
 
-  const [activity, setActivity] = useState('1.2');
+  const [activity, setActivity] = useState('1.55');
 
   const calculatorIcon = useMemo(() => {
     for (const category of CALCULATOR_DIRECTORY) {

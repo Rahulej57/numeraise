@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
         destination: '/calculators/income-tax-calculator',
         permanent: true,
       },
+      {
+        source: '/financial-calculators',
+        destination: '/calculators',
+        permanent: true,
+      },
     ];
   },
 };

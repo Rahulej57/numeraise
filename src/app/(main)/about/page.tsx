@@ -4,6 +4,9 @@ export const metadata = {
   title: 'About Numeraise - Free Financial Tools',
   description:
     'Learn about Numeraise, our mission to democratize financial planning, and why millions trust our calculators.',
+  alternates: {
+    canonical: '/about',
+  },
 };
 
 export default function AboutPage() {
