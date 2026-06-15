@@ -67,7 +67,7 @@ The New Regime was designed for people who want cash in hand. It offers signific
 *   **Pros:** Lower tax rates. You don't have to lock your money into forced investments just to save tax. You have more liquidity.
 *   **Cons:** If you are paying high rent (HRA) or have a massive home loan, the New Regime is usually mathematically terrible for you.
 
-> **Pro Tip:** Always calculate your exact tax liability under *both* regimes before filing. Do not guess. You can use our [Income Tax Calculator](/calculators/income-tax-old-vs-new-regime) to instantly see which regime saves you more money.
+> **Pro Tip:** Always calculate your exact tax liability under *both* regimes before filing. Do not guess. You can use our [Income Tax Calculator](/calculators/income-tax-calculator) to instantly see which regime saves you more money.
 
 ## 4. The Big Three: Essential Tax Saving Strategies
 
