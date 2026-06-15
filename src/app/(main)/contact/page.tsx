@@ -1,9 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Mail, MapPin } from 'lucide-react';
+import { Mail } from 'lucide-react';
+import { ContactForm } from '@/components/contact-form';
 
 export const metadata = {
   title: 'Contact Numeraise - Get Support',
@@ -45,28 +41,9 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <Card className="border-border shadow-md">
-          <CardHeader>
-            <CardTitle>Send a Message</CardTitle>
-            <CardDescription>We typically respond within 24 hours.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="John Doe" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
-              <Input id="email" type="email" placeholder="john@example.com" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="message">Message</Label>
-              <Textarea id="message" placeholder="How can we help you?" className="min-h-[120px]" />
-            </div>
-            <Button className="w-full mt-2">Send Message</Button>
-          </CardContent>
-        </Card>
+        <ContactForm />
       </div>
     </div>
   );
 }
+
