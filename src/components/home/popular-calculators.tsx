@@ -136,7 +136,7 @@ export function PopularCalculators() {
           <div>
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">Popular Tools</h2>
           </div>
-          <Link href="/financial-calculators" className="text-primary hover:underline font-medium text-sm flex items-center gap-1 shrink-0">
+          <Link href="/calculators" className="text-primary hover:underline font-medium text-sm flex items-center gap-1 shrink-0">
             View All <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

@@ -49,7 +49,7 @@ export function QuickLauncher() {
           </div>
           <div className="p-3 bg-muted/30 border-t border-border">
             <Link 
-              href="/financial-calculators" 
+              href="/calculators" 
               onClick={() => setIsOpen(false)}
               className="text-xs text-center block w-full text-primary font-medium hover:underline"
             >

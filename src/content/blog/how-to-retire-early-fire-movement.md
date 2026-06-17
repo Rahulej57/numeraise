@@ -148,7 +148,7 @@ When you achieve Financial Independence, you own 100% of your time. You can choo
 
 The most important step is not reaching the finish line—it is understanding that the finish line exists at all. Once you know your FIRE number, every financial decision becomes clearer. Every unnecessary expense is measured not in dollars, but in days of freedom.
 
-To see exactly how many years it will take *you* to retire based on your current savings rate, use our free [Financial Calculators](/financial-calculators) today!
+To see exactly how many years it will take *you* to retire based on your current savings rate, use our free [Financial Calculators](/calculators) today!
 
 ---
 

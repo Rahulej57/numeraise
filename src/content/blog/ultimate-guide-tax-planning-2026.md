@@ -151,7 +151,7 @@ Tax planning is not a mystical art; it is a mathematical formula. Follow this ch
 5.  **October-November:** Review your investment portfolio for tax-loss harvesting opportunities before the calendar year ends.
 6.  **Year-round:** Track expenses digitally, save receipts, and maintain organized records. The five minutes you spend filing a receipt today saves an hour of panic during tax season.
 
-Remember, a penny saved in taxes is a penny earned—and when invested correctly, that penny can compound into a fortune. Use our free suite of [Tax Calculators](/financial-calculators) to run your specific numbers today.
+Remember, a penny saved in taxes is a penny earned—and when invested correctly, that penny can compound into a fortune. Use our free suite of [Tax Calculators](/calculators) to run your specific numbers today.
 
 ---
 
