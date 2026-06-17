@@ -1,7 +1,7 @@
 const http = require('https');
 
 const host = 'www.numeraise.com';
-const key = '9280d0d828be48b7b25adad93a0bcf47';
+const key = '45fbe24f80164c67909b0bcfda5c065f';
 const keyLocation = `https://${host}/${key}.txt`;
 
 // Fetch the sitemap to get all URLs
