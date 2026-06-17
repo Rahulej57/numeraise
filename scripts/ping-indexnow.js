@@ -1,6 +1,6 @@
 const http = require('https');
 
-const host = 'www.numeraise.com';
+const host = 'numeraise.com';
 const key = '6c98221010aa4f528461be99d29dadde';
 const keyLocation = `https://${host}/${key}.txt`;
 
@@ -12,7 +12,7 @@ http.get(`https://${host}/sitemap.xml`, (res) => {
   res.on('end', () => {
     try {
       // Simple regex to extract all <loc>URLs</loc> from sitemap xml
-      const urlRegex = /<loc>(https:\/\/www\.numeraise\.com[^<]+)<\/loc>/g;
+      const urlRegex = /<loc>(https:\/\/(?:www\.)?numeraise\.com[^<]+)<\/loc>/g;
       const urlList = [];
       let match;
       while ((match = urlRegex.exec(data)) !== null) {
