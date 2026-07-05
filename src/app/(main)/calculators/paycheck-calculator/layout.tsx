@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { CALCULATOR_DIRECTORY } from '@/config/calculators';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const slug = 'inflation-calculator';
+  const slug = 'paycheck-calculator';
   let name = slug.replace(/-/g, ' ');
   let desc = 'Financial Calculator';
 

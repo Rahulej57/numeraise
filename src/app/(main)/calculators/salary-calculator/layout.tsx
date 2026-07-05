@@ -15,9 +15,18 @@ export async function generateMetadata(): Promise<Metadata> {
     }
   }
 
+  // Generate a high-quality, SEO-optimized description between 140-160 characters
+  let seoDesc = `Use our free ${name} to estimate, calculate, and analyze details. ${desc} Plan smarter and manage your money better with Numeraise.`;
+  if (seoDesc.length < 140) {
+    seoDesc = `Use our free ${name} to calculate, estimate, and analyze details. ${desc} Plan your wealth and make smarter money decisions with Numeraise.`;
+  }
+  if (seoDesc.length > 160) {
+    seoDesc = seoDesc.substring(0, 157) + '...';
+  }
+
   return {
     title: `${name} | Numeraise`,
-    description: desc,
+    description: seoDesc,
     alternates: {
       canonical: `/calculators/${slug}`,
     },

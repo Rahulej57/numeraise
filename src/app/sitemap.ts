@@ -4,7 +4,7 @@ import { getAllPosts } from '@/lib/blog';
 import { GLOSSARY_TERMS } from '@/config/glossary';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.numeraise.com';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://numeraise.com';
 
   // Extract all individual calculators from the directory structure
   const calculators = CALCULATOR_DIRECTORY.flatMap((section) => section.calculators);

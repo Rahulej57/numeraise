@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   title: 'Numeraise | Smart Financial Calculators & Planning Tools',
   description:
     'Plan investments, loans, taxes, retirement, and wealth creation using our powerful suite of 50+ financial calculators designed for smarter decisions.',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://www.numeraise.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://numeraise.com'),
   openGraph: {
     title: 'Numeraise | Smart Financial Calculators',
     description:
