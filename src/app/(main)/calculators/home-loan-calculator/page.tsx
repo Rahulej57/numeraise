@@ -300,7 +300,6 @@ Calculate your own: ${shareUrl}`;
             'Calculate your home loan EMI and total interest payable. See the amortization schedule to plan your real estate purchase.',
         }}
       />
-      <StructuredData type="FAQ" data={{ faqs }} />
     </div>
   );
 }

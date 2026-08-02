@@ -1,19 +1,25 @@
 import type { Metadata } from 'next';
+import { CALCULATOR_SEO } from '@/config/calculator-seo';
+import { SITE_URL } from '@/config/site';
+
+const SLUG = 'lumpsum-calculator';
+const seo = CALCULATOR_SEO[SLUG];
 
 export const metadata: Metadata = {
-  title: 'Lumpsum Calculator | Calculate Mutual Fund Bulk Investment Returns',
-  description:
-    'Use our free Lumpsum Calculator to forecast the future value of your one-time bulk investments. Visualize compounding growth over years and decades.',
-  keywords: [
-    'lumpsum calculator',
-    'mutual fund calculator',
-    'one time investment',
-    'compound interest calculator',
-    'investment returns',
-    'wealth creation',
-  ],
-  alternates: {
-    canonical: '/calculators/lumpsum-calculator',
+  title: seo.title,
+  description: seo.description,
+  keywords: seo.keywords,
+  alternates: { canonical: `/calculators/${SLUG}` },
+  openGraph: {
+    title: seo.title,
+    description: seo.description,
+    url: `${SITE_URL}/calculators/${SLUG}`,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: seo.title,
+    description: seo.description,
   },
 };
 

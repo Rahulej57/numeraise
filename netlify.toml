@@ -4,3 +4,56 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# ---------------------------------------------------------------------------
+# Production
+# ---------------------------------------------------------------------------
+# NEXT_PUBLIC_APP_URL drives every canonical, sitemap entry and JSON-LD @id.
+# It must be the apex host with no trailing slash, matching the hostname that
+# serves 200s. www 301-redirects to it.
+[context.production.environment]
+  NEXT_PUBLIC_APP_URL = "https://numeraise.com"
+
+# ---------------------------------------------------------------------------
+# Preview and branch deploys
+# ---------------------------------------------------------------------------
+# venerable-sherbet-10d546.netlify.app was serving a fully crawlable duplicate
+# of production: robots.txt said "Allow: /" and no X-Robots-Tag was set. The old
+# public/_headers rule targeted "https://*.pages.dev/*", which is Cloudflare
+# Pages syntax that Netlify ignores.
+#
+# X-Robots-Tag as a real HTTP header is the reliable control here, because it
+# applies to every response including ones a crawler reaches directly.
+[[context.deploy-preview.headers]]
+  for = "/*"
+  [context.deploy-preview.headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[context.branch-deploy.headers]]
+  for = "/*"
+  [context.branch-deploy.headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# ---------------------------------------------------------------------------
+# Production Netlify subdomain
+# ---------------------------------------------------------------------------
+# venerable-sherbet-10d546.netlify.app served the entire production site with
+# HTTP 200 and no X-Robots-Tag -- a fully crawlable duplicate of every page.
+# The context headers above only cover preview and branch deploys, not the
+# production Netlify URL.
+#
+# A host-scoped redirect closes it: Netlify matches the full origin in `from`,
+# so requests arriving on the .netlify.app host are 301'd to the apex while
+# requests on numeraise.com are untouched. force = true makes the redirect win
+# over the existing static page at that path.
+[[redirects]]
+  from = "https://venerable-sherbet-10d546.netlify.app/*"
+  to = "https://numeraise.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://venerable-sherbet-10d546.netlify.app/*"
+  to = "https://numeraise.com/:splat"
+  status = 301
+  force = true

@@ -318,7 +318,6 @@ Calculate your own: ${shareUrl}`;
             'Calculate your Fixed Deposit maturity value and interest earned with quarterly compounding accuracy.',
         }}
       />
-      <StructuredData type="FAQ" data={{ faqs }} />
     </div>
   );
 }

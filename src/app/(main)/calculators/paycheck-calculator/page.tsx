@@ -410,7 +410,6 @@ Calculate your own: ${shareUrl}`;
             'Calculate your exact take-home pay by estimating federal taxes, state taxes, FICA, and pre-tax deductions.',
         }}
       />
-      <StructuredData type="FAQ" data={{ faqs }} />
     </div>
   );
 }

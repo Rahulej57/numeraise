@@ -2,8 +2,10 @@ import { Mail } from 'lucide-react';
 import { ContactForm } from '@/components/contact-form';
 
 export const metadata = {
-  title: 'Contact Numeraise - Get Support',
-  description: 'Get in touch with the Numeraise team for support, feature requests, or business inquiries.',
+  title: 'Contact Us',
+  description:
+    'Get in touch with the Numeraise team for support, corrections to a calculator, feature requests or business enquiries. We read every message.',
+  alternates: { canonical: '/contact' },
 };
 
 export default function ContactPage() {

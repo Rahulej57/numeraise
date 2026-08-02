@@ -265,3 +265,43 @@ export const comparisonRegistry: Record<string, ComparisonConfig> = {
 export const getComparisonConfig = (slug: string): ComparisonConfig | undefined => {
   return comparisonRegistry[slug];
 };
+
+/** Every comparison slug, for generateStaticParams and the sitemap. */
+export const COMPARISON_SLUGS = Object.keys(comparisonRegistry);
+
+/**
+ * Search-facing copy for each comparison page.
+ *
+ * Kept separate from `comparisonRegistry` because that object holds a
+ * `calculate` function, which makes it unusable from a server component that
+ * only needs metadata.
+ */
+export const COMPARISON_SEO: Record<
+  string,
+  { title: string; description: string; heading: string; intro: string }
+> = {
+  'sip-vs-fd': {
+    title: 'SIP vs FD Calculator: Which Builds More Wealth?',
+    description:
+      'Compare equity SIP returns against a fixed deposit side by side. See maturity value, post-tax returns and the real inflation-adjusted difference over your chosen tenure.',
+    heading: 'SIP vs Fixed Deposit: The Complete Comparison',
+    intro:
+      'A fixed deposit gives you a guaranteed rate and zero volatility. An equity SIP gives you no guarantee and significant year-to-year swings, but a far higher expected return over long periods. This calculator shows you exactly what that trade-off is worth in your own numbers, including the tax treatment that most comparisons quietly ignore.',
+  },
+  'rent-vs-buy': {
+    title: 'Rent vs Buy Calculator: Should You Buy a Home?',
+    description:
+      'Work out whether renting and investing the difference beats buying. Factors in down payment, loan interest, property appreciation, rent inflation and opportunity cost.',
+    heading: 'Rent vs Buy: What the Numbers Actually Say',
+    intro:
+      'Buying a home is usually framed as obviously better than "throwing money away on rent". That framing ignores opportunity cost: the down payment and the gap between EMI and rent could have been invested. This calculator runs both paths in parallel over your full tenure and reports the net worth difference at the end.',
+  },
+  'old-vs-new-tax': {
+    title: 'Old vs New Tax Regime Calculator (FY 2026-27)',
+    description:
+      'Compare your income tax liability under the old and new regimes. Enter your salary and deductions to see which regime saves you more, and the exact break-even deduction amount.',
+    heading: 'Old vs New Tax Regime: Which Should You Pick?',
+    intro:
+      'The new regime offers lower slab rates but strips out almost every deduction. The old regime keeps 80C, HRA, and the rest but taxes you at higher rates. Which one wins depends entirely on how much you actually claim. This calculator finds your personal break-even point instead of giving you a generic rule of thumb.',
+  },
+};

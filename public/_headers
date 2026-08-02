@@ -1,2 +1,26 @@
-https://*.pages.dev/*
-  X-Robots-Tag: noindex
+# Netlify custom headers.
+#
+# The previous contents used Cloudflare Pages syntax ("https://*.pages.dev/*")
+# which Netlify does not understand, so the Netlify preview domain
+# (venerable-sherbet-10d546.netlify.app) was serving a fully crawlable copy of
+# the production site.
+#
+# Netlify rules must start with a path. Host-scoped rules are not supported here,
+# so deploy-preview and branch noindex is handled in netlify.toml instead, which
+# does support per-context configuration.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
+
+# Hashed build assets are immutable, so they can be cached indefinitely.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/og-image.png
+  Cache-Control: public, max-age=604800
+
+/favicon.ico
+  Cache-Control: public, max-age=604800

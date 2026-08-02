@@ -7,6 +7,7 @@ import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import Script from 'next/script';
+import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION, SOCIAL_PROFILES, CONTACT_EMAIL } from '@/config/site';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -19,30 +20,39 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Numeraise | Smart Financial Calculators & Planning Tools',
-  description:
-    'Plan investments, loans, taxes, retirement, and wealth creation using our powerful suite of 50+ financial calculators designed for smarter decisions.',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://numeraise.com'),
+  title: {
+    default: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    // Child routes supply only their own title; this appends the brand once.
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
+  authors: [{ name: 'Rahul Sharma, CFA', url: `${SITE_URL}/authors/rahul-sharma` }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
   openGraph: {
-    title: 'Numeraise | Smart Financial Calculators',
-    description:
-      'Plan investments, loans, taxes, retirement, and wealth creation using our powerful suite of 50+ financial calculators.',
-    url: 'https://www.numeraise.com',
-    siteName: 'Numeraise',
+    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: 'en_US',
     type: 'website',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Numeraise - Smart Financial Calculators',
+        alt: `${SITE_NAME} - ${SITE_TAGLINE}`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Numeraise | Smart Financial Calculators',
-    description: '50+ Financial Calculators designed for smarter decisions.',
+    site: '@numeraise',
+    creator: '@numeraise',
+    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
     images: ['/og-image.png'],
   },
   robots: {
@@ -112,21 +122,45 @@ export default function RootLayout({
               '@graph': [
                 {
                   '@type': 'Organization',
-                  '@id': 'https://www.numeraise.com/#organization',
-                  name: 'Numeraise',
-                  url: 'https://www.numeraise.com',
+                  '@id': `${SITE_URL}/#organization`,
+                  name: SITE_NAME,
+                  url: SITE_URL,
+                  description: SITE_DESCRIPTION,
+                  email: CONTACT_EMAIL,
+                  foundingDate: '2026-06-08',
                   logo: {
                     '@type': 'ImageObject',
-                    url: 'https://www.numeraise.com/og-image.png',
+                    '@id': `${SITE_URL}/#logo`,
+                    url: `${SITE_URL}/og-image.png`,
+                    width: 1200,
+                    height: 630,
+                  },
+                  // sameAs is the strongest cheap entity signal for a new domain:
+                  // it ties the site to verifiable off-site profiles.
+                  sameAs: SOCIAL_PROFILES,
+                  contactPoint: {
+                    '@type': 'ContactPoint',
+                    contactType: 'customer support',
+                    email: CONTACT_EMAIL,
+                    url: `${SITE_URL}/contact`,
+                    availableLanguage: ['English'],
                   },
                 },
                 {
                   '@type': 'WebSite',
-                  '@id': 'https://www.numeraise.com/#website',
-                  url: 'https://www.numeraise.com',
-                  name: 'Numeraise',
-                  publisher: {
-                    '@id': 'https://www.numeraise.com/#organization',
+                  '@id': `${SITE_URL}/#website`,
+                  url: SITE_URL,
+                  name: SITE_NAME,
+                  description: SITE_DESCRIPTION,
+                  inLanguage: 'en',
+                  publisher: { '@id': `${SITE_URL}/#organization` },
+                  potentialAction: {
+                    '@type': 'SearchAction',
+                    target: {
+                      '@type': 'EntryPoint',
+                      urlTemplate: `${SITE_URL}/calculators?q={search_term_string}`,
+                    },
+                    'query-input': 'required name=search_term_string',
                   },
                 },
               ],

@@ -1,22 +1,28 @@
 import type { Metadata } from 'next';
+import { CALCULATOR_SEO } from '@/config/calculator-seo';
+import { SITE_URL } from '@/config/site';
+
+const SLUG = 'fd-calculator';
+const seo = CALCULATOR_SEO[SLUG];
 
 export const metadata: Metadata = {
-  title: 'FD Calculator | Fixed Deposit Return & Maturity Calculator',
-  description:
-    'Calculate your Fixed Deposit maturity amount and total interest earned. Our FD Calculator uses precise quarterly compounding formulas used by all major banks.',
-  keywords: [
-    'FD calculator',
-    'fixed deposit calculator',
-    'bank FD returns',
-    'maturity value calculator',
-    'interest calculator',
-    'quarterly compounding',
-  ],
-  alternates: {
-    canonical: '/calculators/fd-calculator',
+  title: seo.title,
+  description: seo.description,
+  keywords: seo.keywords,
+  alternates: { canonical: `/calculators/${SLUG}` },
+  openGraph: {
+    title: seo.title,
+    description: seo.description,
+    url: `${SITE_URL}/calculators/${SLUG}`,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: seo.title,
+    description: seo.description,
   },
 };
 
-export default function FDCalculatorLayout({ children }: { children: React.ReactNode }) {
+export default function FdCalculatorLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

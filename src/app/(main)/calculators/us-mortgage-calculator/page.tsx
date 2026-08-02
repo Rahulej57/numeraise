@@ -342,7 +342,6 @@ Calculate your own: ${shareUrl}`;
             'Calculate your true monthly PITI mortgage payment including property taxes, homeowners insurance, and Private Mortgage Insurance (PMI).',
         }}
       />
-      <StructuredData type="FAQ" data={{ faqs }} />
     </div>
   );
 }

@@ -29,6 +29,14 @@ const nextConfig: NextConfig = {
         destination: '/calculators',
         permanent: true,
       },
+      // life-insurance-calculator/page.tsx re-exported the term-insurance
+      // component verbatim, so two URLs served byte-identical content. One
+      // canonical page per piece of content.
+      {
+        source: '/calculators/life-insurance-calculator',
+        destination: '/calculators/term-insurance-calculator',
+        permanent: true,
+      },
     ];
   },
 };

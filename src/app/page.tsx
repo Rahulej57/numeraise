@@ -4,9 +4,11 @@ import { PopularCalculators } from '@/components/home/popular-calculators';
 import { ComparisonShowcase } from '@/components/home/comparison-showcase';
 
 export const metadata = {
-  title: 'Numeraise - Free Financial Calculators for Investment, Loans & Tax',
+  // `title.absolute` opts out of the root layout's "%s | Numeraise" template so
+  // the homepage title is not "... | Numeraise | Numeraise".
+  title: { absolute: 'Numeraise: Free Financial Calculators for SIP, EMI & Tax' },
   description:
-    'Plan investments, loans, taxes, retirement, and wealth creation using our powerful suite of 50+ financial calculators designed for smarter decisions.',
+    '70+ free financial calculators for SIP, EMI, income tax, PPF and retirement. Every formula shown, no signup, and your figures never leave your browser.',
   alternates: {
     canonical: '/',
   },

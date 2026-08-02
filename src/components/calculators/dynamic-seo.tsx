@@ -5,6 +5,9 @@ import { CalculatorContent } from '@/components/calculators/calculator-content';
 import { FAQAccordion } from '@/components/calculators/faq-accordion';
 import { RelatedCalculators } from '@/components/calculators/related-calculators';
 import { useCurrency } from '@/context/CurrencyContext';
+import { getDeepContent } from '@/config/calculator-deep-content';
+import { DeepContentBlock } from '@/components/calculators/deep-content';
+import { StructuredData } from '@/components/seo/structured-data';
 
 export function DynamicSEO({
   slug,
@@ -14,6 +17,27 @@ export function DynamicSEO({
   relatedCalculators?: { title: string; description: string; href: string; icon?: React.ReactNode }[];
 }) {
   const { format, currency } = useCurrency();
+
+  /*
+   * Calculators migrated to the structured long-form registry render from there.
+   * Everything else falls through to the original inline branches below, so
+   * pages can be upgraded one at a time rather than in a single rewrite.
+   */
+  const deep = getDeepContent(slug);
+  if (deep) {
+    return (
+      <div className="mt-12">
+        <CalculatorContent>
+          <DeepContentBlock content={deep} />
+        </CalculatorContent>
+        <FAQAccordion faqs={deep.faqs} />
+        {relatedCalculators && relatedCalculators.length > 0 && (
+          <RelatedCalculators calculators={relatedCalculators} />
+        )}
+      </div>
+    );
+  }
+
   if (slug === 'inflation-calculator') {
     return (
       <div className="mt-12">

@@ -1,6 +1,8 @@
 export const metadata = {
-  title: 'Cookie Policy | Numeraise',
-  description: 'Learn about how Numeraise uses cookies.',
+  title: 'Cookie Policy',
+  description:
+    'Which cookies Numeraise sets, what each one is used for, how advertising and analytics cookies work, and how to control them in your browser.',
+  alternates: { canonical: '/cookie-policy' },
 };
 
 export default function CookiePolicyPage() {

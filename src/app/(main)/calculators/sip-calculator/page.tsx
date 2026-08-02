@@ -344,7 +344,6 @@ Calculate your own: ${shareUrl}`;
             'Calculate the future value of your Systematic Investment Plan with detailed charts and amortization tables.',
         }}
       />
-      <StructuredData type="FAQ" data={{ faqs }} />
     </div>
   );
 }

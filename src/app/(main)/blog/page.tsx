@@ -2,16 +2,18 @@ import Link from 'next/link';
 import { Newspaper } from 'lucide-react';
 import { getAllPosts } from '@/lib/blog';
 import type { Metadata } from 'next';
+import { SITE_URL } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: 'The Numeraise Blog | Numeraise',
+  title: 'Personal Finance Guides & Explainers',
   description:
-    'Actionable financial advice, guides on using our tools, and strategies for accelerating your wealth creation.',
+    'Plain-English guides on compounding, tax regimes, emergency funds, insurance and loans — written to be useful rather than to fill a content calendar.',
   alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'The Numeraise Blog | Numeraise',
-    description: 'Actionable financial advice, guides on using our tools, and strategies for accelerating your wealth creation.',
-    url: 'https://www.numeraise.com/blog',
+    title: 'Personal Finance Guides & Explainers',
+    description:
+      'Plain-English guides on compounding, tax regimes, emergency funds, insurance and loans.',
+    url: `${SITE_URL}/blog`,
     type: 'website',
   },
 };
@@ -52,7 +54,7 @@ export default function ArticlesPage() {
                       year: 'numeric',
                     })}
                   </span>
-                  <span>•</span>
+                  <span>â€¢</span>
                   <span>{post.readTime}</span>
                 </div>
 
@@ -64,7 +66,7 @@ export default function ArticlesPage() {
 
                 <div className="pt-2">
                   <span className="text-sm md:text-base font-semibold text-blue-600 dark:text-blue-400 group-hover:underline inline-flex items-center gap-1">
-                    Read article <span className="transition-transform group-hover:translate-x-1">→</span>
+                    Read article <span className="transition-transform group-hover:translate-x-1">â†’</span>
                   </span>
                 </div>
               </Link>

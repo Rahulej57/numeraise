@@ -312,7 +312,6 @@ Calculate your own: ${shareUrl}`;
             'Calculate your Equated Monthly Installment for personal loans and car loans instantly. View detailed amortization schedules.',
         }}
       />
-      <StructuredData type="FAQ" data={{ faqs }} />
     </div>
   );
 }

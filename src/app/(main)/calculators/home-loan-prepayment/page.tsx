@@ -5,6 +5,7 @@ import { CalculatorContent } from '@/components/calculators/calculator-content';
 import { FAQAccordion } from '@/components/calculators/faq-accordion';
 import { RelatedCalculators } from '@/components/calculators/related-calculators';
 import { getRelatedCalculators } from '@/config/calculators';
+import { SITE_URL } from '@/config/site';
 
 export const metadata = {
   title: 'Home Loan Prepayment Calculator | EMI Savings & Tenure Reduction',
@@ -65,7 +66,7 @@ export default function HomeLoanPrepaymentPage() {
 
           <h3>The Mathematical Formula</h3>
           <div className="bg-muted p-4 rounded-lg my-4 text-center font-mono text-sm">
-            <p>Interest Saved = (Old EMI × Old Tenure) - (New EMI × New Tenure)</p>
+            <p>Interest Saved = (Old EMI Ã— Old Tenure) - (New EMI Ã— New Tenure)</p>
           </div>
         </CalculatorContent>
         <FAQAccordion
@@ -96,7 +97,7 @@ export default function HomeLoanPrepaymentPage() {
         data={{
           name: 'Home Loan Prepayment Calculator',
           description: 'Calculate interest savings from loan prepayments.',
-          url: 'https://www.numeraise.com/calculators/home-loan-prepayment',
+          url: `${SITE_URL}/calculators/home-loan-prepayment`,
         }}
       />
     </>

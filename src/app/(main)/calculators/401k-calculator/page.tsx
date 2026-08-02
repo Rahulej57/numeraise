@@ -359,7 +359,6 @@ Calculate your own: ${shareUrl}`;
             'Estimate your future 401(k) retirement balance taking into account employer matching, salary increases, and compound interest.',
         }}
       />
-      <StructuredData type="FAQ" data={{ faqs }} />
     </div>
   );
 }

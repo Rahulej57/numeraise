@@ -322,7 +322,6 @@ Calculate your own: ${shareUrl}`;
             'Calculate the future value and estimated returns of a one-time bulk investment using the power of compounding.',
         }}
       />
-      <StructuredData type="FAQ" data={{ faqs }} />
     </div>
   );
 }

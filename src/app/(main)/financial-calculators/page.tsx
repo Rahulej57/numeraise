@@ -1,9 +1,24 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { ArrowRight, LayoutGrid } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { StructuredData } from '@/components/seo/structured-data';
 import { CalculatorSearchModal } from '@/components/layout/calculator-search-modal';
 import { CALCULATOR_DIRECTORY } from '@/config/calculators';
+import { SITE_URL } from '@/config/site';
+
+/**
+ * DEAD ROUTE. next.config.ts permanently redirects /financial-calculators to
+ * /calculators, so this component never renders. It duplicates the /calculators
+ * hub almost exactly, so it must never be indexed if that redirect is removed.
+ * Safe to delete along with the redirect once you are sure no external links
+ * point at the old path.
+ */
+export const metadata: Metadata = {
+  title: 'All Financial Calculators',
+  robots: { index: false, follow: true },
+  alternates: { canonical: '/calculators' },
+};
 
 export default function FinancialCalculatorsHubPage() {
   return (
@@ -57,7 +72,7 @@ export default function FinancialCalculatorsHubPage() {
         data={{
           name: 'Numeraise Calculator Hub',
           description: 'Directory of all financial calculators on Numeraise.',
-          url: 'https://www.numeraise.com/financial-calculators',
+          url: `${SITE_URL}/financial-calculators`,
         }}
       />
     </div>

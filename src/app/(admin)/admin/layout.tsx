@@ -1,6 +1,16 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { LayoutDashboard, FileText, Calculator, Settings, Users } from 'lucide-react';
+
+/**
+ * robots.txt already disallows /admin/, but a disallowed URL can still be
+ * indexed URL-only if anything links to it. An explicit noindex closes that.
+ */
+export const metadata: Metadata = {
+  title: 'Admin',
+  robots: { index: false, follow: false, nocache: true },
+};
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (

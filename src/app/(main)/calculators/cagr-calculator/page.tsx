@@ -2,6 +2,7 @@ import { CagrCalculatorClient } from '@/components/calculators/cagr-calculator-c
 import { StructuredData } from '@/components/seo/structured-data';
 import { RelatedCalculators } from '@/components/calculators/related-calculators';
 import { getRelatedCalculators } from '@/config/calculators';
+import { SITE_URL } from '@/config/site';
 
 export const metadata = {
   title: 'CAGR Calculator | Calculate Compound Annual Growth Rate',
@@ -21,7 +22,7 @@ export default function CagrCalculatorPage() {
         data={{
           name: 'CAGR Calculator',
           description: 'Calculate the Compound Annual Growth Rate of investments.',
-          url: 'https://www.numeraise.com/calculators/cagr-calculator',
+          url: `${SITE_URL}/calculators/cagr-calculator`,
         }}
       />
     </>

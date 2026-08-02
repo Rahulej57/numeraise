@@ -1,6 +1,8 @@
 export const metadata = {
-  title: 'Terms of Service - Numeraise',
-  description: 'Terms of Service for the Numeraise platform.',
+  title: 'Terms of Service',
+  description:
+    'The terms governing your use of Numeraise calculators and content, including accuracy limitations, acceptable use and liability.',
+  alternates: { canonical: '/terms' },
 };
 
 export default function TermsOfServicePage() {

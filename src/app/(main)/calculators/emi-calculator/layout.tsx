@@ -1,22 +1,28 @@
 import type { Metadata } from 'next';
+import { CALCULATOR_SEO } from '@/config/calculator-seo';
+import { SITE_URL } from '@/config/site';
+
+const SLUG = 'emi-calculator';
+const seo = CALCULATOR_SEO[SLUG];
 
 export const metadata: Metadata = {
-  title: 'EMI Calculator | Calculate Personal & Car Loan Installments',
-  description:
-    'Use our free EMI Calculator to instantly calculate your monthly loan installments. View detailed amortization schedules, principal breakdowns, and total interest payable.',
-  keywords: [
-    'EMI calculator',
-    'loan calculator',
-    'personal loan EMI',
-    'car loan calculator',
-    'amortization schedule',
-    'interest calculator',
-  ],
-  alternates: {
-    canonical: '/calculators/emi-calculator',
+  title: seo.title,
+  description: seo.description,
+  keywords: seo.keywords,
+  alternates: { canonical: `/calculators/${SLUG}` },
+  openGraph: {
+    title: seo.title,
+    description: seo.description,
+    url: `${SITE_URL}/calculators/${SLUG}`,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: seo.title,
+    description: seo.description,
   },
 };
 
-export default function EMICalculatorLayout({ children }: { children: React.ReactNode }) {
+export default function EmiCalculatorLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

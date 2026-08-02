@@ -138,8 +138,9 @@ export const CALCULATOR_DIRECTORY = [
     icon: <Activity className="w-6 h-6 text-pink-500" />,
     calculators: [
       { name: "BMI Calculator", desc: "Calculate Body Mass Index (BMI).", href: "/calculators/bmi-calculator", icon: <Activity className="w-5 h-5 text-pink-500" /> },
-      { name: "BMR Calculator", desc: "Calculate your Basal Metabolic Rate.", href: "/calculators/bmr-calculator", icon: <Heart className="w-5 h-5 text-pink-500" /> },
-      { name: "TDEE Calculator", desc: "Total daily energy expenditure.", href: "/calculators/bmr-calculator", icon: <Heart className="w-5 h-5 text-pink-500" /> },
+      // BMR and TDEE were two entries pointing at the same href, which emitted a
+      // duplicate <loc> in sitemap.xml. Merged into one entry covering both terms.
+      { name: "BMR & TDEE Calculator", desc: "Basal metabolic rate and total daily energy expenditure.", href: "/calculators/bmr-calculator", icon: <Heart className="w-5 h-5 text-pink-500" /> },
       { name: "Body Fat", desc: "Estimate body fat percentage.", href: "/calculators/body-fat-calculator", icon: <Calculator className="w-5 h-5 text-pink-500" /> },
       { name: "Pregnancy Due Date", desc: "Estimate conception & due dates.", href: "/calculators/pregnancy-due-date", icon: <Baby className="w-5 h-5 text-pink-500" /> },
     ]

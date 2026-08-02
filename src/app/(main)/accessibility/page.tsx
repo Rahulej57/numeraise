@@ -1,6 +1,8 @@
 export const metadata = {
-  title: 'Accessibility Statement | Numeraise',
-  description: "Numeraise's commitment to web accessibility.",
+  title: 'Accessibility Statement',
+  description:
+    'How Numeraise approaches web accessibility, the standards we work towards, and how to report a barrier you encounter on the site.',
+  alternates: { canonical: '/accessibility' },
 };
 
 export default function AccessibilityPage() {

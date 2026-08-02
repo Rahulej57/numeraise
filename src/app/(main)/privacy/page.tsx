@@ -1,6 +1,8 @@
 export const metadata = {
-  title: 'Privacy Policy - Numeraise',
-  description: 'Privacy Policy for the Numeraise platform.',
+  title: 'Privacy Policy',
+  description:
+    'What Numeraise collects and what it does not. Calculator inputs are processed in your browser and never sent to our servers. Covers analytics and advertising.',
+  alternates: { canonical: '/privacy' },
 };
 
 export default function PrivacyPolicyPage() {

@@ -359,7 +359,6 @@ Calculate your own: ${shareUrl}`;
             'Calculate your true financial net worth by balancing your total assets against your total liabilities and debts.',
         }}
       />
-      <StructuredData type="FAQ" data={{ faqs }} />
     </div>
   );
 }

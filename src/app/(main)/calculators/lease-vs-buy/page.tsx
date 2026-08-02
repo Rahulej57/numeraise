@@ -377,7 +377,6 @@ Calculate your own: ${shareUrl}`;
             'Compare the true financial cost of financing a car versus leasing it over the same time period.',
         }}
       />
-      <StructuredData type="FAQ" data={{ faqs }} />
     </div>
   );
 }

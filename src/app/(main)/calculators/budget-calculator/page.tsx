@@ -223,7 +223,6 @@ Calculate your own: ${shareUrl}`;
             'Use the 50/30/20 rule to divide your after-tax income into needs, wants, and savings. A simple, effective budgeting tool.',
         }}
       />
-      <StructuredData type="FAQ" data={{ faqs }} />
     </div>
   );
 }

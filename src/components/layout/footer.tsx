@@ -37,7 +37,11 @@ export function Footer() {
         <p className="flex flex-wrap items-center justify-center gap-2">
           <Link href="/about" className="hover:text-foreground hover:underline transition-colors">About Us</Link>
           <span className="text-muted-foreground/50">|</span>
+          <Link href="/compare" className="hover:text-foreground hover:underline transition-colors">Compare</Link>
+          <span className="text-muted-foreground/50">|</span>
           <Link href="/glossary" className="hover:text-foreground hover:underline transition-colors">Glossary</Link>
+          <span className="text-muted-foreground/50">|</span>
+          <Link href="/blog" className="hover:text-foreground hover:underline transition-colors">Blog</Link>
           <span className="text-muted-foreground/50">|</span>
           <Link href="/contact" className="hover:text-foreground hover:underline transition-colors">Contact</Link>
           <span className="text-muted-foreground/50">|</span>

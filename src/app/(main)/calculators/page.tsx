@@ -6,8 +6,9 @@ import { DynamicCalculatorList } from '@/components/calculators/dynamic-calculat
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'All Financial Calculators | Numeraise',
-  description: 'Explore our collection of 50+ premium financial calculators designed to help you make smarter money decisions.',
+  title: 'All Financial Calculators',
+  description:
+    'Every Numeraise calculator in one place — investments, loans, tax, savings, insurance, retirement, property and everyday maths. Free, with formulas shown.',
   alternates: {
     canonical: '/calculators',
   },

@@ -1,6 +1,8 @@
 export const metadata = {
-  title: 'Disclaimer - Numeraise',
-  description: 'Financial Disclaimer for the Numeraise platform.',
+  title: 'Financial Disclaimer',
+  description:
+    'Numeraise provides educational calculators, not financial advice. Read the limitations of our estimates and when to consult a licensed professional.',
+  alternates: { canonical: '/disclaimer' },
 };
 
 export default function DisclaimerPage() {

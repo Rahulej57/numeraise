@@ -2,6 +2,7 @@ import { CALCULATOR_DIRECTORY } from '@/config/calculators';
 import { DynamicCalculatorClient } from '@/components/calculators/dynamic-calculator-client';
 import { StructuredData } from '@/components/seo/structured-data';
 import { DynamicSEO } from '@/components/calculators/dynamic-seo';
+import { SITE_URL } from '@/config/site';
 
 // Find name from config or directory
 const getCalculatorMetadata = (slug: string) => {
@@ -36,7 +37,7 @@ export default function CalculatorPage() {
           data={{
             name: meta.name,
             description: meta.desc,
-            url: `https://www.numeraise.com/calculators/${slug}`,
+            url: `${SITE_URL}/calculators/${slug}`,
           }}
         />
       </DynamicCalculatorClient>

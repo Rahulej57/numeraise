@@ -1,12 +1,49 @@
+import type { Metadata } from 'next';
 import { GLOSSARY_TERMS } from '@/config/glossary';
 import { BookOpen, ChevronLeft, Lightbulb, Calculator, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { StructuredData } from '@/components/seo/structured-data';
+import { SITE_URL } from '@/config/site';
 
 export async function generateStaticParams() {
   return GLOSSARY_TERMS.map((term) => ({
     slug: term.slug,
   }));
+}
+
+/**
+ * Every glossary detail page previously inherited the root layout's title and
+ * description verbatim and emitted no canonical, so all 15 collapsed into a
+ * single duplicate cluster and none could be indexed on their own.
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const term = GLOSSARY_TERMS.find((t) => t.slug === slug);
+
+  if (!term) {
+    return { title: 'Term Not Found', robots: { index: false, follow: true } };
+  }
+
+  // Keep the description inside the ~155 char SERP window without cutting a word.
+  const description =
+    term.shortDef.length > 155 ? `${term.shortDef.slice(0, 152).replace(/\s+\S*$/, '')}...` : term.shortDef;
+
+  return {
+    title: `${term.term}: Meaning, Formula & Example`,
+    description,
+    alternates: { canonical: `/glossary/${term.slug}` },
+    openGraph: {
+      title: `${term.term} - Definition & Example`,
+      description,
+      url: `${SITE_URL}/glossary/${term.slug}`,
+      type: 'article',
+    },
+  };
 }
 
 export default async function GlossarySlugPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -20,6 +57,35 @@ export default async function GlossarySlugPage({ params }: { params: Promise<{ s
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl min-h-[70vh]">
+      <StructuredData
+        type="BreadcrumbList"
+        data={{
+          breadcrumbs: [
+            { name: 'Home', url: '/' },
+            { name: 'Glossary', url: '/glossary' },
+            { name: termData.term, url: `/glossary/${termData.slug}` },
+          ],
+        }}
+      />
+      {/* DefinedTerm is the correct schema type here and is eligible for rich results. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'DefinedTerm',
+            '@id': `${SITE_URL}/glossary/${termData.slug}`,
+            name: termData.term,
+            description: termData.shortDef,
+            inDefinedTermSet: {
+              '@type': 'DefinedTermSet',
+              '@id': `${SITE_URL}/glossary`,
+              name: 'Numeraise Financial Glossary',
+              url: `${SITE_URL}/glossary`,
+            },
+          }),
+        }}
+      />
       <div className="mb-6">
         <Link
           href="/glossary"

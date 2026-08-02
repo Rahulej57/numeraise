@@ -4,41 +4,49 @@ import { Newspaper, Calendar, User, Clock, ChevronLeft } from 'lucide-react';
 import { getPostBySlug, getAllPosts } from '@/lib/blog';
 import type { Metadata } from 'next';
 import { CurrencyAwareMarkdown } from '@/components/blog/currency-aware-markdown';
+import { SITE_URL, SITE_NAME } from '@/config/site';
+import { findAuthorByName } from '@/config/authors';
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://www.numeraise.com';
+const BASE_URL = SITE_URL;
 
-// Fix 4: Dynamic metadata per article with title length constraint
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const post = getPostBySlug(resolvedParams.slug);
-  if (!post) return { title: 'Article Not Found | Numeraise' };
+  if (!post) return { title: 'Article Not Found' };
 
-  // Shorten title if it is too long (keep title + " | Numeraise" <= 65 chars, or use title as is if already short)
-  const suffix = " | Numeraise";
+  // The root layout appends " | Numeraise" via its title template, so keep the
+  // bare title here and only trim if the combined length would be truncated in
+  // the SERP (~60 visible chars).
+  const suffixLength = ` | ${SITE_NAME}`.length;
   let metaTitle = post.title;
-  if (metaTitle.length + suffix.length > 68) {
-    // Try to truncate title nicely or use a shortened version
-    const maxTitleLen = 65 - suffix.length;
-    metaTitle = metaTitle.substring(0, maxTitleLen).trim() + "...";
+  if (metaTitle.length + suffixLength > 68) {
+    metaTitle = metaTitle.substring(0, 65 - suffixLength).trim() + '...';
   }
-  const titleWithSuffix = `${metaTitle}${suffix}`;
+
+  const authorProfile = findAuthorByName(post.author);
 
   return {
-    title: titleWithSuffix,
+    title: metaTitle,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
+    authors: [
+      authorProfile
+        ? { name: post.author, url: `${SITE_URL}/authors/${authorProfile.slug}` }
+        : { name: post.author },
+    ],
     openGraph: {
-      title: titleWithSuffix,
+      title: metaTitle,
       description: post.excerpt,
       url: `${BASE_URL}/blog/${post.slug}`,
       type: 'article',
       publishedTime: post.date,
+      modifiedTime: post.date,
       authors: [post.author],
       images: [{ url: '/og-image.png', width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: titleWithSuffix,
+      title: metaTitle,
       description: post.excerpt,
       images: ['/og-image.png'],
     },
@@ -59,20 +67,24 @@ export default async function ArticleSlugPage({ params }: { params: Promise<{ sl
     notFound();
   }
 
-  // Fix 5: Article JSON-LD schema for Google Discover & rich results
+  const authorProfile = findAuthorByName(post.author);
+
+  // Article JSON-LD. `author` resolves to the Person node on the author page and
+  // `publisher` to the Organization node declared once in the root layout, so
+  // the whole site collapses into a single entity graph rather than repeating
+  // loose name strings on every article.
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: post.title,
     description: post.excerpt,
-    author: { '@type': 'Person', name: post.author },
+    author: authorProfile
+      ? { '@id': `${SITE_URL}/authors/${authorProfile.slug}` }
+      : { '@type': 'Person', name: post.author },
     datePublished: post.date,
     dateModified: post.date,
-    publisher: {
-      '@type': 'Organization',
-      name: 'Numeraise',
-      url: BASE_URL,
-    },
+    inLanguage: 'en',
+    publisher: { '@id': `${SITE_URL}/#organization` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE_URL}/blog/${post.slug}` },
     image: `${BASE_URL}/og-image.png`,
   };
@@ -109,13 +121,21 @@ export default async function ArticleSlugPage({ params }: { params: Promise<{ sl
         <div className="flex flex-wrap items-center text-muted-foreground gap-y-2 gap-x-6 text-sm">
           <div className="flex items-center gap-1.5">
             <User className="w-4 h-4" />
-            <span>{post.author}</span>
+            {/* A byline that links to a real author profile is a far stronger
+                trust signal on a YMYL page than a bare name string. */}
+            {authorProfile ? (
+              <Link href={`/authors/${authorProfile.slug}`} className="hover:text-primary hover:underline">
+                {post.author}
+              </Link>
+            ) : (
+              <span>{post.author}</span>
+            )}
           </div>
           <div className="flex items-center gap-1.5">
             <Calendar className="w-4 h-4" />
-            <span>
+            <time dateTime={post.date}>
               {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-            </span>
+            </time>
           </div>
           <div className="flex items-center gap-1.5">
             <Clock className="w-4 h-4" />
