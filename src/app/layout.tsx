@@ -8,6 +8,7 @@ import { Footer } from '@/components/layout/footer';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import Script from 'next/script';
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION, SOCIAL_PROFILES, CONTACT_EMAIL } from '@/config/site';
+import { ROBOTS_DIRECTIVE } from '@/config/deployment';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -55,17 +56,10 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: ['/og-image.png'],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+  // Resolves to noindex,nofollow on any preview or branch deployment, so a
+  // generated *.vercel.app or *.netlify.app URL can never rank against the
+  // canonical domain. See src/config/deployment.ts.
+  robots: ROBOTS_DIRECTIVE,
   verification: {
     google: process.env.NEXT_PUBLIC_SEARCH_CONSOLE_ID,
   },
@@ -113,7 +107,20 @@ export default function RootLayout({
             strategy="afterInteractive"
           />
         )}
-        <Script
+        {/*
+          Plain <script>, NOT next/script's <Script>.
+
+          <Script> defaults to strategy="afterInteractive", which injects the tag
+          client-side after hydration. The Organization and WebSite graph was
+          therefore never present in the server HTML: measured across all 127
+          URLs, `"@type":"Organization"` appeared 0 times, while 86 pages emitted
+          `"provider":{"@id":".../#organization"}` and `"publisher":{...}`
+          references pointing at a node that did not exist. Every one of those
+          @id references was a dangling pointer.
+
+          Crawlers parse the server response. JSON-LD must be in it.
+        */}
+        <script
           id="global-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -124,10 +131,24 @@ export default function RootLayout({
                   '@type': 'Organization',
                   '@id': `${SITE_URL}/#organization`,
                   name: SITE_NAME,
+                  // Brand disambiguation. "Numeraise" sits one character from
+                  // "numeraire", an established economics term with its own
+                  // Wikipedia entity in the same subject domain -- Bing
+                  // autocorrects the query and the site does not rank for its
+                  // own brand. alternateName plus sameAs are the on-page half of
+                  // teaching engines this is a distinct entity.
+                  alternateName: ['Numeraise.com', 'Numeraise Calculators'],
                   url: SITE_URL,
                   description: SITE_DESCRIPTION,
                   email: CONTACT_EMAIL,
                   foundingDate: '2026-06-08',
+                  knowsAbout: [
+                    'Personal finance',
+                    'Investment calculators',
+                    'Loan amortisation',
+                    'Indian income tax',
+                    'Retirement planning',
+                  ],
                   logo: {
                     '@type': 'ImageObject',
                     '@id': `${SITE_URL}/#logo`,
