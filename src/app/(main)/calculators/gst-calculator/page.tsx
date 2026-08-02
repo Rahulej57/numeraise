@@ -134,6 +134,8 @@ Calculate your own: ${shareUrl}`;
                   <div className="flex items-center gap-2">
                     <input
                       type="number"
+                      inputMode="decimal"
+                      aria-label={`Select ${taxName} rate in percent`}
                       value={taxRate}
                       onChange={(e) => setTaxRate(Number(e.target.value) || 0)}
                       className="w-16 h-8 text-right bg-background border rounded-md px-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary/20"

@@ -2,6 +2,7 @@ import { HeroSection } from '@/components/home/hero-section';
 import { CategoryShowcase } from '@/components/home/category-showcase';
 import { PopularCalculators } from '@/components/home/popular-calculators';
 import { ComparisonShowcase } from '@/components/home/comparison-showcase';
+import { HomeIntro } from '@/components/home/home-intro';
 
 export const metadata = {
   // `title.absolute` opts out of the root layout's "%s | Numeraise" template so
@@ -21,6 +22,8 @@ export default function HomePage() {
       <PopularCalculators />
       <CategoryShowcase />
       <ComparisonShowcase />
+      {/* The homepage rendered 153 visible words before this. */}
+      <HomeIntro />
     </div>
   );
 }

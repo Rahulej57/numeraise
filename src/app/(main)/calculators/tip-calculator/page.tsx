@@ -83,7 +83,12 @@ export default function TipCalculatorPage() {
                   <span className="text-primary font-bold">{tipPercent}%</span>
                 </div>
                 <input
+                  // The Label above already targets id="tip"; the input never
+                  // had one, so the association was broken and the control had
+                  // no accessible name.
+                  id="tip"
                   type="range"
+                  aria-valuetext={`${tipPercent} percent`}
                   min="0"
                   max="30"
                   step="1"

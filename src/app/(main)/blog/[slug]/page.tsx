@@ -9,6 +9,25 @@ import { findAuthorByName } from '@/config/authors';
 
 const BASE_URL = SITE_URL;
 
+/**
+ * Trims text to fit the SERP description window, preferring a sentence boundary
+ * over a hard cut so the result still reads as a finished sentence.
+ */
+function truncateForSerp(text: string, max: number): string {
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= max) return clean;
+
+  // Prefer ending on a full stop, but only if it still fills most of the budget.
+  // A lower threshold produced a 91-character description from a 245-character
+  // excerpt, which is as bad as being too long -- Google discards short
+  // descriptions and writes its own from page text.
+  const cut = clean.slice(0, max);
+  const lastStop = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('? '), cut.lastIndexOf('! '));
+  if (lastStop > max * 0.75) return cut.slice(0, lastStop + 1);
+
+  return `${cut.replace(/\s+\S*$/, '')}...`;
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const post = getPostBySlug(resolvedParams.slug);
@@ -17,17 +36,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   // The root layout appends " | Numeraise" via its title template, so keep the
   // bare title here and only trim if the combined length would be truncated in
   // the SERP (~60 visible chars).
+  // Google renders roughly 60 characters of title. Budget for the suffix so the
+  // combined string fits, rather than letting it truncate mid-word in the SERP.
   const suffixLength = ` | ${SITE_NAME}`.length;
   let metaTitle = post.title;
-  if (metaTitle.length + suffixLength > 68) {
-    metaTitle = metaTitle.substring(0, 65 - suffixLength).trim() + '...';
+  if (metaTitle.length + suffixLength > 60) {
+    metaTitle = metaTitle.substring(0, 57 - suffixLength).trim() + '...';
   }
+
+  /*
+   * Frontmatter excerpts are written for the article card, not the SERP, and
+   * ran 180-245 characters on four posts — Google truncates around 160. Trim on
+   * a sentence boundary where possible so the description still reads as a
+   * complete thought rather than stopping mid-clause with an ellipsis.
+   */
+  const metaDescription = truncateForSerp(post.excerpt, 158);
 
   const authorProfile = findAuthorByName(post.author);
 
   return {
     title: metaTitle,
-    description: post.excerpt,
+    description: metaDescription,
     alternates: { canonical: `/blog/${post.slug}` },
     authors: [
       authorProfile

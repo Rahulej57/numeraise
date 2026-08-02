@@ -278,30 +278,133 @@ export const COMPARISON_SLUGS = Object.keys(comparisonRegistry);
  */
 export const COMPARISON_SEO: Record<
   string,
-  { title: string; description: string; heading: string; intro: string }
+  {
+    title: string;
+    description: string;
+    heading: string;
+    intro: string;
+    /**
+     * Long-form body copy. These pages rendered 156-170 visible words each,
+     * which is not enough to rank for terms as competitive as "rent vs buy".
+     * Rendered as h2 + paragraphs beneath the calculator.
+     */
+    body: { heading: string; paragraphs: string[] }[];
+  }
 > = {
   'sip-vs-fd': {
     title: 'SIP vs FD Calculator: Which Builds More Wealth?',
     description:
-      'Compare equity SIP returns against a fixed deposit side by side. See maturity value, post-tax returns and the real inflation-adjusted difference over your chosen tenure.',
+      'Compare equity SIP returns against a fixed deposit side by side. See maturity value, post-tax returns and the real inflation-adjusted gap.',
     heading: 'SIP vs Fixed Deposit: The Complete Comparison',
     intro:
       'A fixed deposit gives you a guaranteed rate and zero volatility. An equity SIP gives you no guarantee and significant year-to-year swings, but a far higher expected return over long periods. This calculator shows you exactly what that trade-off is worth in your own numbers, including the tax treatment that most comparisons quietly ignore.',
+    body: [
+      {
+        heading: 'The comparison most articles get wrong',
+        paragraphs: [
+          'Most SIP versus FD comparisons put a 12% equity assumption next to a 7% deposit rate, declare equity the winner, and stop. That is not a comparison, it is an assumption restated. The two products differ on three axes that all matter: the certainty of the return, the tax treatment of the gain, and what inflation does to each over the holding period.',
+          'Certainty is the honest advantage of a fixed deposit. The maturity value is contractual. You will receive it whether markets rose or fell, and for money you need on a known date within the next few years that is worth more than a higher expected return. An equity SIP offers no such promise: a five-year window can and does end below where it started.',
+        ],
+      },
+      {
+        heading: 'Where tax changes the answer',
+        paragraphs: [
+          'Fixed deposit interest is taxable at your slab rate, in the year it accrues, whether or not you withdraw it. For someone in the 30% bracket, a 7% deposit returns roughly 4.9% after tax. If inflation is running near 6%, that is a real loss of purchasing power on money that felt safe.',
+          'Equity held beyond the long-term threshold is taxed more favourably, and only when you actually sell. That deferral matters: gains left invested keep compounding on the untaxed amount, which widens the gap over long horizons well beyond what the headline rates suggest.',
+          'This is why the post-tax column in the calculator above is the one to read. The pre-tax comparison flatters the deposit for lower earners and flatters equity for nobody in particular.',
+        ],
+      },
+      {
+        heading: 'When a fixed deposit is genuinely the right answer',
+        paragraphs: [
+          'For an emergency fund, a deposit wins outright. The purpose of that money is to be available and intact on an unpredictable day, and volatility defeats both requirements.',
+          'The same applies to any goal inside about three years — a house deposit, a wedding, school fees. The expected return on equity is higher, but the distribution of outcomes over three years is wide enough that you could be forced to sell into a drawdown. Matching the instrument to the time horizon matters more than maximising the expected return.',
+          'And if a 20% paper loss would genuinely cause you to stop investing and sell, then your real return from equity is not the historical average. It is whatever you capture before you panic, which is usually considerably less. A deposit you hold beats an SIP you abandon.',
+        ],
+      },
+      {
+        heading: 'When the SIP is the right answer',
+        paragraphs: [
+          'Over ten years and longer, the arithmetic strongly favours equity for money you will not touch. The volatility that makes equity unsuitable for a two-year goal is precisely what generates the premium over a long one, and monthly investing averages your purchase price across the cycle rather than betting on a single entry point.',
+          'Run both columns with your own numbers, then check the difference against what a fixed deposit leaves you after tax and inflation. For most long-horizon goals the gap is not marginal.',
+        ],
+      },
+    ],
   },
   'rent-vs-buy': {
     title: 'Rent vs Buy Calculator: Should You Buy a Home?',
     description:
-      'Work out whether renting and investing the difference beats buying. Factors in down payment, loan interest, property appreciation, rent inflation and opportunity cost.',
+      'Work out whether renting and investing the difference beats buying. Factors in down payment, loan interest, appreciation and opportunity cost.',
     heading: 'Rent vs Buy: What the Numbers Actually Say',
     intro:
       'Buying a home is usually framed as obviously better than "throwing money away on rent". That framing ignores opportunity cost: the down payment and the gap between EMI and rent could have been invested. This calculator runs both paths in parallel over your full tenure and reports the net worth difference at the end.',
+    body: [
+      {
+        heading: 'The cost that never appears in the brochure',
+        paragraphs: [
+          'The rent-is-wasted argument treats an EMI as saving and rent as spending. But a large share of an early EMI is not saving either — it is interest, and interest is exactly as gone as rent. On a twenty-year loan at 8.5%, the first few years are overwhelmingly interest, and the principal you are actually accumulating is small.',
+          'The larger omission is opportunity cost. A down payment is capital removed from every other use. If it would otherwise have been invested, the buying case has to beat not just rent but rent plus the compounded return on that capital plus the compounded return on any monthly gap between EMI and rent. That is the comparison the calculator above runs.',
+        ],
+      },
+      {
+        heading: 'Costs buyers systematically forget',
+        paragraphs: [
+          'Stamp duty and registration are payable immediately and are not recoverable on sale. Brokerage applies at both ends. Then there is the recurring set that a tenant simply does not pay: society maintenance, property tax, insurance, and the repairs an owner absorbs — waterproofing, plumbing, the periodic replacement of things that wear out.',
+          'Averaged across a full ownership period these add a meaningful percentage to the true cost, and they are absent from almost every rent-versus-buy comparison you will read.',
+        ],
+      },
+      {
+        heading: 'Why the answer is so sensitive to appreciation',
+        paragraphs: [
+          'Change the assumed appreciation rate by two percentage points and the result frequently flips. That sensitivity is the single most important thing to understand here, because appreciation is the input you know least about.',
+          'Property markets can stagnate for a decade. If you enter an optimistic figure because prices have risen recently, the calculator will duly report that buying wins — but you have assumed the conclusion. Run it again at a conservative rate and see whether the case survives. If it only works at aggressive appreciation, it is a bet on prices, not a housing decision.',
+        ],
+      },
+      {
+        heading: 'What the arithmetic cannot tell you',
+        paragraphs: [
+          'A home is not purely a financial instrument. Security of tenure, freedom to alter the place, staying in one school catchment, and not having a landlord end your lease at twelve months notice are real benefits that no calculator prices.',
+          'The honest use of this tool is not to be told what to do. It is to find out what the non-financial benefits are costing you, so you can decide whether they are worth that number. Sometimes they clearly are. The point is knowing the figure rather than assuming it is zero.',
+        ],
+      },
+    ],
   },
   'old-vs-new-tax': {
     title: 'Old vs New Tax Regime Calculator (FY 2026-27)',
     description:
-      'Compare your income tax liability under the old and new regimes. Enter your salary and deductions to see which regime saves you more, and the exact break-even deduction amount.',
+      'Compare your tax liability under the old and new regimes. Enter salary and deductions to see which saves more, and your exact break-even point.',
     heading: 'Old vs New Tax Regime: Which Should You Pick?',
     intro:
       'The new regime offers lower slab rates but strips out almost every deduction. The old regime keeps 80C, HRA, and the rest but taxes you at higher rates. Which one wins depends entirely on how much you actually claim. This calculator finds your personal break-even point instead of giving you a generic rule of thumb.',
+    body: [
+      {
+        heading: 'There is no universal answer, and that is the point',
+        paragraphs: [
+          'Every article promising that one regime is better for a given salary is guessing at the variable that actually decides it. Income sets the slab, but deductions set the outcome. Two people earning identically can land on opposite sides depending on whether they rent, hold a home loan, and genuinely use their 80C limit.',
+          'The break-even is the deduction total at which both regimes produce the same liability. Below it the new regime wins on its lower rates; above it the old regime wins because the deductions are worth more than the rate difference. Your job is to work out honestly which side of that line you sit on.',
+        ],
+      },
+      {
+        heading: 'Claimed, not claimable',
+        paragraphs: [
+          'The commonest error is entering the deductions you could theoretically claim rather than the ones you actually will. A full 80C limit assumes you genuinely invest that amount and can evidence it. HRA assumes you pay rent, have a rent agreement, and can produce the landlord PAN where required.',
+          'People routinely choose the old regime on the strength of deductions they then fail to substantiate at filing, and end up worse off than the new regime would have left them. Enter what you will actually claim and can actually prove.',
+        ],
+      },
+      {
+        heading: 'What the old regime keeps that the new one does not',
+        paragraphs: [
+          'The old regime retains HRA exemption, 80C, health insurance premium relief, home loan interest deduction on a let-out or self-occupied property, education loan interest, and the rest of the familiar set. For a salaried person renting in a metro while servicing a home loan, those can add up to a substantial figure.',
+          'The new regime removes nearly all of them in exchange for lower rates and a higher basic exemption. Its real advantage is not only arithmetic — it is that filing becomes simple, with nothing to document and nothing to defend.',
+        ],
+      },
+      {
+        heading: 'A decision you revisit annually',
+        paragraphs: [
+          'Salaried taxpayers can generally switch between regimes each year, so this is not a permanent commitment. It is worth rerunning whenever your circumstances change: taking or clearing a home loan, moving between renting and owning, or a significant change in income.',
+          'Slabs, thresholds and the deductions available are revised between budgets. Confirm the current year rules before filing, and for anything material take advice from a qualified tax professional rather than from a calculator — including this one.',
+        ],
+      },
+    ],
   },
 };

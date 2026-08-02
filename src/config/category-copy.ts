@@ -16,7 +16,7 @@ export interface CategoryCopy {
 
 export const CATEGORY_INTROS: Record<string, CategoryCopy> = {
   investments: {
-    title: 'Investment Calculators: SIP, Lumpsum, CAGR & Returns',
+    title: 'Investment Calculators: SIP, Lumpsum & CAGR',
     description:
       'Free investment calculators for SIP, lumpsum, CAGR, SWP and mutual fund returns. Every formula is shown, results update instantly, and nothing is stored.',
     intro:
@@ -30,7 +30,7 @@ export const CATEGORY_INTROS: Record<string, CategoryCopy> = {
     ],
   },
   loans: {
-    title: 'Loan & EMI Calculators: Home, Car, Personal & Refinance',
+    title: 'Loan & EMI Calculators: Home, Car & Personal',
     description:
       'Calculate EMI, total interest and full amortisation schedules for home, car, personal and education loans. Compare prepayment and refinancing scenarios instantly.',
     intro:
@@ -44,7 +44,7 @@ export const CATEGORY_INTROS: Record<string, CategoryCopy> = {
     ],
   },
   savings: {
-    title: 'Savings Calculators: FD, RD, PPF, EPF & Small Savings',
+    title: 'Savings Calculators: FD, RD, PPF & EPF',
     description:
       'Calculate maturity value and interest for fixed deposits, recurring deposits, PPF, EPF, NSC, SCSS and Sukanya Samriddhi with current scheme rules.',
     intro:
@@ -58,7 +58,7 @@ export const CATEGORY_INTROS: Record<string, CategoryCopy> = {
     ],
   },
   taxes: {
-    title: 'Tax Calculators: Income Tax, GST, HRA, Capital Gains & TDS',
+    title: 'Tax Calculators: Income Tax, GST & HRA',
     description:
       'Calculate income tax under old and new regimes, GST, VAT, sales tax, HRA exemption, capital gains and TDS. Slab-by-slab breakdowns, not just a final figure.',
     intro:
@@ -72,7 +72,7 @@ export const CATEGORY_INTROS: Record<string, CategoryCopy> = {
     ],
   },
   insurance: {
-    title: 'Insurance Calculators: Term Cover, HLV & Health Insurance',
+    title: 'Insurance Calculators: Term Cover & HLV',
     description:
       'Work out how much life cover you actually need using the human life value and income replacement methods, plus health insurance and premium estimators.',
     intro:
@@ -87,7 +87,7 @@ export const CATEGORY_INTROS: Record<string, CategoryCopy> = {
     ],
   },
   retirement: {
-    title: 'Retirement Calculators: NPS, Pension, FIRE & Corpus Planning',
+    title: 'Retirement Calculators: NPS, FIRE & Pension',
     description:
       'Calculate the retirement corpus you need, model NPS and pension outcomes, and find your financial independence number with inflation factored in.',
     intro:
@@ -101,7 +101,7 @@ export const CATEGORY_INTROS: Record<string, CategoryCopy> = {
     ],
   },
   business: {
-    title: 'Business Calculators: Break-Even, EBITDA, Margin & Markup',
+    title: 'Business Calculators: Break-Even & Margin',
     description:
       'Calculate break-even volume, EBITDA, gross margin, markup and ROI for your business. Clear formulas for pricing and profitability decisions.',
     intro:
@@ -115,7 +115,7 @@ export const CATEGORY_INTROS: Record<string, CategoryCopy> = {
     ],
   },
   'real-estate': {
-    title: 'Real Estate Calculators: Rent vs Buy, Rental Yield & Stamp Duty',
+    title: 'Property Calculators: Rent vs Buy & Yield',
     description:
       'Compare renting against buying, calculate rental yield and stamp duty, and see the full cost of property ownership including opportunity cost.',
     intro:
@@ -129,7 +129,7 @@ export const CATEGORY_INTROS: Record<string, CategoryCopy> = {
     ],
   },
   crypto: {
-    title: 'Crypto & Forex Calculators: Profit, Pip Value & Conversion',
+    title: 'Crypto & Forex Calculators: Profit & Pips',
     description:
       'Calculate crypto profit and loss, forex pip value and live currency conversions. Position sizing and P&L maths without the noise.',
     intro:
@@ -143,7 +143,7 @@ export const CATEGORY_INTROS: Record<string, CategoryCopy> = {
     ],
   },
   health: {
-    title: 'Health Calculators: BMI, BMR, Body Fat & Pregnancy Due Date',
+    title: 'Health Calculators: BMI, BMR & Body Fat',
     description:
       'Calculate BMI, BMR, daily calorie needs, body fat percentage and pregnancy due date using standard clinical formulas.',
     intro:
@@ -157,7 +157,7 @@ export const CATEGORY_INTROS: Record<string, CategoryCopy> = {
     ],
   },
   utility: {
-    title: 'Everyday Calculators: Percentage, Discount, Tip, Age & Units',
+    title: 'Everyday Calculators: Percentage, Tip & Age',
     description:
       'Fast everyday calculators for percentages, discounts, tips, age, date differences and unit conversion. No signup, works on mobile.',
     intro:

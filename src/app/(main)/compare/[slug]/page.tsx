@@ -78,10 +78,18 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
 
       {seo && (
         <div className="container mx-auto px-4 pb-16 max-w-3xl">
-          <div className="prose prose-slate dark:prose-invert max-w-none">
+          <article className="prose prose-slate dark:prose-invert max-w-none">
             <h2>{seo.heading}</h2>
             <p>{seo.intro}</p>
-          </div>
+            {seo.body?.map((section, i) => (
+              <section key={i}>
+                <h2>{section.heading}</h2>
+                {section.paragraphs.map((p, j) => (
+                  <p key={j}>{p}</p>
+                ))}
+              </section>
+            ))}
+          </article>
         </div>
       )}
     </>

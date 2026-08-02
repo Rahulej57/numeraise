@@ -29,9 +29,32 @@ export async function generateMetadata({
     return { title: 'Term Not Found', robots: { index: false, follow: true } };
   }
 
-  // Keep the description inside the ~155 char SERP window without cutting a word.
+  /*
+   * `shortDef` alone ran 64-108 characters on all 15 terms — well under the
+   * ~120-160 window, which invites Google to discard the description and
+   * synthesise its own from page text.
+   *
+   * Compose instead: the definition, then a tail naming what the page actually
+   * contains. The tail is chosen by what the term genuinely has, so it stays
+   * truthful rather than boilerplate, and the longest one that still fits is
+   * preferred so short definitions get the most padding.
+   */
+  const tails = [
+    term.formula && term.example
+      ? ' Includes the formula, a worked example and the key points to remember.'
+      : null,
+    term.formula ? ' Includes the formula and the key points to remember.' : null,
+    term.example ? ' Includes a worked example and the key points to remember.' : null,
+    ' Plain-English definition with the key points to remember.',
+    ' Plain-English definition.',
+    '',
+  ].filter((t): t is string => t !== null);
+
+  const base = term.shortDef.trim();
   const description =
-    term.shortDef.length > 155 ? `${term.shortDef.slice(0, 152).replace(/\s+\S*$/, '')}...` : term.shortDef;
+    tails.find((t) => (base + t).length <= 160) !== undefined
+      ? base + tails.find((t) => (base + t).length <= 160)!
+      : `${base.slice(0, 157).replace(/\s+\S*$/, '')}...`;
 
   return {
     title: `${term.term}: Meaning, Formula & Example`,
@@ -101,7 +124,15 @@ export default async function GlossarySlugPage({ params }: { params: Promise<{ s
           <BookOpen className="w-4 h-4" />
           Glossary Term
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">{termData.term}</h1>
+        {/*
+          Qualified with "Meaning" so the H1 does not collide with the calculator
+          of the same name. "Dividend Yield" was previously the H1 on both
+          /glossary/dividend-yield and /calculators/dividend-yield, which reads
+          to a crawler as two pages competing for one intent.
+        */}
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+          {termData.term}: Meaning &amp; Example
+        </h1>
         <p className="text-xl text-muted-foreground leading-relaxed border-l-4 border-primary pl-4">
           {termData.shortDef}
         </p>

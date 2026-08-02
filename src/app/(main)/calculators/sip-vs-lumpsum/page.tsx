@@ -112,7 +112,12 @@ export default function SipVsLumpsumPage() {
                   <span className="font-bold text-primary">{returnRate}%</span>
                 </div>
                 <input
+                  // The Label above already targets id="rate"; the input never
+                  // had one, so the association was broken and the control had
+                  // no accessible name.
+                  id="rate"
                   type="range"
+                  aria-valuetext={`${returnRate} percent`}
                   min="1"
                   max="30"
                   step="0.5"
