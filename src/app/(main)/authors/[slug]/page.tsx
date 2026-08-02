@@ -23,7 +23,11 @@ export async function generateMetadata({
 
   return {
     title: `${author.name} - Author Profile`,
-    description: `${author.name}, ${author.role}. Articles and calculators published on Numeraise.`,
+    // Targets 120-160. The bare name-and-role version measured 93, short enough
+    // that Google would discard it and synthesise its own from page text.
+    description:
+      `${author.name}, ${author.role}. The articles and calculators they publish, ` +
+      'and how every figure is checked before it goes live.',
     alternates: { canonical: `/authors/${author.slug}` },
     openGraph: {
       title: `${author.name} - Author Profile`,

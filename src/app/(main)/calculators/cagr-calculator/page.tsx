@@ -4,11 +4,10 @@ import { RelatedCalculators } from '@/components/calculators/related-calculators
 import { getRelatedCalculators } from '@/config/calculators';
 import { SITE_URL } from '@/config/site';
 
-export const metadata = {
-  title: 'CAGR Calculator | Calculate Compound Annual Growth Rate',
-  description:
-    'Calculate the Compound Annual Growth Rate (CAGR) of your investments to understand annualized returns over any time period.',
-};
+// Metadata for this page lives in ./layout.tsx, driven by
+// src/config/calculator-seo.ts. A page-level export const metadata here would
+// silently override the layout and bypass that config, which is how this page
+// ended up with a title longer than the SERP window.
 
 export default function CagrCalculatorPage() {
   return (

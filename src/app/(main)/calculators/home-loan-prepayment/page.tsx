@@ -7,11 +7,10 @@ import { RelatedCalculators } from '@/components/calculators/related-calculators
 import { getRelatedCalculators } from '@/config/calculators';
 import { SITE_URL } from '@/config/site';
 
-export const metadata = {
-  title: 'Home Loan Prepayment Calculator | EMI Savings & Tenure Reduction',
-  description:
-    'Calculate how much interest and time you can save by making a part-payment on your home loan while keeping your EMI constant.',
-};
+// Metadata for this page lives in ./layout.tsx, driven by
+// src/config/calculator-seo.ts. A page-level export const metadata here would
+// silently override the layout and bypass that config, which is how this page
+// ended up with a title longer than the SERP window.
 
 export default function HomeLoanPrepaymentPage() {
   const relatedCalcs = getRelatedCalculators('home-loan-prepayment');

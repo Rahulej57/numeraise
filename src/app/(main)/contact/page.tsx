@@ -2,7 +2,10 @@ import { Mail } from 'lucide-react';
 import { ContactForm } from '@/components/contact-form';
 
 export const metadata = {
-  title: 'Contact Us',
+  // "Contact Us | Numeraise" is only 22 characters — well under the ~60 the SERP
+  // allows, which wastes the most prominent line in the result. The brand is
+  // added by the layout's title template, so it must not be repeated here.
+  title: 'Contact Us: Support & Corrections',
   description:
     'Get in touch with the Numeraise team for support, corrections to a calculator, feature requests or business enquiries. We read every message.',
   alternates: { canonical: '/contact' },
