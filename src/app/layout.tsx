@@ -9,6 +9,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import Script from 'next/script';
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION, SOCIAL_PROFILES, CONTACT_EMAIL } from '@/config/site';
 import { ROBOTS_DIRECTIVE } from '@/config/deployment';
+import { bylineFor } from '@/config/authors';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -29,7 +30,9 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   metadataBase: new URL(SITE_URL),
   applicationName: SITE_NAME,
-  authors: [{ name: 'Rahul Sharma, CFA', url: `${SITE_URL}/authors/rahul-sharma` }],
+  // Derived from src/config/authors.ts rather than hardcoded, so the site-wide
+  // author meta tag cannot assert a credential that config treats as unverified.
+  authors: [{ name: bylineFor('Rahul Sharma'), url: `${SITE_URL}/authors/rahul-sharma` }],
   creator: SITE_NAME,
   publisher: SITE_NAME,
   openGraph: {

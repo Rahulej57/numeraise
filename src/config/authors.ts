@@ -72,3 +72,36 @@ export function findAuthorByName(name: string): Author | undefined {
   const base = name.split(',')[0].trim().toLowerCase();
   return Object.values(AUTHORS).find((a) => a.name.toLowerCase() === base);
 }
+
+/**
+ * Bio paragraphs that are safe to publish.
+ *
+ * Scaffold text is marked with a PLACEHOLDER prefix and filtered here rather
+ * than relying on someone remembering to delete it. Both placeholder paragraphs
+ * were live on /authors/rahul-sharma as visible body copy — on a page whose
+ * entire purpose is establishing credibility, which made it worse than having
+ * no author page at all.
+ */
+export function publishableBio(author: Author): string[] {
+  return author.bio.filter((p) => !p.trimStart().toUpperCase().startsWith('PLACEHOLDER'));
+}
+
+/**
+ * The byline to publish for a given author.
+ *
+ * Markdown frontmatter bylines the posts as "Rahul Sharma, CFA", but this
+ * config is the only place a credential is treated as verified. Any suffix in
+ * the frontmatter is discarded and rebuilt from `credentials`, so an
+ * unverified designation cannot leak into a meta tag or JSON-LD via a content
+ * file. Claiming a professional credential that is not held is a real
+ * liability on a financial site, not a cosmetic issue.
+ */
+export function displayByline(author: Author): string {
+  return author.credentials.length ? `${author.name}, ${author.credentials.join(', ')}` : author.name;
+}
+
+/** Byline for a raw frontmatter string, falling back to the raw name if unknown. */
+export function bylineFor(rawAuthor: string): string {
+  const profile = findAuthorByName(rawAuthor);
+  return profile ? displayByline(profile) : rawAuthor;
+}

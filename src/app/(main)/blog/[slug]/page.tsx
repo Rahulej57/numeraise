@@ -5,7 +5,7 @@ import { getPostBySlug, getAllPosts } from '@/lib/blog';
 import type { Metadata } from 'next';
 import { CurrencyAwareMarkdown } from '@/components/blog/currency-aware-markdown';
 import { SITE_URL, SITE_NAME } from '@/config/site';
-import { findAuthorByName } from '@/config/authors';
+import { findAuthorByName, bylineFor } from '@/config/authors';
 
 const BASE_URL = SITE_URL;
 
@@ -53,6 +53,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const metaDescription = truncateForSerp(post.excerpt, 158);
 
   const authorProfile = findAuthorByName(post.author);
+  // Frontmatter bylines posts as "Rahul Sharma, CFA". src/config/authors.ts is
+  // the only place a credential counts as verified, so the byline is rebuilt
+  // from there and an unverified designation cannot reach a meta tag.
+  const byline = bylineFor(post.author);
 
   return {
     title: metaTitle,
@@ -60,8 +64,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     alternates: { canonical: `/blog/${post.slug}` },
     authors: [
       authorProfile
-        ? { name: post.author, url: `${SITE_URL}/authors/${authorProfile.slug}` }
-        : { name: post.author },
+        ? { name: byline, url: `${SITE_URL}/authors/${authorProfile.slug}` }
+        : { name: byline },
     ],
     openGraph: {
       title: metaTitle,
@@ -70,7 +74,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: 'article',
       publishedTime: post.date,
       modifiedTime: post.date,
-      authors: [post.author],
+      authors: [byline],
       images: [{ url: '/og-image.png', width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
@@ -97,6 +101,9 @@ export default async function ArticleSlugPage({ params }: { params: Promise<{ sl
   }
 
   const authorProfile = findAuthorByName(post.author);
+  // Rebuilt from src/config/authors.ts, so an unverified credential in the
+  // markdown frontmatter cannot reach the visible byline or the JSON-LD.
+  const byline = bylineFor(post.author);
 
   // Article JSON-LD. `author` resolves to the Person node on the author page and
   // `publisher` to the Organization node declared once in the root layout, so
@@ -109,7 +116,7 @@ export default async function ArticleSlugPage({ params }: { params: Promise<{ sl
     description: post.excerpt,
     author: authorProfile
       ? { '@id': `${SITE_URL}/authors/${authorProfile.slug}` }
-      : { '@type': 'Person', name: post.author },
+      : { '@type': 'Person', name: byline },
     datePublished: post.date,
     dateModified: post.date,
     inLanguage: 'en',
@@ -154,10 +161,10 @@ export default async function ArticleSlugPage({ params }: { params: Promise<{ sl
                 trust signal on a YMYL page than a bare name string. */}
             {authorProfile ? (
               <Link href={`/authors/${authorProfile.slug}`} className="hover:text-primary hover:underline">
-                {post.author}
+                {byline}
               </Link>
             ) : (
-              <span>{post.author}</span>
+              <span>{byline}</span>
             )}
           </div>
           <div className="flex items-center gap-1.5">

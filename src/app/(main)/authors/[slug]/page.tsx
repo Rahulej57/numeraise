@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Mail, PenLine } from 'lucide-react';
-import { AUTHORS, AUTHOR_SLUGS, getAuthor } from '@/config/authors';
+import { AUTHORS, AUTHOR_SLUGS, getAuthor, publishableBio, displayByline } from '@/config/authors';
 import { getAllPosts } from '@/lib/blog';
 import { StructuredData } from '@/components/seo/structured-data';
 import { SITE_URL } from '@/config/site';
@@ -51,9 +51,9 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
     (p) => p.author.split(',')[0].trim().toLowerCase() === author.name.toLowerCase(),
   );
 
-  const displayName = author.credentials.length
-    ? `${author.name}, ${author.credentials.join(', ')}`
-    : author.name;
+  // Scaffold paragraphs are stripped rather than published. See publishableBio.
+  const bio = publishableBio(author);
+  const displayName = displayByline(author);
 
   return (
     <div className="container mx-auto px-4 py-16 max-w-3xl">
@@ -80,7 +80,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
             '@id': `${SITE_URL}/authors/${author.slug}`,
             name: author.name,
             jobTitle: author.role,
-            description: author.bio[0],
+            description: bio[0] ?? author.role,
             url: `${SITE_URL}/authors/${author.slug}`,
             ...(author.credentials.length ? { honorificSuffix: author.credentials.join(', ') } : {}),
             ...(author.email ? { email: author.email } : {}),
@@ -100,7 +100,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
       </div>
 
       <div className="prose prose-neutral dark:prose-invert max-w-none">
-        {author.bio.map((paragraph, i) => (
+        {bio.map((paragraph, i) => (
           <p key={i}>{paragraph}</p>
         ))}
 
