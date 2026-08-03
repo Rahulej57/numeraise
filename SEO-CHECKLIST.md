@@ -1,225 +1,210 @@
-# Numeraise SEO: what was fixed, and what you must do
+# Numeraise SEO status
 
-Baseline measured 2 Aug 2026 against the live site.
+Last verified: 3 Aug 2026, against production, all 127 sitemap URLs crawled.
 
-Domain registered **8 June 2026** (Verisign RDAP). Last deploy before this work:
-**5 July 2026**. So the site is ~8 weeks old and had been static for 4 weeks.
-
----
-
-## Part 1 — Fixed in code
-
-| # | Problem | Fix |
-|---|---------|-----|
-| 1 | `robots.ts` defaulted to **www**, `sitemap.ts` and `metadataBase` to **non-www**, all JSON-LD and `og:url` hardcoded **www** | `src/config/site.ts` is now the only place the domain appears. 45 files rewritten to use it. |
-| 2 | 15 glossary + 3 compare pages shipped the **root layout's title and description** with **no canonical** | `generateMetadata` added to both dynamic routes. Every page now has a unique title, description and canonical. |
-| 3 | Those same 18 pages were **orphans** — zero internal links anywhere | `/glossary` now links each term to its detail page (union of both glossary datasets). `/compare` was a redirect stub; it is now a real hub linking all three comparisons, and is in the footer. |
-| 4 | 11 category pages, `/glossary`, `/privacy`, `/terms`, `/disclaimer`, `/accessibility`, `/cookie-policy`, `/contact` had **no canonical** | All added. |
-| 5 | 10 live pages **missing from sitemap.xml** | Added, plus `/compare`, `/compare/*` and the new author page. |
-| 6 | `lastmod` used `new Date()` — 104 of 116 URLs shared one build timestamp | Now a stable `CONTENT_REVISION_DATE`; blog posts use real frontmatter dates. |
-| 7 | **69 of 74** calculators shared one generated meta description | `src/config/calculator-seo.ts` — hand-written title, description and keywords for all 73. |
-| 8 | `bmr-calculator` appeared **twice in the live sitemap** (BMR + TDEE entries, same href) | Merged into one entry; sitemap de-duplicates defensively. |
-| 9 | `/calculators/life-insurance-calculator` re-exported the term-insurance component — **two URLs, identical bytes** | 301 redirect to `/calculators/term-insurance-calculator`. |
-| 10 | `/calculators/life-insurance-calculator` was also **absent from the config** — orphan, not linked, not in sitemap | Resolved by the redirect above. |
-| 11 | Netlify preview domain served a **fully crawlable duplicate** (`_headers` used Cloudflare `*.pages.dev` syntax Netlify ignores) | `netlify.toml` now sets `X-Robots-Tag: noindex` on deploy-preview and branch contexts. `_headers` rewritten with valid syntax + security headers. |
-| 12 | `/about` claimed **"millions trust our calculators"** on a 55-day-old site | Rewritten: honest launch date, named maintainer, editorial standards, funding disclosure, YMYL disclaimer. |
-| 13 | No author entity; blog bylines were bare strings | `/authors/[slug]` with `Person` schema; bylines link to it; `Article.author` references it by `@id`. |
-| 14 | Organization schema had only name/url/logo | Added `sameAs` (your real FB/IG/X profiles), `contactPoint`, `foundingDate`, `SearchAction`. |
-| 15 | FAQ schema emitted **duplicate questions** (e.g. "What is hyperinflation?" twice on the inflation page) | De-duplicated; empty answers dropped. |
-| 16 | **36 calculators showed FAQs on-page but emitted no FAQ schema at all** — only 11 hand-written pages had it | `FAQAccordion` now emits `FAQPage` JSON-LD itself. Verified: **73 of 73** calculator pages emit valid schema, 0 duplicate blocks, 0 duplicate questions. |
-| 17 | `/admin` indexable if ever linked | `noindex, nofollow`. |
-| 18 | IndexNow script would silently do nothing on a redirect and could fail a build | Rewritten: follows redirects, batches, derives host from env, never fails the deploy. Verified returning HTTP 200. |
-| 19 | Category pages were bare link grids (thin doorway pattern) | `src/config/category-copy.ts` — 150-250 words of unique copy per hub (loans hub measured at 330 words). |
-| 20 | Thin calculator content | Structured content system + 3 pages rewritten. **See Part 3.** |
-
-### Verified after rebuild
-
-```
-tsc --noEmit                 exit 0
-npm run build                exit 0, all routes prerender
-sitemap URLs                 127 (was 116), 0 duplicates, 0 www
-pages missing canonical      0   (was 18+)
-duplicate <title> groups     0   (was 18 pages sharing one)
-duplicate descriptions       0   (was 69 pages sharing one)
-calculator FAQ schema        73/73 valid
-```
-
-Measured word counts on the three rewritten pages (visible text, chrome excluded):
-
-| Page | Before | After |
-|------|--------|-------|
-| `epf-calculator` | ~85 words of prose | **846** |
-| `break-even-calculator` | ~85 | **734** |
-| `rental-yield` | ~106 | **811** |
+Domain registered 8 June 2026, so the site is roughly eight weeks old. It now
+runs on Vercel with `numeraise.com` as the canonical apex.
 
 ---
 
-## Part 2 — What only you can do
-
-These are the highest-impact items on the whole list. Nothing in Part 1 matters
-without them.
-
-### 1. ~~Set the Netlify environment variable~~ — ALREADY DONE
-
-`NEXT_PUBLIC_APP_URL` is already set to `https://numeraise.com`. Confirmed
-because live `robots.txt` emits the non-www sitemap URL, which is only possible
-if the env var overrides the code default. Nothing to do.
-
-### 2. Deploy
-
-Repo is `github.com/Rahulej57/numeraise`, branch `master`, auto-publish on. The
-live build is from **5 July**. Push and it deploys itself:
-
-```bash
-git add -A && git commit -m "fix(seo): canonicals, metadata, orphan pages, duplicate URLs" && git push origin master
-```
-
-The `postbuild` IndexNow ping fires automatically (verified: HTTP 200 accepted).
-
-### 3. Bing Webmaster Tools — this is why Bing has nothing
-
-`BingSiteAuth.xml` returns 404 and there is no Bing DNS record. A June 17 deploy
-configured the IndexNow key, but the site itself was never registered in Bing
-Webmaster Tools — IndexNow pings for a domain Bing has no other signals about
-are largely ignored.
-
-**Do NOT use DNS verification.** See the warning below.
-
-1. https://www.bing.com/webmasters
-2. **Import from Google Search Console** — fastest, GSC is already verified, and
-   it sidesteps the DNS problem entirely
-3. Submit `https://numeraise.com/sitemap.xml`
-4. **URL Inspection → Request Indexing** on your 10 best pages
-
-Expect first Bing results in 1–3 weeks.
-
-### 3a. WARNING: Netlify's DNS panel is a dead end
-
-Netlify's Domain Management shows "✓ Netlify DNS" next to both domains. That is
-misleading. The actual authoritative nameservers are:
+## Current state — every technical check passes
 
 ```
-numeraise.com NS →  ns4.wixdns.net
-                    ns5.wixdns.net
+pages crawled                     127 / 127
+missing canonical                   0
+canonical not self-referential      0
+any www reference in HTML           0
+missing meta description            0
+not index,follow                    0
+duplicate titles                    0
+duplicate descriptions              0
+duplicate H1                        0
+title over 62 / under 25 chars      0
+description over 165 / under 110    0
+pages without Organization node     0
+dangling @id references             0
+calculators without FAQ schema      0   (73/73 have it)
+images missing alt                  0
+pages with 0 or >1 h1               0
+unlabelled form controls            0
+unverified CFA claim                0
+scaffold PLACEHOLDER text           0
 ```
 
-A Netlify DNS zone exists but Wix was never delegated to it. Your A record and
-`www` CNAME live at **Wix**, which is why the site resolves correctly — but
-**any DNS record added in Netlify's panel does nothing.**
+Infrastructure verified: apex serves 200, `www` and `numeraise.vercel.app` both
+308 to it, sitemap lists 127 apex URLs that all return 200, robots.txt points at
+the apex sitemap, 404s return 404, analytics live (`G-5KZWHTJNJ4`), IndexNow key
+and Google verification files serving.
 
-So: add DNS records at **Wix**, not Netlify. Or delegate properly by pointing
-Wix's nameservers at Netlify — but that migrates your SPF/ImprovMX mail records
-too, so only do it deliberately and copy every existing record first.
-
-Current TXT records (all at Wix): `google-site-verification`, `brevo-code`,
-`v=spf1 include:spf.improvmx.com`.
-
-### 4. Fill in the author profile — `src/config/authors.ts`
-
-Currently contains `PLACEHOLDER` text and `needsReview: true`.
-
-**Read the comment at the top of that file before editing.** Specifically: your
-blog posts are bylined "Rahul Sharma, CFA". Only keep the CFA designation if the
-charter is genuinely held and current. The CFA Institute enforces designation
-use, and an unverifiable professional credential on a financial site is the kind
-of trust signal that gets a YMYL domain suppressed rather than promoted. If it
-is not held, remove it here **and** from the `author:` line in every file under
-`src/content/blog/`.
-
-Add a LinkedIn URL to `sameAs` — highest-value single entry on the page.
-
-### 5. Get backlinks — the actual bottleneck
-
-Zero sites link to numeraise.com. This is why Google crawls you rarely and Bing
-not at all. Everything else is preparation for this.
-
-Realistic starting points: Product Hunt, Indie Hackers, relevant subreddits
-(read each one's self-promotion rules first), free-tools directories, your own
-social profiles. Five real links beat five hundred purchased ones — paid link
-networks are a manual-action risk, not a shortcut.
-
-### 6. ~~Lock down the Netlify subdomain~~ — FIXED IN CODE
-
-`netlify.toml` now carries a host-scoped 301 from
-`venerable-sherbet-10d546.netlify.app/*` to `https://numeraise.com/:splat`,
-plus `X-Robots-Tag: noindex` on preview and branch contexts.
-
-After deploying, confirm it worked:
-
-```bash
-curl -sI https://venerable-sherbet-10d546.netlify.app/ | head -3
-```
-
-You want `HTTP/2 301` and a `location:` header pointing at numeraise.com. If it
-still returns 200, fall back to **Site configuration → Build & deploy → Deploy
-Prime URL** protection in the Netlify UI.
+Average 504 visible words per page.
 
 ---
 
-## Part 3 — Content queue
+## Decisions taken, and why
 
-**Do not bulk-generate these.** Publishing ~30 near-identical long pages in one
-batch is "scaled content abuse" under Google's spam policies and is more likely
-to suppress the domain than lift it. Three or four a week, each genuinely
-different, is the right pace.
+**The CFA designation was removed.** Eleven markdown files bylined posts "Rahul
+Sharma, CFA" and the root layout hardcoded it into a site-wide author meta tag.
+The charter could not be verified. The CFA Institute enforces designation use,
+and an unverifiable credential on a YMYL finance site suppresses rather than
+builds trust. The decision is asymmetric: removing it is reversible in one line,
+publishing a false claim is not.
 
-Add entries to `src/config/calculator-deep-content.ts`. `DynamicSEO` picks them
-up automatically; anything not migrated falls back to the existing inline copy.
+If the charter *is* held, add `'CFA'` to `credentials` in `src/config/authors.ts`
+— it propagates to every byline, meta tag and JSON-LD node on the next build.
+Content files no longer control credentials, by design.
 
-Done (707–846 words each, all with valid FAQ schema):
-`epf-calculator` (846) · `pomis-calculator` (833) · `rental-yield` (811) ·
-`hra-exemption` (764) · `break-even-calculator` (734) · `scss-calculator` (707)
+**Two factual errors were found and corrected** after a source check:
 
-Aim for 800+ visible words per page. That is enough to compete on long-tail
-queries; chasing an arbitrary 1,500-word target produces padding, which is worse
-than a tight 800.
+- The HRA metro list was out of date. The Income-tax Rules 2026 (Rule 279) added
+  Bengaluru, Hyderabad, Pune and Ahmedabad from 1 April 2026, taking the 50%
+  list to eight cities. The old copy told readers claiming 50% in Bengaluru was
+  an error — it would have caused under-claiming in four major cities.
+- The EPF split claimed ~15.67% of basic compounds in EPF. That holds only at or
+  below the ₹15,000 EPS wage ceiling. Above it, EPS caps at ₹1,250 and the
+  remainder goes to EPF — 21.5% on a ₹50,000 basic.
 
-Remaining, ordered by value ÷ effort:
+Verified as correct and left alone: POMIS 7.4% / ₹9L / ₹15L, SCSS 8.2% / ₹30L /
+ages 60-55-50, the 8.33%–3.67% employer split, the least-of-three HRA structure,
+the landlord PAN threshold.
 
-| Priority | Slug | Current words |
-|----------|------|---------------|
-| 1 | `capital-gains-tax` | 145 |
-| 2 | `credit-card-payoff` | 154 |
-| 3 | `ssy-calculator` | 104 |
-| 4 | `nps-calculator` | 190 |
-| 5 | `ppf-calculator` | 228 |
-| 6 | `rd-calculator` | 161 |
-| 7 | `swp-calculator` | 234 |
-| 8 | `step-up-sip` | 247 |
-| 9 | `advance-tax` | 136 |
-| 10 | `tds-calculator` | 132 |
-
-Then: `nsc-calculator`, `gratuity-calculator`, `pension-calculator`,
-`fire-calculator`, `human-life-value`, `health-insurance-calculator`,
-`life-insurance-premium`, `stamp-duty`, `loan-refinance`,
-`education-loan-calculator`, `personal-loan-calculator`, `car-loan-emi`,
-`mutual-fund-returns`, `stock-profit`, `dividend-yield`, `margin-calculator`,
-`markup-calculator`, `roi-calculator`, `discount-calculator`, `ebitda-calculator`,
-`inflation-calculator`, `crypto-profit`, `forex-pip`.
+**Mobile UX was audited at 375×812 and needed no changes.** No horizontal
+overflow, tables fit with an `overflow-x: auto` fallback, no inputs trigger iOS
+zoom, and the slider thumb has a 44×44 effective hit area via `after:-inset-3`.
 
 ---
 
-## Part 4 — Expectations
+## What actually limits this site now
 
-Be realistic about the timeline, because the alternative is abandoning this at
-month four when it looks like nothing is working.
+Neither item is code. Both were true before this work and remain true.
 
-- **Weeks 1–2:** Bing begins indexing. Google recrawls and picks up the new
-  titles, descriptions and canonicals. The 18 previously-duplicate pages become
-  eligible for indexing for the first time.
-- **Weeks 3–8:** Indexed page count rises. First impressions on long-tail
-  queries. Traffic still close to zero — this is normal and not a signal of
-  failure.
-- **Months 3–6:** Long-tail rankings, assuming backlinks are being built and
-  content is being deepened. First meaningful traffic.
-- **Months 6–12:** Competitive terms become reachable — but only with a real
+### 1. One backlink
+
+Bing's own dashboard says it: *"Your site does not have enough inbound links
+from high quality domains."* Every technical check above passes; this is what
+sits between the site and traffic.
+
+`BACKLINKS.md` holds four ready-to-paste snippets for pomiscalculator.in. Worth
+doing when you set that site up, but be clear-eyed: it takes you from one
+backlink to about four, and search engines discount links between sites under
+common ownership. Housekeeping, not strategy.
+
+Realistic sources, in rough order of value:
+
+1. A Product Hunt or Indie Hackers launch — real referring domains, one afternoon.
+2. Reddit (r/IndiaInvestments, r/personalfinanceindia) — read each subreddit's
+   self-promotion rules first. A genuinely useful answer that happens to link a
+   calculator works; a bare link does not.
+3. Free-tool directories — AlternativeTo, SaaSHub and similar. Low value each,
+   but real domains and quick.
+4. Your own social profiles. The Facebook, Instagram and X accounts are already
+   in the Organization `sameAs`. Make sure each bio contains the literal string
+   "Numeraise" and links to numeraise.com — this also helps the brand collision
+   below.
+5. One piece of original data — e.g. PPF vs SSY vs SCSS returns compared across
+   the last ten rate revisions. Original analysis is the only reliable way to
+   earn links you did not ask for.
+
+**Do not buy links.** A manual action on a site carrying AdSense is a far worse
+outcome than slow growth.
+
+### 2. Content depth on the money pages
+
+A competitive crawl of the SERP numeraise loses for "sip calculator":
+
+| Site | Words |
+|---|---|
+| numeraise (after expansion) | **1,328** |
+| sipemicalc.com | 971 |
+| numerral.com | 1,287 |
+| planmymoney.in | 1,547 |
+| Groww | 2,211 |
+| finlane.ai | 4,737 |
+
+SIP was 597 words — last in its field — and is now mid-table. The same gap
+exists on other high-intent pages.
+
+---
+
+## Content queue
+
+Seven pages carry long-form content (707–1,328 words):
+`sip-calculator` · `epf-calculator` · `pomis-calculator` · `rental-yield` ·
+`hra-exemption` · `break-even-calculator` · `scss-calculator`
+
+Add entries to `src/config/calculator-deep-content.ts`; `DynamicSEO` picks them
+up automatically and anything not migrated falls back to existing inline copy.
+
+**Do not bulk-generate these.** Publishing ~30 near-identical long pages at once
+is scaled content abuse under Google's spam policies and is more likely to
+suppress the domain than lift it. Three or four a week, each genuinely
+different. Aim for 800+ visible words; chasing 1,500 produces padding.
+
+Next, by value ÷ effort:
+
+| # | Slug | Note |
+|---|---|---|
+| 1 | `emi-calculator` | highest intent after SIP, hand-written, not yet expanded |
+| 2 | `income-tax-calculator` | high intent, India, old-vs-new regime |
+| 3 | `capital-gains-tax` | 145 words |
+| 4 | `credit-card-payoff` | 154 |
+| 5 | `ssy-calculator` | 104 |
+| 6 | `nps-calculator` | 190 |
+| 7 | `ppf-calculator` | 228 |
+| 8 | `rd-calculator` | 161 |
+| 9 | `swp-calculator` | 234 |
+| 10 | `step-up-sip` | 247 |
+
+Then: `advance-tax`, `tds-calculator`, `nsc-calculator`, `gratuity-calculator`,
+`pension-calculator`, `fire-calculator`, `human-life-value`,
+`health-insurance-calculator`, `life-insurance-premium`, `stamp-duty`,
+`loan-refinance`, `education-loan-calculator`, `personal-loan-calculator`,
+`car-loan-emi`, `mutual-fund-returns`, `stock-profit`, `dividend-yield`,
+`margin-calculator`, `markup-calculator`, `roi-calculator`,
+`discount-calculator`, `ebitda-calculator`, `inflation-calculator`,
+`crypto-profit`, `forex-pip`.
+
+The 59 pages under 300 words are mostly glossary entries (178–193 words) and
+legal pages. That is defensible for those page types — do not pad them.
+
+---
+
+## Open items needing a human
+
+- **Author bio.** `src/config/authors.ts` holds one verified sentence. Real
+  background — actual experience, what prompted the site — is the highest-value
+  E-E-A-T improvement available and cannot be invented. Scaffold text prefixed
+  `PLACEHOLDER` is filtered out and never published, so it is safe to leave
+  while drafting.
+- **A LinkedIn URL** in the author `sameAs` array. Single highest-value entry.
+- **Brand collision.** "Numeraise" is one character from *numéraire*, an
+  economics term in the same subject domain; Bing autocorrects the query and the
+  site does not rank for its own name. `alternateName` and `knowsAbout` are set
+  on the Organization node, but the rest is off-page entity building: a LinkedIn
+  company page, a Crunchbase entry, and backlinks using "Numeraise" as anchor
+  text. Low urgency — brand search volume on an eight-week-old site is near zero
+  and traffic will come from "sip calculator", not "numeraise".
+- **Geo-targeting titles.** Every competitor puts "India" in the title; the site
+  does not. It fits the India-only tools (PPF, EPF, SCSS, POMIS, HRA, SSY, NSC,
+  gratuity) but would be wrong on the multi-market ones (401k, US mortgage,
+  paycheck). A judgement call, not a defect.
+- **AdSense.** `NEXT_PUBLIC_ADSENSE_ID` is unset, so no ad code loads. Before
+  re-enabling: an earlier measurement on the old host found the ad chain was 45%
+  of page bytes and returning `data-ad-status: "unfilled"` — all cost, no
+  revenue. Only turn it on once AdSense is approved and actually filling.
+
+---
+
+## Expectations
+
+- **Weeks 1–2:** Google recrawls and picks up the corrected canonicals now that
+  the domain and canonicals finally agree. The GSC "Duplicate, Google chose
+  different canonical" validation should clear.
+- **Weeks 3–8:** indexed page count rises, first long-tail impressions. Traffic
+  still near zero — normal, not failure.
+- **Months 3–6:** long-tail rankings, assuming backlinks are being built and
+  content deepened. First meaningful traffic.
+- **Months 6–12:** competitive terms become reachable, but only with a real
   backlink profile.
 
-You cannot win "SIP calculator" this year. ClearTax, Groww and Bankrate have
-decade-old domains and thousands of referring domains. You can win
-"SIP calculator with step-up and inflation adjustment" or "PPF vs SSY for a girl
-child born 2026" — and those queries convert better anyway.
-
-One caution on AdSense: driving ad revenue before you have organic traffic is
-not achievable, and thin pages carrying ad code are a policy risk. Fix the
-content first; the revenue follows the traffic, never the other way round.
+"SIP calculator" is not winnable this year. "SIP calculator with step-up and
+inflation adjustment" is — and it converts better anyway.
