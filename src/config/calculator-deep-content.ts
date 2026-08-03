@@ -54,15 +54,18 @@ export const CALCULATOR_DEEP_CONTENT: Record<string, DeepContent> = {
         heading: 'How EPF contributions actually split',
         paragraphs: [
           'The headline is that you and your employer each contribute 12% of basic salary plus dearness allowance. That is true of the amount leaving each side, but not of where it lands, and the difference matters a great deal for your final balance.',
-          'Your entire 12% goes into the provident fund. Your employer’s 12% is split: 8.33% is diverted to the Employees’ Pension Scheme, capped at a statutory wage ceiling, and only the remaining 3.67% joins your EPF balance. So the fund compounding in your name grows by roughly 15.67% of basic pay each month, not the 24% the two contributions suggest.',
+          'Your entire 12% goes into the provident fund. Your employer’s 12% is split: 8.33% is diverted to the Employees’ Pension Scheme and the remaining 3.67% joins your EPF balance. Crucially, the EPS portion is capped at a wage ceiling of ₹15,000 a month, which works out to a maximum of ₹1,250 going to EPS regardless of what you earn.',
+          'That cap is why the split behaves differently above and below the ceiling, and it is the detail most explanations skip. If your basic pay is at or under ₹15,000, roughly 15.67% of it compounds in your EPF. Above the ceiling, EPS still takes only ₹1,250 and the entire remainder of the employer contribution is redirected into your EPF — so the share compounding in your name is considerably larger.',
         ],
         table: {
-          caption: 'Where each portion of a 12% + 12% contribution actually goes.',
-          headers: ['Source', 'Rate', 'Destination'],
+          caption:
+            'A ₹50,000 basic salary. EPS is capped at ₹1,250, so the surplus goes to EPF rather than the pension scheme.',
+          headers: ['Source', 'Amount', 'Destination'],
           rows: [
-            ['Employee', '12%', 'EPF account (compounds in your name)'],
-            ['Employer', '3.67%', 'EPF account (compounds in your name)'],
-            ['Employer', '8.33%', 'Employees’ Pension Scheme, subject to the wage ceiling'],
+            ['Employee 12%', '₹6,000', 'EPF account'],
+            ['Employer, EPS share', '₹1,250', 'Employees’ Pension Scheme (capped at the ₹15,000 wage ceiling)'],
+            ['Employer, balance', '₹4,750', 'EPF account (the excess above the EPS cap)'],
+            ['Total into EPF', '₹10,750', '21.5% of basic — not the 15.67% the headline split implies'],
           ],
         },
       },
@@ -659,21 +662,38 @@ export const CALCULATOR_DEEP_CONTENT: Record<string, DeepContent> = {
           expression: 'Exemption = MIN( HRA received, Rent paid − 10% of salary, 50% or 40% of salary )',
           where: [
             'Salary here means Basic + Dearness Allowance (+ commission on turnover, if part of your terms)',
-            '50% applies if you live in Delhi, Mumbai, Kolkata or Chennai',
-            '40% applies everywhere else, including Bengaluru, Hyderabad, Pune and Gurugram',
+            '50% applies in the eight cities classified as metro — see below, this list changed in 2026',
+            '40% applies everywhere else',
             'It is your place of residence that matters, not where your employer is registered',
           ],
         },
         callout: {
           tone: 'warning',
-          heading: 'Only four cities count as metro',
-          text: 'For HRA purposes the metro list is Delhi, Mumbai, Kolkata and Chennai — and nowhere else. Bengaluru, Hyderabad, Pune, Ahmedabad and Gurugram are all non-metro at 40%, regardless of how expensive they have become. Claiming 50% in Bengaluru is one of the most frequent errors in HRA computation.',
+          heading: 'The metro list changed on 1 April 2026 — check which year you are filing for',
+          text: 'The Income-tax Rules, 2026 (Rule 279) added Bengaluru, Hyderabad, Pune and Ahmedabad to the original four of Delhi, Mumbai, Kolkata and Chennai, taking the 50% list to eight cities. This applies to income from FY 2026-27 onwards. For a return covering FY 2025-26, the old four-metro rule still governs, so those four newer cities remain at 40% for that year. Getting the year wrong in either direction changes your exemption.',
         },
+      },
+      {
+        heading: 'Which cities qualify for 50%',
+        table: {
+          caption:
+            'Metro classification for HRA. The four cities added in 2026 apply from FY 2026-27; earlier years use the original four.',
+          headers: ['City', 'Rate from FY 2026-27', 'Rate for FY 2025-26 and earlier'],
+          rows: [
+            ['Delhi, Mumbai, Kolkata, Chennai', '50%', '50%'],
+            ['Bengaluru, Hyderabad, Pune, Ahmedabad', '50%', '40%'],
+            ['Everywhere else (Gurugram, Noida, Jaipur, Kochi…)', '40%', '40%'],
+          ],
+        },
+        paragraphs: [
+          'This was the first change to the HRA metro list in decades, and a good deal of advice online still states the old four-city rule as though it were current. If you live in one of the four added cities, an out-of-date article will have you claiming 40% when you are entitled to 50%.',
+          'Note that "metro" here is a definition specific to this section of the tax rules. It is not the census definition, and it does not follow how large or expensive a city has become — Gurugram and Noida remain at 40% despite rents that rival any of the eight.',
+        ],
       },
       {
         heading: 'A worked example',
         paragraphs: [
-          'Take a basic salary of ₹6,00,000 a year, HRA of ₹3,00,000, and rent paid of ₹2,40,000 (₹20,000 a month) in Pune — a non-metro city.',
+          'Take a basic salary of ₹6,00,000 a year, HRA of ₹3,00,000, and rent paid of ₹2,40,000 (₹20,000 a month) in Jaipur — a non-metro city, so the third test uses 40%.',
         ],
         table: {
           caption: 'The three calculations. The smallest is the exemption.',
@@ -692,7 +712,7 @@ export const CALCULATOR_DEEP_CONTENT: Record<string, DeepContent> = {
           },
           {
             label: 'Why test 2 usually binds',
-            text: 'For most salaried people the rent-minus-10% test is the smallest of the three, because the 10% deduction bites and rent rarely exceeds half of basic salary. If your rent is low relative to your salary, this test can even go to zero.',
+            text: 'For most salaried people the rent-minus-10% test is the smallest of the three, because the 10% deduction bites and rent rarely exceeds half of basic salary. If your rent is low relative to your salary, this test can even go to zero. Worth noting in the example above: the answer would be the same in a 50% metro, because test 2 is already the lowest — the metro rate only changes your exemption when test 3 is the binding one.',
           },
         ],
       },
@@ -728,7 +748,12 @@ export const CALCULATOR_DEEP_CONTENT: Record<string, DeepContent> = {
       {
         question: 'Which cities count as metro for HRA?',
         answer:
-          'Only Delhi, Mumbai, Kolkata and Chennai qualify for the 50% rate. Every other city, including Bengaluru, Hyderabad, Pune and Gurugram, is treated as non-metro at 40%.',
+          'From FY 2026-27 there are eight: Delhi, Mumbai, Kolkata, Chennai, plus Bengaluru, Hyderabad, Pune and Ahmedabad, which the Income-tax Rules 2026 added with effect from 1 April 2026. For FY 2025-26 and earlier only the original four qualify, so those four newer cities are at 40% for those years. Everywhere else, including Gurugram and Noida, is 40%.',
+      },
+      {
+        question: 'I live in Bengaluru — can I claim 50% now?',
+        answer:
+          'For income from FY 2026-27 onwards, yes. Bengaluru, Hyderabad, Pune and Ahmedabad were added to the metro list with effect from 1 April 2026. If you are filing a return covering FY 2025-26, the old rule still applies and the limit for that year is 40%. Much of the advice online has not been updated and still states the old four-city list.',
       },
       {
         question: 'Can I claim HRA under the new tax regime?',

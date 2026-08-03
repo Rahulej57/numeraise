@@ -7,7 +7,11 @@ export const taxCalculators: Record<string, CalculatorConfig> = {
       { id: "basic", label: "Basic Salary (Annual)", type: "currency", min: 100000, max: 5000000, step: 10000, default: 600000 },
       { id: "hra", label: "HRA Received (Annual)", type: "currency", min: 10000, max: 2000000, step: 10000, default: 240000 },
       { id: "rent", label: "Actual Rent Paid (Annual)", type: "currency", min: 10000, max: 2000000, step: 10000, default: 300000 },
-      { id: "metro", label: "Living in Metro City? (1=Yes, 0=No)", type: "number", min: 0, max: 1, step: 1, default: 1 }
+      // The metro list expanded on 1 Apr 2026 (Income-tax Rules 2026, Rule 279)
+      // from four cities to eight. Naming them in the label matters: someone in
+      // Bengaluru or Pune would otherwise answer "No" out of habit and
+      // under-claim by ten percentage points.
+      { id: "metro", label: "Metro city? Delhi/Mumbai/Kolkata/Chennai/Bengaluru/Hyderabad/Pune/Ahmedabad (1=Yes, 0=No)", type: "number", min: 0, max: 1, step: 1, default: 1 }
     ],
     calculate: (inputs) => {
       const condition1 = inputs.hra;
