@@ -3,7 +3,7 @@ title: "7 Brutal EMI Mistakes That Will Cost You a Fortune"
 date: "2026-04-25"
 excerpt: "Taking a loan—whether for a car, a home, or personal needs—is a major financial commitment. When the bank approves your application, they calculate an EMI that seems affordable. But hidden traps inside the math are silently draining your wealth."
 readTime: "10 min read"
-author: "Rahul Sharma, CFA"
+author: "Rahul Sharma"
 ---
 
 # 7 Brutal EMI Mistakes That Will Cost You a Fortune

@@ -4,7 +4,7 @@ date: "2026-06-04"
 excerpt: "Don't wait until tax season to start thinking about your taxes. Discover the most powerful strategies to legally reduce your tax burden, optimize your deductions, and keep more of your hard-earned money this year."
 readTime: "14 min read"
 category: "Tax"
-author: "Rahul Sharma, CFA"
+author: "Rahul Sharma"
 ---
 
 # The Ultimate Guide to Tax Planning in 2026

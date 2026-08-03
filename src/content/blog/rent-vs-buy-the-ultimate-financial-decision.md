@@ -3,7 +3,7 @@ title: "Rent vs Buy: The Ultimate Financial Decision"
 date: "2026-05-19"
 excerpt: 'In Indian society, buying a house is considered the ultimate milestone of financial success. The prevailing logic is: Renting is throwing money away...'
 readTime: "11 min read"
-author: "Rahul Sharma, CFA"
+author: "Rahul Sharma"
 ---
 
 ## "Renting Is Throwing Money Away" — Or Is It?

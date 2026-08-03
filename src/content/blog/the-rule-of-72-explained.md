@@ -3,7 +3,7 @@ title: "The Rule of 72: A Mental Math Trick Every Investor Needs to Know"
 date: "2026-05-31"
 excerpt: "Want to know exactly when your money will double? You don't need a spreadsheet, you just need to know the Rule of 72."
 readTime: "9 min read"
-author: "Rahul Sharma, CFA"
+author: "Rahul Sharma"
 ---
 
 # The Rule of 72: A Mental Math Trick Every Investor Needs to Know

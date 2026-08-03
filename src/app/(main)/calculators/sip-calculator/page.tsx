@@ -331,6 +331,89 @@ Calculate your own: ${shareUrl}`;
           markets have historically delivered 10-12% over the long term, expecting 20%+ consistently is a recipe for
           missed goals. Always plan conservatively.
         </p>
+
+        <h2>Why the Last Ten Years Matter More Than the First Ten</h2>
+        <p>
+          The most counterintuitive property of a long SIP is that the corpus is built overwhelmingly at the end. Run a
+          20-year projection and split it in half: the first decade typically contributes a small minority of the final
+          value, and the second decade the large majority. Nothing changes about your contribution — the difference is
+          that by year fifteen, the returns are themselves generating returns on a base that took fifteen years to
+          accumulate.
+        </p>
+        <p>
+          This has a practical consequence that catches people out. A SIP stopped at year twelve does not give you
+          60% of the twenty-year outcome. It gives you far less, because you surrendered precisely the years doing the
+          heaviest lifting. If you are going to start, the single most valuable decision is committing to a horizon you
+          can genuinely hold through a downturn — a smaller amount you will not interrupt beats a larger one you
+          abandon in year three.
+        </p>
+
+        <h2>Choosing a Realistic Return Rate</h2>
+        <p>
+          The expected return field is the input with the most influence over your result and the least grounding in
+          fact. It is a projection, not a promise, and small changes compound into very different answers. Over 20
+          years, the gap between assuming 12% and assuming 15% is not 25% more money — it is roughly 70% more, purely
+          from an assumption you made in a text box.
+        </p>
+        <p>
+          A defensible approach is to model three scenarios rather than one. Run a pessimistic case, a central case,
+          and an optimistic case, then plan against the pessimistic one. If your goal is still reachable when equity
+          underperforms, you have a plan. If it only works at the optimistic figure, you do not have a plan — you have
+          a hope with a spreadsheet attached.
+        </p>
+        <p>
+          Remember also that the return you enter should be a nominal figure, and inflation will erode it. A corpus
+          that looks substantial in twenty years buys considerably less than the same number does today. Run the result
+          through our <Link href="/calculators/inflation-calculator">inflation calculator</Link> to see the figure in
+          today&apos;s purchasing power before deciding it is sufficient.
+        </p>
+
+        <h2>SIP Compared With the Alternatives</h2>
+        <p>
+          A SIP is not automatically the right instrument, and the honest comparison depends on your time horizon. For
+          money you need within about three years, the volatility that generates the equity premium over long periods
+          is simply risk — a five-year window can and does end below where it started, and being forced to sell into a
+          drawdown converts a paper loss into a real one.
+        </p>
+        <p>
+          Against a <Link href="/calculators/fd-calculator">fixed deposit</Link>, the SIP wins clearly over long
+          horizons and loses clearly over short ones, with tax treatment widening the gap further: deposit interest is
+          taxed annually at your slab rate, while equity gains are taxed only on sale and at more favourable long-term
+          rates. Our <Link href="/compare/sip-vs-fd">SIP vs FD comparison</Link> runs both on identical assumptions.
+        </p>
+        <p>
+          Against a <Link href="/calculators/lumpsum-calculator">lumpsum</Link>, neither dominates. A lumpsum has more
+          time in the market, which mathematically favours it when markets rise steadily. A SIP averages your entry
+          price across the cycle, which favours it when markets are volatile or falling early. For most people the
+          question is academic — you invest monthly because that is how income arrives, not because you chose an entry
+          strategy.
+        </p>
+
+        <h2>Step-Up SIP: The Easiest Improvement Available</h2>
+        <p>
+          A standard SIP holds your contribution flat for decades while your salary rises. A step-up SIP raises the
+          instalment by a fixed percentage each year, typically matching your increment. It is the single change most
+          likely to close a gap between your projection and your goal, and it costs nothing in the present because the
+          increase comes from income you do not yet have.
+        </p>
+        <p>
+          The effect is larger than it sounds. Raising a SIP by 10% annually frequently outperforms a flat SIP by a
+          wide margin over twenty years, because each increase compounds for the entire remaining horizon. Model it
+          with the <Link href="/calculators/step-up-sip">step-up SIP calculator</Link> before assuming a flat
+          contribution is enough — for most salaried investors it is not.
+        </p>
+
+        <h2>What This Calculator Does Not Account For</h2>
+        <p>
+          Being explicit about the limits matters more than adding decimal places. This calculator assumes a constant
+          rate of return, which no market delivers; real returns arrive unevenly, and the order in which good and bad
+          years fall changes your outcome even when the average is identical.
+        </p>
+        <p>
+          It also excludes the expense ratio charged by the fund, exit loads on early redemption, and capital gains tax
+          on withdrawal — all of which reduce what you actually receive. Treat the output as an upper bound on a smooth
+          path rather than a forecast, and size your plan with room to be wrong.
+        </p>
       </CalculatorContent>
 
       <FAQAccordion faqs={faqs} />

@@ -3,7 +3,7 @@ title: "Flat vs Reducing Balance: The Hidden Trap in Your Loan Interest Rate"
 date: "2026-04-29"
 excerpt: "Why a 10% Flat interest rate is actually much more expensive than a 15% Reducing Balance rate. Learn how to spot this common lending trap."
 readTime: "10 min read"
-author: "Rahul Sharma, CFA"
+author: "Rahul Sharma"
 ---
 
 # Flat vs Reducing Balance: The Hidden Trap in Your Loan Interest Rate

@@ -3,7 +3,7 @@ title: "Understanding CAGR: The Gold Standard for Measuring Investment Returns"
 date: "2026-06-08"
 excerpt: "Absolute returns can be misleading. Discover why Compound Annual Growth Rate (CAGR) is the only metric you should trust when evaluating long-term investments."
 readTime: "10 min read"
-author: "Rahul Sharma, CFA"
+author: "Rahul Sharma"
 ---
 
 # Understanding CAGR: The Gold Standard for Measuring Investment Returns

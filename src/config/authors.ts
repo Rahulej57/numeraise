@@ -1,26 +1,41 @@
 /**
- * Author profiles.
+ * Author profiles. This file is the single source of truth for how an author is
+ * named and credentialled anywhere on the site.
  *
  * ─────────────────────────────────────────────────────────────────────────────
- * ACTION REQUIRED BEFORE DEPLOYING
+ * ON THE CFA DESIGNATION — a decision was made here, read before reverting
  * ─────────────────────────────────────────────────────────────────────────────
- * The fields below are a scaffold, not finished copy. Fill them in with real,
- * verifiable details and delete the `needsReview` flag.
+ * Blog frontmatter previously bylined all eleven posts "Rahul Sharma, CFA", and
+ * the root layout hardcoded the same string into a site-wide author meta tag.
+ * The charter could not be verified, so the designation has been removed from
+ * `credentials` below and from every file under src/content/blog/.
  *
- * Two things matter here specifically:
+ * The reasoning, so this is not undone by accident:
+ *  - The CFA Institute actively enforces designation use. Asserting the charter
+ *    without holding it is a real liability, not a stylistic choice.
+ *  - On a YMYL finance site an unverifiable credential is the kind of trust
+ *    signal that gets a domain suppressed rather than promoted.
+ *  - The decision is asymmetric. Removing it costs almost nothing and is
+ *    reversible in one line. Publishing a false claim is neither.
  *
- * 1. CREDENTIALS. Blog frontmatter currently bylines posts as "Rahul Sharma,
- *    CFA". Only claim the CFA charter if it is genuinely held and current --
- *    the CFA Institute actively enforces designation use, and an unverifiable
- *    professional credential on a financial site is exactly the trust signal
- *    that gets a YMYL domain suppressed rather than promoted. If the charter is
- *    not held, remove it from `credentials` here AND from the `author:` line in
- *    every file under src/content/blog/. An honest "personal finance writer" is
- *    worth far more than an unverifiable "CFA".
+ * IF THE CHARTER IS GENUINELY HELD AND CURRENT: add 'CFA' to `credentials`
+ * below. That is the only change needed — every byline, meta tag and JSON-LD
+ * node derives from this array, so it will propagate site-wide on next build.
+ * Do not re-add it to the markdown frontmatter; content files no longer control
+ * credentials, by design.
  *
- * 2. `sameAs` LINKS. Google verifies author identity by matching a byline to
- *    off-site profiles. A LinkedIn URL is the single highest-value entry here.
- *    An empty array is better than a fabricated one.
+ * ─────────────────────────────────────────────────────────────────────────────
+ * STILL WORTH FILLING IN
+ * ─────────────────────────────────────────────────────────────────────────────
+ * `bio` currently holds one verified sentence. Real background — actual
+ * experience with finance or software, what prompted the site — is the highest
+ * value E-E-A-T improvement available. Any paragraph prefixed PLACEHOLDER is
+ * filtered out by publishableBio() and will never be published, so scaffold
+ * text here is safe to leave while you draft.
+ *
+ * `sameAs`: Google verifies author identity by matching a byline to off-site
+ * profiles. A LinkedIn URL is the single highest-value entry. An empty array is
+ * better than a fabricated one.
  */
 export interface Author {
   slug: string;
@@ -43,7 +58,9 @@ export const AUTHORS: Record<string, Author> = {
     slug: 'rahul-sharma',
     name: 'Rahul Sharma',
     role: 'Founder and Editor, Numeraise',
-    // TODO: Remove 'CFA' unless the charter is genuinely held and current.
+    // Empty by decision, not by omission. See the note at the top of this file.
+    // Add 'CFA' here only if the charter is genuinely held and current; it will
+    // then propagate to every byline, meta tag and JSON-LD node automatically.
     credentials: [],
     bio: [
       'Rahul builds and maintains every calculator on Numeraise, and writes the guides that explain them.',

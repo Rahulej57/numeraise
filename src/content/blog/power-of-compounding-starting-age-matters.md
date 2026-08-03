@@ -3,7 +3,7 @@ title: "The Unstoppable Power of Compounding: Why Starting at 25 vs 35 vs 45 Mat
 date: "2026-05-15"
 excerpt: 'Albert Einstein reportedly called compound interest the eighth wonder of the world. He who understands it, earns it; he who does not, pays it...'
 readTime: "10 min read"
-author: "Rahul Sharma, CFA"
+author: "Rahul Sharma"
 ---
 
 ## A Riddle That Reveals Everything
