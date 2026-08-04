@@ -49,10 +49,26 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
   const fieldId = useId();
   const inputId = `${fieldId}-value`;
   const sliderId = `${fieldId}-slider`;
-  
+
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const isDragging = useRef(false);
   const lastCallRef = useRef(0);
+
+  /*
+   * Large amounts rendered as a raw digit string — "112133000" — are genuinely
+   * unreadable, and on a 360px screen they also overflow the value box and get
+   * clipped at the viewport edge.
+   *
+   * Grouping separators are shown only while the field is NOT focused. A
+   * type="number" input rejects commas, so the field switches to text while
+   * displaying a formatted value and back to a plain numeric string the moment
+   * the user starts editing. inputMode="decimal" keeps the numeric keypad on
+   * mobile either way.
+   */
+  const [isFocused, setIsFocused] = useState(false);
+  const grouped = (n: number) =>
+    Number.isFinite(n) ? n.toLocaleString(undefined, { maximumFractionDigits: 2 }) : '';
+  const displayValue = isFocused ? inputValue : grouped(localValue);
 
   // Sync external changes (only if not actively interacting with the slider)
   useEffect(() => {
@@ -65,10 +81,14 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     isDragging.current = true;
-    const val = e.target.value;
+    // The field is type="text" so it can display grouping separators. Strip
+    // anything that is not a digit, a decimal point or a leading minus before
+    // parsing — otherwise a pasted "1,12,133" would evaluate to NaN and the
+    // value would silently stop updating.
+    const val = e.target.value.replace(/[^\d.-]/g, '');
     setInputValue(val);
-    
-    const num = val === "" ? 0 : Number(val);
+
+    const num = val === '' ? 0 : Number(val);
     if (!isNaN(num)) {
       setLocalValue(num);
       onChange(num);
@@ -123,33 +143,44 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
 
   return (
     <div className="space-y-2 lg:space-y-4">
-      <div className="flex items-center justify-between">
-        <Label htmlFor={inputId} className="text-sm lg:text-base font-medium">
+      {/*
+        gap-3 rather than justify-between alone, and min-w-0 on the label so
+        flexbox is allowed to shrink it. Without min-w-0 a long label refuses to
+        wrap, pushes the value box past the container and clips it at the
+        viewport edge — which is exactly what happened to "Retirement Age" and
+        "Down Payment / Due at Signing" on a 360px screen.
+      */}
+      <div className="flex items-start justify-between gap-3">
+        <Label
+          htmlFor={inputId}
+          className="min-w-0 flex-1 text-sm lg:text-base font-medium leading-snug break-words pt-1.5"
+        >
           {label}
         </Label>
-        <div className="flex items-center space-x-2 bg-muted/50 px-3 py-1 rounded-md border">
+        <div className="flex shrink-0 max-w-[60%] items-center gap-1.5 rounded-md border bg-muted/50 px-2.5 py-1">
           {symbol && (
-            <span aria-hidden="true" className="text-muted-foreground font-medium">
+            <span aria-hidden="true" className="shrink-0 text-muted-foreground font-medium">
               {symbol}
             </span>
           )}
           <Input
             id={inputId}
-            type="number"
+            // Text while blurred so grouping separators can render; a number
+            // input silently rejects commas. See the note on displayValue.
+            type="text"
             inputMode="decimal"
-            value={inputValue}
+            value={displayValue}
             onChange={handleInputChange}
-            min={cleanMin}
-            max={cleanMax}
-            step={cleanStep}
-            // The currency symbol and unit sit in sibling spans, so the
-            // accessible name would otherwise be just the label. Spelling out
-            // the unit here is what a screen reader actually announces.
+            onFocus={() => {
+              setIsFocused(true);
+              setInputValue(String(localValue));
+            }}
+            onBlur={() => setIsFocused(false)}
             aria-label={`${label}${symbol ? ` in ${symbol}` : ''}${suffix ? ` in ${suffix}` : ''}`}
-            className="w-24 h-8 border-0 bg-transparent text-right font-bold text-primary focus-visible:ring-0 focus-visible:ring-offset-0 p-0"
+            className="h-8 w-full min-w-[3.5rem] max-w-[9rem] border-0 bg-transparent p-0 text-right font-bold text-primary tabular-nums focus-visible:ring-0 focus-visible:ring-offset-0"
           />
           {suffix && (
-            <span aria-hidden="true" className="text-muted-foreground font-medium">
+            <span aria-hidden="true" className="shrink-0 text-muted-foreground font-medium">
               {suffix}
             </span>
           )}

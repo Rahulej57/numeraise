@@ -257,7 +257,7 @@ Calculate your own: ${shareUrl}`;
               <div className="pt-4 border-t">
                 <p className="text-sm font-medium mb-4 text-muted-foreground">Taxes & Deductions</p>
                 <div className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <SliderInput
                       label={taxLabels.fed}
                       value={federalTaxRate}
@@ -277,7 +277,7 @@ Calculate your own: ${shareUrl}`;
                       suffix="%"
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <SliderInput
                       label={taxLabels.social}
                       value={ficaTaxRate}

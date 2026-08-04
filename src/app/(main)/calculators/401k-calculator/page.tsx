@@ -162,7 +162,7 @@ Calculate your own: ${shareUrl}`;
         <div className="lg:col-span-6 space-y-6">
           <Card className="border-none shadow-none bg-muted/20">
             <CardContent className="p-5 md:p-6 space-y-6">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <SliderInput
                   label="Current Age"
                   value={currentAge}
@@ -213,7 +213,7 @@ Calculate your own: ${shareUrl}`;
               <div className="pt-4 border-t">
                 <p className="text-sm font-medium mb-4 text-muted-foreground">Employer Details & Market Assumptions</p>
                 <div className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <SliderInput
                       label="Employer Match %"
                       value={employerMatchPercent}
@@ -233,7 +233,7 @@ Calculate your own: ${shareUrl}`;
                       suffix="%"
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <SliderInput
                       label="Expected Return"
                       value={annualReturn}
