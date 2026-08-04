@@ -173,12 +173,41 @@ curl -sI https://numeraise.com/calculators/life-insurance-calculator | head -1
 ```
 → `HTTP/2 308` (the duplicate-content redirect still works)
 
-### 8. Only after everything above passes
+### 8. Do NOT delete the Netlify files — corrected advice
 
-- Delete the Netlify site, or at minimum unlink the custom domain from it.
-- Remove `@netlify/plugin-nextjs` from `devDependencies`, delete `netlify.toml`
-  and `public/_headers`. They are inert on Vercel, but leaving them invites a
-  future maintainer to edit the wrong file.
+An earlier version of this file said to delete `netlify.toml`, `public/_headers`
+and `@netlify/plugin-nextjs` once Vercel was verified. That was wrong, and the
+reason is worth understanding.
+
+`venerable-sherbet-10d546.netlify.app` is still live and currently returns
+**301 → https://numeraise.com/**. That redirect exists *because* of the
+host-scoped rule in `netlify.toml`. Delete the file and let Netlify rebuild, and
+the redirect disappears — the Netlify subdomain would start serving a full,
+crawlable duplicate of the site again, which is the exact bug this whole
+exercise started with.
+
+So the Netlify config is not dead weight. It is what keeps that hostname
+pointing home.
+
+**Recommended: keep the Netlify site, stop it rebuilding.**
+
+Netlify → Site configuration → Build & deploy → **Lock to stop auto publishing**.
+
+That freezes the current deploy, so the 301 keeps working forever, and future
+pushes to `master` no longer consume Netlify build minutes. You get the redirect
+without the cost. Leave `netlify.toml`, `public/_headers` and the plugin in the
+repo — they are inert on Vercel and load-bearing on Netlify.
+
+**If you would rather delete the Netlify site entirely:** that is also fine. The
+subdomain then stops resolving instead of redirecting. Slightly worse, because a
+301 consolidates any signal Google attached to those URLs and a dead host does
+not, but the difference is small. Only after the site is deleted is it safe to
+remove the three Netlify artefacts from the repo.
+
+**Check this either way:** if the Netlify site is still connected to the GitHub
+repo with auto-publish on, every push to `master` triggers a Netlify build as
+well as a Vercel one — quietly burning the deploy credits you moved away from
+Netlify to escape.
 
 ---
 
