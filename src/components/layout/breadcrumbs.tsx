@@ -65,7 +65,8 @@ export function Breadcrumbs() {
   return (
     <div className="print:hidden bg-muted/30 border-b">
       <div className="container mx-auto px-4 py-3 flex items-center text-sm text-muted-foreground overflow-x-auto whitespace-nowrap hide-scrollbar">
-        <Link href="/" className="flex items-center hover:text-primary transition-colors">
+        {/* Icon-only link: announces as an unnamed link without this. */}
+        <Link href="/" aria-label="Home" className="flex items-center hover:text-primary transition-colors">
           <Home className="w-4 h-4" />
         </Link>
         {breadcrumbItems.map((item, index) => {

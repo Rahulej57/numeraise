@@ -28,7 +28,11 @@ export function QuickLauncher() {
               <Calculator className="w-4 h-4 text-primary" />
               Quick Calculators
             </h4>
-            <button onClick={() => setIsOpen(false)} className="text-muted-foreground hover:text-foreground">
+            <button
+              onClick={() => setIsOpen(false)}
+              aria-label="Close quick calculators"
+              className="text-muted-foreground hover:text-foreground"
+            >
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -59,10 +63,12 @@ export function QuickLauncher() {
         </div>
       )}
 
-      {/* FAB Button */}
-      <Button 
+      {/* FAB Button — icon only, so it needs an explicit name */}
+      <Button
         onClick={() => setIsOpen(!isOpen)}
         size="icon"
+        aria-label={isOpen ? 'Close quick calculators' : 'Open quick calculators'}
+        aria-expanded={isOpen}
         className="w-11 h-11 md:w-12 md:h-12 rounded-full shadow-2xl bg-primary hover:bg-primary/90 hover:scale-105 transition-all duration-300"
       >
         {isOpen ? <ChevronUp className="w-5 h-5 md:w-6 md:h-6 rotate-180 transition-transform" /> : <Calculator className="w-5 h-5 md:w-6 md:h-6" />}
