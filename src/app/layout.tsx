@@ -10,6 +10,8 @@ import Script from 'next/script';
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION, SOCIAL_PROFILES, CONTACT_EMAIL } from '@/config/site';
 import { ROBOTS_DIRECTIVE } from '@/config/deployment';
 import { bylineFor } from '@/config/authors';
+import { Suspense } from 'react';
+import { NavigationProgress } from '@/components/layout/navigation-progress';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -90,6 +92,14 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
           <CurrencyProvider>
+            {/*
+              Appears on the click itself, before React begins rendering — the
+              exact window in which tapping a link produced no visible response.
+              useSearchParams requires a Suspense boundary during prerender.
+            */}
+            <Suspense fallback={null}>
+              <NavigationProgress />
+            </Suspense>
             <div className="relative flex min-h-screen flex-col">
               <Navbar />
               <main className="flex-1 flex flex-col">

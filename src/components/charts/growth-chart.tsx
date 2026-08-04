@@ -1,69 +1,26 @@
-"use client";
+'use client';
 
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-  Legend
-} from "recharts";
+import dynamic from 'next/dynamic';
+import { ChartSkeleton } from '@/components/layout/skeletons';
 
-interface GrowthChartProps {
-  data: any[];
-  xAxisKey: string;
-  areas: { key: string; color: string; name: string }[];
-}
-
-import { memo } from "react";
-import { useCurrency } from "@/context/CurrencyContext";
-
-export const GrowthChart = memo(function GrowthChart({ data, xAxisKey, areas }: GrowthChartProps) {
-  const { format } = useCurrency();
-  
-  return (
-    <ResponsiveContainer width="100%" height={350}>
-      <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-        <defs>
-          {areas.map((area) => (
-            <linearGradient key={`color${area.key}`} id={`color${area.key}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={area.color} stopOpacity={0.8} />
-              <stop offset="95%" stopColor={area.color} stopOpacity={0} />
-            </linearGradient>
-          ))}
-        </defs>
-        <CartesianGrid strokeDasharray="3 3" vertical={false} className="stroke-muted" />
-        <XAxis 
-          dataKey={xAxisKey} 
-          className="text-xs text-muted-foreground" 
-          tickLine={false}
-          axisLine={false}
-        />
-        <YAxis 
-          tickFormatter={(value: any) => format(Number(value))} 
-          className="text-xs text-muted-foreground"
-          tickLine={false}
-          axisLine={false}
-        />
-        <Tooltip 
-          formatter={(value: any) => format(Number(value))}
-          contentStyle={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)', borderRadius: '8px' }}
-        />
-        <Legend />
-        {areas.map((area) => (
-          <Area
-            key={area.key}
-            type="monotone"
-            dataKey={area.key}
-            name={area.name}
-            stroke={area.color}
-            fillOpacity={1}
-            fill={`url(#color${area.key})`}
-          />
-        ))}
-      </AreaChart>
-    </ResponsiveContainer>
-  );
-});
+/**
+ * Dynamic wrapper around the Recharts implementation.
+ *
+ * Recharts was imported eagerly by twelve calculator pages, so its bundle sat in
+ * the critical path for the initial render even though the chart is below the
+ * fold and the headline result number is not waiting on it. Deferring it lets
+ * the inputs and results paint first, which is what the visitor actually came
+ * for.
+ *
+ * `ssr: false` because Recharts measures the DOM to size itself; rendering it on
+ * the server produces markup the client immediately discards. The skeleton
+ * reserves the exact chart height, so nothing shifts when the real chart
+ * arrives (no CLS penalty).
+ *
+ * The filename is unchanged deliberately — all twelve import sites keep working
+ * without modification.
+ */
+export const GrowthChart = dynamic(
+  () => import('./growth-chart-impl').then((m) => m.GrowthChart),
+  { ssr: false, loading: () => <ChartSkeleton /> },
+);

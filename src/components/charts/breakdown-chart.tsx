@@ -1,39 +1,13 @@
-"use client";
+'use client';
 
-import { Cell, Pie, PieChart as RechartsPieChart, ResponsiveContainer, Tooltip, Legend } from "recharts";
+import dynamic from 'next/dynamic';
+import { ChartSkeleton } from '@/components/layout/skeletons';
 
-interface BreakdownChartProps {
-  data: { name: string; value: number; color: string }[];
-}
-
-import { memo } from "react";
-import { useCurrency } from "@/context/CurrencyContext";
-
-export const BreakdownChart = memo(function BreakdownChart({ data }: BreakdownChartProps) {
-  const { format } = useCurrency();
-  
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <RechartsPieChart>
-        <Pie
-          data={data}
-          cx="50%"
-          cy="50%"
-          innerRadius={60}
-          outerRadius={80}
-          paddingAngle={5}
-          dataKey="value"
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
-          ))}
-        </Pie>
-        <Tooltip 
-          formatter={(value: any) => format(Number(value))} 
-          contentStyle={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)', borderRadius: '8px' }}
-        />
-        <Legend />
-      </RechartsPieChart>
-    </ResponsiveContainer>
-  );
-});
+/**
+ * Dynamic wrapper around the Recharts implementation. See growth-chart.tsx for
+ * the full reasoning; same trade-off applies.
+ */
+export const BreakdownChart = dynamic(
+  () => import('./breakdown-chart-impl').then((m) => m.BreakdownChart),
+  { ssr: false, loading: () => <ChartSkeleton /> },
+);
