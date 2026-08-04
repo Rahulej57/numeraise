@@ -29,6 +29,24 @@ export default function PaycheckCalculatorPage() {
   // Deductions
   const [preTaxDeductions, setPreTaxDeductions] = useState(5); // % of salary for 401k, health, etc.
 
+  /*
+   * Salary presets in LOCAL currency units.
+   *
+   * The slider bounds were previously derived from the USD figures
+   * (20,000-500,000 × rate), which put the Indian range at roughly
+   * ₹16.6 lakh to ₹4.15 crore — a minimum above what most of the audience
+   * earns, so the slider started pinned at its floor. Real local ranges are
+   * more useful than a converted American one.
+   */
+  const SALARY_PRESETS: Record<string, { def: number; min: number; max: number; step: number }> = {
+    INR: { def: 1_200_000, min: 120_000, max: 30_000_000, step: 10_000 },
+    USD: { def: 75_000, min: 20_000, max: 500_000, step: 1_000 },
+    GBP: { def: 40_000, min: 15_000, max: 400_000, step: 1_000 },
+    AUD: { def: 90_000, min: 25_000, max: 500_000, step: 1_000 },
+    CAD: { def: 70_000, min: 20_000, max: 500_000, step: 1_000 },
+  };
+  const preset = SALARY_PRESETS[currency.code] ?? SALARY_PRESETS.USD;
+
   // Dynamic Labels based on currency
   const taxLabels = useMemo(() => {
     switch (currency.code) {
@@ -88,25 +106,15 @@ export default function PaycheckCalculatorPage() {
   // Set defaults when currency changes
   useEffect(() => {
     if (!window.history.state?.initializedPaycheck) {
-      switch (currency.code) {
-        case 'INR':
-          setAnnualSalary(1200000);
-          break;
-        case 'USD':
-          setAnnualSalary(75000);
-          break;
-        case 'GBP':
-          setAnnualSalary(40000);
-          break;
-        case 'AUD':
-          setAnnualSalary(90000);
-          break;
-        case 'CAD':
-          setAnnualSalary(70000);
-          break;
-        default:
-          setAnnualSalary(100000);
-      }
+      // `annualSalary` is held in USD; the slider multiplies by currency.rate
+      // for display. These presets are in LOCAL units, so they must be divided
+      // by the rate before being stored.
+      //
+      // They previously were not, which double-converted every non-USD
+      // currency: the INR default of 1,200,000 was multiplied by 83 again and
+      // rendered as a gross salary of ₹9,96,00,000. USD only looked correct
+      // because its rate is 1.
+      setAnnualSalary(preset.def / (currency.rate || 1));
       window.history.replaceState({ ...window.history.state, initializedPaycheck: true }, '');
     }
     setFederalTaxRate(taxLabels.fedDef);
@@ -223,10 +231,12 @@ Calculate your own: ${shareUrl}`;
               <SliderInput
                 label="Gross Annual Salary"
                 value={annualSalary * currency.rate}
-                min={20000 * currency.rate}
-                max={500000 * currency.rate}
-                step={1000 * currency.rate}
-                onChange={(val) => setAnnualSalary(val / currency.rate)}
+                // Bounds come straight from the local preset — they are already
+                // in the displayed currency and must not be scaled again.
+                min={preset.min}
+                max={preset.max}
+                step={preset.step}
+                onChange={(val) => setAnnualSalary(val / (currency.rate || 1))}
                 symbol={currency.symbol}
               />
 
