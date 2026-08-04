@@ -31,14 +31,18 @@ export function Navbar() {
         
         {/* Brand */}
         <div className="flex items-center gap-2">
-          <button 
+          <button
             className="lg:hidden p-2 -ml-2 text-foreground"
+            // Icon-only control: without a name a screen reader announces only
+            // "button". This is the primary navigation affordance on mobile.
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
           
-          <Link href="/" className="flex items-center gap-2 shrink-0 group">
+          <Link href="/" aria-label="Numeraise home" className="flex items-center gap-2 shrink-0 group">
             <div className="bg-primary/10 p-1.5 rounded-lg group-hover:bg-primary/20 transition-colors">
               <TrendingUp className="w-5 h-5 text-primary stroke-[2.5]" />
             </div>

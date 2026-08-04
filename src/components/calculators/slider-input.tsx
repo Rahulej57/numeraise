@@ -162,11 +162,9 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
         max={RESOLUTION}
         step={1}
         onValueChange={handleSliderChange}
-        // The slider drives an internal 0-10000 resolution track, so its raw
-        // aria-valuenow is meaningless to a listener. aria-valuetext reports the
-        // real figure the user is choosing.
         aria-label={`${label} slider`}
-        aria-valuetext={`${symbol ?? ''}${localValue}${suffix ? ` ${suffix}` : ''}`}
+        // Announced in place of the raw 0-10000 track position. See slider.tsx.
+        valueText={`${symbol ?? ''}${localValue}${suffix ? ` ${suffix}` : ''}`}
         className="py-4 touch-pan-y print:hidden"
       />
     </div>
