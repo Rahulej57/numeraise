@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useCurrency } from '@/context/CurrencyContext';
 import { SliderInput } from '@/components/calculators/slider-input';
 import { BreakdownChart } from '@/components/charts/breakdown-chart';
@@ -46,6 +46,11 @@ export default function PaycheckCalculatorPage() {
     CAD: { def: 70_000, min: 20_000, max: 500_000, step: 1_000 },
   };
   const preset = SALARY_PRESETS[currency.code] ?? SALARY_PRESETS.USD;
+
+  // Which currency's default is currently loaded, and whether the visitor has
+  // overridden it. Refs rather than state: neither should trigger a re-render.
+  const initializedFor = useRef<string | null>(null);
+  const userEditedSalary = useRef(false);
 
   // Dynamic Labels based on currency
   const taxLabels = useMemo(() => {
@@ -103,24 +108,30 @@ export default function PaycheckCalculatorPage() {
     }
   }, [currency.code]);
 
-  // Set defaults when currency changes
+  /*
+   * Apply the local default whenever the currency changes, unless the visitor
+   * has edited the salary themselves.
+   *
+   * The previous guard was a single `initializedPaycheck` flag on history.state.
+   * That fired on the very first render, while currency was still the USD
+   * default, and then blocked the effect forever — so once the currency
+   * resolved to INR the rupee preset never applied and the field kept showing
+   * the US figure converted (₹62,25,000 from $75,000). Keying on the currency
+   * code instead means each currency gets its own default exactly once.
+   *
+   * `annualSalary` is held in USD and the slider multiplies by currency.rate for
+   * display, so the local preset is divided by the rate before being stored.
+   */
   useEffect(() => {
-    if (!window.history.state?.initializedPaycheck) {
-      // `annualSalary` is held in USD; the slider multiplies by currency.rate
-      // for display. These presets are in LOCAL units, so they must be divided
-      // by the rate before being stored.
-      //
-      // They previously were not, which double-converted every non-USD
-      // currency: the INR default of 1,200,000 was multiplied by 83 again and
-      // rendered as a gross salary of ₹9,96,00,000. USD only looked correct
-      // because its rate is 1.
+    if (!userEditedSalary.current && initializedFor.current !== currency.code) {
       setAnnualSalary(preset.def / (currency.rate || 1));
-      window.history.replaceState({ ...window.history.state, initializedPaycheck: true }, '');
+      initializedFor.current = currency.code;
     }
     setFederalTaxRate(taxLabels.fedDef);
     setStateTaxRate(taxLabels.stateDef);
     setFicaTaxRate(taxLabels.socialDef);
-  }, [currency.code, taxLabels]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currency.code, currency.rate, taxLabels]);
 
   // Sync state with URL on mount for shareable links
   useEffect(() => {
@@ -236,7 +247,11 @@ Calculate your own: ${shareUrl}`;
                 min={preset.min}
                 max={preset.max}
                 step={preset.step}
-                onChange={(val) => setAnnualSalary(val / (currency.rate || 1))}
+                onChange={(val) => {
+                  // Stop the currency effect from overwriting a manual edit.
+                  userEditedSalary.current = true;
+                  setAnnualSalary(val / (currency.rate || 1));
+                }}
                 symbol={currency.symbol}
               />
 
