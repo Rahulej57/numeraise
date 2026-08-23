@@ -1,0 +1,66 @@
+# Numeraise - Full Financial Calculation Specification & Formulas
+
+> Comprehensive mathematical documentation for Numeraise financial calculators (https://numeraise.com).
+
+## 1. Systematic Investment Plan (SIP)
+- **Route**: `https://numeraise.com/calculators/sip-calculator`
+- **Embed URL**: `https://numeraise.com/embed/sip-calculator`
+- **Mathematical Formula**:
+  $$FV = P \times \frac{(1 + r)^n - 1}{r} \times (1 + r)$$
+  Where:
+  - $P$ = Periodic investment amount (e.g., Monthly SIP)
+  - $r$ = Monthly periodic rate of return $(Annual Return / 12 / 100)$
+  - $n$ = Total number of monthly installments $(Years \times 12)$
+  - $FV$ = Future Maturity Value
+
+## 2. Loan Equated Monthly Installment (EMI)
+- **Route**: `https://numeraise.com/calculators/emi-calculator`
+- **Embed URL**: `https://numeraise.com/embed/emi-calculator`
+- **Mathematical Formula**:
+  $$EMI = \frac{P \times r \times (1 + r)^n}{(1 + r)^n - 1}$$
+  Where:
+  - $P$ = Principal loan amount
+  - $r$ = Monthly interest rate $(Annual Rate / 12 / 100)$
+  - $n$ = Loan tenure in months $(Years \times 12)$
+  - Total Interest Payable $= (EMI \times n) - P$
+
+## 3. Compound Annual Growth Rate (CAGR)
+- **Route**: `https://numeraise.com/calculators/cagr-calculator`
+- **Embed URL**: `https://numeraise.com/embed/cagr-calculator`
+- **Mathematical Formula**:
+  $$CAGR = \left(\frac{FV}{PV}\right)^{\frac{1}{t}} - 1$$
+  Where:
+  - $PV$ = Initial present value / investment amount
+  - $FV$ = Final maturity / portfolio value
+  - $t$ = Investment time horizon in years
+
+## 4. Systematic Withdrawal Plan (SWP)
+- **Route**: `https://numeraise.com/calculators/swp-calculator`
+- **Embed URL**: `https://numeraise.com/embed/swp-calculator`
+- **Monthly Recurrence**:
+  $$Balance_{t} = Balance_{t-1} \times (1 + r) - W$$
+  Where:
+  - $W$ = Monthly withdrawal amount
+  - $r$ = Monthly periodic return $(Annual Return / 12 / 100)$
+
+## 5. Step-Up SIP (Annual Increment)
+- **Route**: `https://numeraise.com/calculators/step-up-sip`
+- **Embed URL**: `https://numeraise.com/embed/step-up-sip`
+- **Mechanics**:
+  The monthly installment increases annually by a step-up rate $s$:
+  $$P_{year = k} = P_1 \times (1 + s)^{k-1}$$
+
+## 6. Financial Independence, Retire Early (FIRE)
+- **Route**: `https://numeraise.com/calculators/fire-calculator`
+- **Embed URL**: `https://numeraise.com/embed/fire-calculator`
+- **The 4% Trinity Rule**:
+  $$Target Corpus = \frac{Annual Expenses}{Withdrawal Rate} = Annual Expenses \times 25$$
+
+## 7. US 401(k) Retirement with Employer Match
+- **Route**: `https://numeraise.com/calculators/401k-calculator`
+- **Embed URL**: `https://numeraise.com/embed/401k-calculator`
+- **Annual Contribution**:
+  $$Annual Total = (Salary \times Employee\%) + \min(Salary \times Match\%, Salary \times MatchCap\%)$$
+
+---
+All calculations execute 100% client-side via JavaScript with multi-currency formatting across USD, INR, GBP, EUR, CAD, AUD, SGD, and AED.

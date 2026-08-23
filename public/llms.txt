@@ -1,26 +1,70 @@
-# Numeraise - Smart Financial Calculators
+# Numeraise
 
-Numeraise is a comprehensive platform providing over 50+ free financial calculators designed for smarter decision making regarding investments, loans, taxes, and retirement planning.
+> Free financial calculators for investments, loans, mortgages, retirement, and tax planning. Privacy-first, transparent mathematical formulas, multi-currency support, zero signup.
 
-## Purpose
-The platform serves as an educational tool and calculation engine to help users optimize their financial strategies. It supports dynamic currency rendering, allowing users to calculate figures in USD, INR, EUR, GBP, and JPY.
+Numeraise (https://numeraise.com) provides 70+ client-side financial modeling tools with instant calculation engines, visual breakdown charts, and embeddable widgets.
 
-## Available Sections
-- **Calculators**: A vast array of calculators categorized into Investments, Loans, and Tax. Notable calculators include:
-  - SIP Calculator
-  - Lumpsum Calculator
-  - Home Loan EMI Calculator
-  - Income Tax Calculator (Old vs New Regime)
-  - Rent vs Buy Calculator
-- **Blog**: Educational content explaining complex financial topics such as CAGR, the Rule of 72, emergency funds, and the power of compounding.
+## Core Capabilities
+- **Multi-Currency Engine**: Dynamic conversion across USD ($), INR (₹), GBP (£), EUR (€), CAD (C$), AUD (A$), SGD (S$), and AED (د.إ).
+- **Goal Presets**: 1-click milestone scenarios (e.g., $1M 401(k), ₹1 Crore SIP, $400k Home Loan).
+- **Embeddable Widgets**: Embed interactive calculators on any website via `https://numeraise.com/embed/[slug]`.
+- **Privacy First**: All calculations run locally in the client browser. No financial data is ever collected or transmitted.
 
-## Key URL Paths
-- `/`: Homepage with calculator categories
-- `/calculators`: Directory of all available calculators
-- `/articles`: Educational blog posts
-- `/calculators/[slug]`: Individual calculator tools
+## Calculators Directory
 
-## Contact and Socials
-Website: https://numeraise.com
-Twitter: @numeraise
-Contact: support@numeraise.com
+### Investment & Wealth Creation
+- [SIP Calculator](https://numeraise.com/calculators/sip-calculator): Calculate Systematic Investment Plan returns with year-by-year compounding schedules.
+- [SIP vs Lumpsum](https://numeraise.com/calculators/sip-vs-lumpsum): Compare monthly recurring investments against a one-time lump sum on identical CAGR assumptions.
+- [Lumpsum Calculator](https://numeraise.com/calculators/lumpsum-calculator): One-time capital compounding trajectory.
+- [Step-Up SIP](https://numeraise.com/calculators/step-up-sip): Model annual contribution step-ups matching salary increments.
+- [CAGR Calculator](https://numeraise.com/calculators/cagr-calculator): Compound Annual Growth Rate between initial and final values.
+- [SWP Calculator](https://numeraise.com/calculators/swp-calculator): Systematic Withdrawal Plan and corpus depletion estimator.
+- [Mutual Fund Returns](https://numeraise.com/calculators/mutual-fund-returns): Absolute, annualized, and rolling mutual fund return analyzer.
+- [Stock Profit Calculator](https://numeraise.com/calculators/stock-profit): Equity trading profit and loss after brokerage fees.
+- [Net Worth Calculator](https://numeraise.com/calculators/net-worth-calculator): Total personal assets minus liabilities.
+- [Dividend Yield](https://numeraise.com/calculators/dividend-yield): Current yield and yield-on-cost stock dividend calculator.
+
+### Loans & Mortgages
+- [EMI Calculator](https://numeraise.com/calculators/emi-calculator): Monthly loan installment calculator with complete amortization table.
+- [Home Loan Calculator](https://numeraise.com/calculators/home-loan-calculator): Mortgage EMI, total interest, and prepayment impact.
+- [US Mortgage Calculator](https://numeraise.com/calculators/us-mortgage-calculator): 15-year and 30-year fixed US mortgages with property tax and insurance.
+- [Car Loan EMI](https://numeraise.com/calculators/car-loan-emi): Auto loan monthly payments and interest cost.
+- [Personal Loan Calculator](https://numeraise.com/calculators/personal-loan-calculator): Unsecured loan repayment schedule.
+- [Credit Card Payoff](https://numeraise.com/calculators/credit-card-payoff): Debt avalanche and payoff timeline estimator.
+- [Loan Comparison](https://numeraise.com/calculators/loan-comparison): Side-by-side comparison of multiple loan offers.
+
+### Retirement & FIRE
+- [401(k) Calculator](https://numeraise.com/calculators/401k-calculator): US employer-sponsored 401(k) retirement growth with employer matching.
+- [FIRE Calculator](https://numeraise.com/calculators/fire-calculator): Financial Independence, Retire Early target using the 4% rule.
+- [Retirement Calculator](https://numeraise.com/calculators/retirement-calculator): Global retirement corpus requirement based on lifestyle expenses.
+- [Pension Calculator](https://numeraise.com/calculators/pension-calculator): Annuity and monthly post-retirement pension estimator.
+- [NPS Calculator](https://numeraise.com/calculators/nps-calculator): National Pension System compounding and annuity payout.
+
+### Taxes & Payroll
+- [Income Tax Calculator](https://numeraise.com/calculators/income-tax-calculator): Indian Old vs New Tax Regime side-by-side comparison.
+- [Paycheck Calculator](https://numeraise.com/calculators/paycheck-calculator): US gross-to-net salary take-home estimator.
+- [Sales Tax Calculator](https://numeraise.com/calculators/sales-tax-calculator): US state and local sales tax calculator.
+- [VAT Calculator](https://numeraise.com/calculators/vat-calculator): UK/EU Value Added Tax inclusive and exclusive estimator.
+- [GST Calculator](https://numeraise.com/calculators/gst-calculator): Goods and Services Tax calculator with custom rates.
+- [Salary Calculator](https://numeraise.com/calculators/salary-calculator): CTC to in-hand monthly salary breakdown.
+
+### Business & Financial Decision Making
+- [Break-Even Calculator](https://numeraise.com/calculators/break-even-calculator): Units and revenue required to cover fixed and variable costs.
+- [ROI Calculator](https://numeraise.com/calculators/roi-calculator): Return on Investment percentage and annualized gain.
+- [Margin Calculator](https://numeraise.com/calculators/margin-calculator): Gross and net profit margin from cost and revenue.
+- [Markup Calculator](https://numeraise.com/calculators/markup-calculator): Percentage markup over cost price.
+- [Rent vs Buy](https://numeraise.com/calculators/rent-vs-buy): Comprehensive 10-year wealth comparison between renting and buying a home.
+- [Lease vs Buy](https://numeraise.com/calculators/lease-vs-buy): Vehicle lease vs loan financing net cost analyzer.
+- [Inflation Calculator](https://numeraise.com/calculators/inflation-calculator): Historical and future purchasing power depreciation.
+
+## Educational Resources
+- [Financial Blog](https://numeraise.com/blog): In-depth guides on personal finance strategies, compounding mechanics, and tax optimization.
+- [Financial Glossary](https://numeraise.com/glossary): Definitions and formulas for personal finance terminology.
+- [Side-by-Side Comparisons](https://numeraise.com/compare): Detailed strategy comparisons (e.g., SIP vs FD, Old vs New Tax Regime, Rent vs Buy).
+
+## Contact & Entity Details
+- **Website**: https://numeraise.com
+- **Author**: Rahul Sharma (Founder & Tools Architect)
+- **Email**: support@numeraise.com
+- **GitHub**: https://github.com/Rahulej57/numeraise
+- **Twitter/X**: https://x.com/numeraise
