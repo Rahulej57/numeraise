@@ -15,7 +15,7 @@ export const SITE_NAME = 'Numeraise';
 export const SITE_TAGLINE = 'Free Financial Calculators for Investment, Loans & Tax';
 
 export const SITE_DESCRIPTION =
-  'Free financial calculators for SIP, EMI, income tax, PPF, retirement and more. Transparent formulas, no signup, no data leaves your browser.';
+  'Free financial calculators for 401(k), US mortgage, SIP, EMI, income tax, compound interest, and retirement. Transparent formulas, multi-currency support, no signup.';
 
 export const CONTACT_EMAIL = 'support@numeraise.com';
 

@@ -156,11 +156,13 @@ export default function RootLayout({
                   email: CONTACT_EMAIL,
                   foundingDate: '2026-06-08',
                   knowsAbout: [
-                    'Personal finance',
-                    'Investment calculators',
-                    'Loan amortisation',
-                    'Indian income tax',
-                    'Retirement planning',
+                    'Global personal finance',
+                    'Investment and wealth creation calculators',
+                    'US 401(k) and IRA retirement planning',
+                    'Loan and mortgage amortisation schedules',
+                    'Indian and international tax optimization',
+                    'FIRE and early retirement forecasting',
+                    'Compound interest and inflation modeling',
                   ],
                   logo: {
                     '@type': 'ImageObject',
