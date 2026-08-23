@@ -14,9 +14,11 @@ import { getRelatedCalculators } from '@/config/calculators';
 import { RelatedArticles } from '@/components/calculators/related-articles';
 import { StructuredData } from '@/components/seo/structured-data';
 import { CalculatorHeader } from '@/components/calculators/calculator-header';
+import { GoalPresets } from '@/components/calculators/goal-presets';
 
 export default function Four01kCalculatorPage() {
   const { format, currency } = useCurrency();
+  const [activePreset, setActivePreset] = useState<string | null>(null);
 
   const [currentAge, setCurrentAge] = useState(30);
   const [retirementAge, setRetirementAge] = useState(65);
@@ -27,6 +29,14 @@ export default function Four01kCalculatorPage() {
   const [employerMatchLimit, setEmployerMatchLimit] = useState(6);
   const [employerMatchPercent, setEmployerMatchPercent] = useState(50);
   const [annualReturn, setAnnualReturn] = useState(7);
+
+  const handleApplyPreset = (values: Record<string, number>) => {
+    if (values.salary !== undefined) setAnnualSalary(values.salary);
+    if (values.contributionPercent !== undefined) setEmployeeContribution(values.contributionPercent);
+    if (values.employerMatch !== undefined) setEmployerMatchLimit(values.employerMatch);
+    if (values.years !== undefined) setRetirementAge(currentAge + values.years);
+    if (values.returnRate !== undefined) setAnnualReturn(values.returnRate);
+  };
 
   // Sync state with URL on mount for shareable links
   useEffect(() => {
@@ -157,6 +167,12 @@ Calculate your own: ${shareUrl}`;
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-6xl">
       <CalculatorHeader title="401(k) Calculator" />
+
+      <GoalPresets
+        slug="401k-calculator"
+        onApplyPreset={handleApplyPreset}
+        activePresetId={activePreset}
+      />
 
       <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
         <div className="lg:col-span-6 space-y-6">
@@ -299,7 +315,12 @@ Calculate your own: ${shareUrl}`;
                 <BreakdownChart data={pieData} />
               </div>
 
-              <ResultActions shareUrl={shareUrl} copyPayload={copyPayload} />
+              <ResultActions
+                shareUrl={shareUrl}
+                copyPayload={copyPayload}
+                slug="401k-calculator"
+                calculatorName="401(k) Calculator"
+              />
             </CardContent>
           </Card>
         </div>
