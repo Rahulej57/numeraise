@@ -124,18 +124,31 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     const pathname = window.location.pathname;
     
     // 1. Strongly typed URLs should force a specific currency on first load
-    // so if a user shares a link to "sales-tax-calculator", the receiver sees USD
-    // even if they are in India or haven't set a preference.
-    if (pathname.includes('/sales-tax-calculator') || pathname.includes('us-mortgage-calculator') || pathname.includes('401k-calculator')) {
+    const indiaTools = [
+      '/gst-calculator', '/sip-calculator', '/step-up-sip', '/epf-calculator',
+      '/pomis-calculator', '/scss-calculator', '/ppf-calculator', '/ssy-calculator',
+      '/nps-calculator', '/hra-exemption', '/income-tax-calculator', '/gratuity-calculator',
+      '/rd-calculator', '/fd-calculator', '/mutual-fund-returns', '/advance-tax',
+      '/tds-calculator', '/nsc-calculator', '/pension-calculator', '/flat-vs-reducing-loan',
+      '/lumpsum-calculator', '/swp-calculator', '/cagr-calculator'
+    ];
+    if (indiaTools.some(tool => pathname.includes(tool))) {
+      setCurrencyCode('INR');
+      return;
+    }
+
+    const usTools = [
+      '/sales-tax-calculator', '/us-mortgage-calculator', '/401k-calculator',
+      '/cd-calculator', '/paycheck-calculator', '/roth-ira', '/traditional-ira'
+    ];
+    if (usTools.some(tool => pathname.includes(tool))) {
       setCurrencyCode('USD');
       return;
     }
-    if (pathname.includes('/vat-calculator')) {
+
+    const ukTools = ['/vat-calculator', '/uk-mortgage-calculator', '/isa-calculator'];
+    if (ukTools.some(tool => pathname.includes(tool))) {
       setCurrencyCode('GBP');
-      return;
-    }
-    if (pathname.includes('/gst-calculator')) {
-      setCurrencyCode('INR');
       return;
     }
 

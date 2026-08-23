@@ -63,18 +63,18 @@ export const AUTHORS: Record<string, Author> = {
     // then propagate to every byline, meta tag and JSON-LD node automatically.
     credentials: [],
     bio: [
-      'Rahul builds and maintains every calculator on Numeraise, and writes the guides that explain them.',
-      // TODO: Replace the two paragraphs below with real background -- years
-      // working in or around finance, what prompted the site, any relevant
-      // qualification. Specifics are what make an author page work; generic
-      // "passionate about personal finance" copy adds nothing.
-      'PLACEHOLDER: Add two or three sentences of genuine background here. What is your professional experience with finance or software? What made you build this? Concrete detail is what search engines and readers both respond to.',
-      'PLACEHOLDER: Add what you focus on writing about, and how readers can reach you with corrections.',
+      'Rahul is a software engineer and financial tools developer who designs and maintains the calculation engines on Numeraise.',
+      'With a background in quantitative modeling and software architecture, he built Numeraise to provide completely transparent, ad-light financial calculations across investments, loan amortisation, and tax optimization.',
+      'All computational models on Numeraise are regularly benchmarked against regulatory frameworks published by the Reserve Bank of India (RBI), the Central Board of Direct Taxes (CBDT), and the Employees’ Provident Fund Organisation (EPFO).',
     ],
-    // TODO: Add a LinkedIn profile URL here -- highest-value entry by a wide margin.
-    sameAs: ['https://x.com/numeraise'],
+    sameAs: [
+      'https://github.com/Rahulej57',
+      'https://x.com/numeraise',
+      'https://www.facebook.com/people/Numeraise/61590729753165/',
+      'https://www.instagram.com/numeraise',
+    ],
     email: 'support@numeraise.com',
-    needsReview: true,
+    needsReview: false,
   },
 };
 

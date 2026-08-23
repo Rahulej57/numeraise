@@ -40,4 +40,4 @@ export function absoluteUrl(path = '/'): string {
  * pattern and stop trusting lastmod entirely. Bump this only when page content
  * genuinely changes.
  */
-export const CONTENT_REVISION_DATE = '2026-08-02';
+export const CONTENT_REVISION_DATE = '2026-08-23';

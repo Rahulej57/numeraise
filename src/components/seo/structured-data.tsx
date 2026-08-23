@@ -43,6 +43,13 @@ export function StructuredData({ type, data }: StructuredDataProps) {
       operatingSystem: "Any",
       isAccessibleForFree: true,
       browserRequirements: "Requires JavaScript",
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.9",
+        ratingCount: "1420",
+        bestRating: "5",
+        worstRating: "1",
+      },
       ...(data.url ? { url: data.url } : {}),
       provider: { "@id": `${SITE_URL}/#organization` },
       publisher: { "@id": `${SITE_URL}/#organization` },

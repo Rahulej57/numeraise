@@ -13,6 +13,8 @@ import { getCalculatorConfig } from "@/lib/calculator-engine";
 import { useCurrency } from "@/context/CurrencyContext";
 import { IndiaOnlyGate } from "@/components/calculators/india-only-gate";
 import { CALCULATOR_DIRECTORY } from "@/config/calculators";
+import { GoalPresets } from "@/components/calculators/goal-presets";
+import { EmbedModal } from "@/components/calculators/embed-modal";
 
 const INR_BASE_RATE = 83.00;
 
@@ -312,7 +314,17 @@ export function DynamicCalculatorClient({ slug, name, children }: { slug: string
     return "text-foreground print:text-black";
   };
 
-  // Direct SSR render. The client will hydrate with the default state and update if URL parameters or context changes.
+  const [activePreset, setActivePreset] = useState<string | null>(null);
+
+  const handleApplyPreset = (presetValues: Record<string, number>) => {
+    setInputs(prev => {
+      const updated = { ...prev };
+      for (const [key, val] of Object.entries(presetValues)) {
+        updated[key] = val;
+      }
+      return updated;
+    });
+  };
 
   return (
     <IndiaOnlyGate slug={slug}>
@@ -321,6 +333,12 @@ export function DynamicCalculatorClient({ slug, name, children }: { slug: string
       description={config.description}
       icon={calculatorIcon ?? undefined}
     >
+      <GoalPresets
+        slug={slug}
+        onApplyPreset={handleApplyPreset}
+        activePresetId={activePreset}
+      />
+
       <div className="grid lg:grid-cols-12 gap-2 lg:gap-8">
         
         {/* INPUTS SECTION */}
@@ -431,6 +449,7 @@ export function DynamicCalculatorClient({ slug, name, children }: { slug: string
               <Download className="w-4 h-4 mr-2" />
               CSV
             </Button>
+            <EmbedModal slug={slug} calculatorName={config.name} />
           </div>
         </div>
       </div>

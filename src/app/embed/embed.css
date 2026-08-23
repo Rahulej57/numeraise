@@ -1,0 +1,13 @@
+/* Hide standard site navigation & footer inside iframe embeds */
+header,
+.print\:hidden:not(.embed-safe),
+footer:not(.embed-footer),
+div:has(> button[aria-label="Open quick calculators"]),
+div:has(> button[aria-label="Open menu"]) {
+  display: none !important;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: transparent !important;
+}

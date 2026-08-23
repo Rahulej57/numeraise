@@ -15,15 +15,22 @@ import { CalculatorContent } from '@/components/calculators/calculator-content';
 import { FAQAccordion, FAQ } from '@/components/calculators/faq-accordion';
 import { RelatedCalculators } from '@/components/calculators/related-calculators';
 import { getRelatedCalculators } from '@/config/calculators';
-import { RelatedArticles } from '@/components/calculators/related-articles';
 import { StructuredData } from '@/components/seo/structured-data';
 import { CalculatorHeader } from '@/components/calculators/calculator-header';
+import { GoalPresets } from '@/components/calculators/goal-presets';
 
 export default function SIPCalculatorPage() {
   const { format, currency } = useCurrency();
   const [monthlyInvestment, setMonthlyInvestment] = useState(5000 / 83);
   const [expectedReturnRate, setExpectedReturnRate] = useState(12);
   const [timePeriodYears, setTimePeriodYears] = useState(10);
+  const [activePreset, setActivePreset] = useState<string | null>(null);
+
+  const handleApplyPreset = (values: Record<string, number>) => {
+    if (values.monthly !== undefined) setMonthlyInvestment(values.monthly);
+    if (values.rate !== undefined) setExpectedReturnRate(values.rate);
+    if (values.years !== undefined) setTimePeriodYears(values.years);
+  };
 
   // Sync state with URL on mount for shareable links
   useEffect(() => {
@@ -135,6 +142,12 @@ Calculate your own: ${shareUrl}`;
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-6xl">
       <CalculatorHeader title="SIP Calculator" />
 
+      <GoalPresets
+        slug="sip-calculator"
+        onApplyPreset={handleApplyPreset}
+        activePresetId={activePreset}
+      />
+
       <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
         <div className="lg:col-span-6 space-y-6">
           <Card className="border-none shadow-none bg-muted/20">
@@ -221,6 +234,8 @@ Calculate your own: ${shareUrl}`;
               </Tabs>
 
               <ResultActions
+                slug="sip-calculator"
+                calculatorName="SIP Calculator"
                 shareUrl={shareUrl}
                 copyPayload={copyPayload}
                 csvData={result.yearlyData}

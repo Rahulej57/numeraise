@@ -3,6 +3,7 @@
 import { Download, Printer, Share2, Copy, Save, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { EmbedModal } from "@/components/calculators/embed-modal";
 
 interface ResultActionsProps {
   csvData?: any[];
@@ -10,9 +11,11 @@ interface ResultActionsProps {
   shareUrl?: string;
   onSave?: () => void;
   copyPayload?: string;
+  slug?: string;
+  calculatorName?: string;
 }
 
-export function ResultActions({ csvData, csvFilename = "export.csv", shareUrl, onSave, copyPayload }: ResultActionsProps) {
+export function ResultActions({ csvData, csvFilename = "export.csv", shareUrl, onSave, copyPayload, slug, calculatorName }: ResultActionsProps) {
   const [copiedShare, setCopiedShare] = useState(false);
   const [copiedText, setCopiedText] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -125,6 +128,7 @@ export function ResultActions({ csvData, csvFilename = "export.csv", shareUrl, o
         {copiedText ? <Check className="w-4 h-4 mr-2 text-green-500" /> : <Copy className="w-4 h-4 mr-2" />}
         {copiedText ? "Copied" : "Copy Info"}
       </Button>
+      {slug && <EmbedModal slug={slug} calculatorName={calculatorName || "Financial Calculator"} />}
       <Button variant="default" size="sm" onClick={handleShare} className="flex-1 sm:flex-none ml-auto">
         {copiedShare ? <Check className="w-4 h-4 mr-2 text-primary-foreground" /> : <Share2 className="w-4 h-4 mr-2" />}
         {copiedShare ? "Link Copied" : "Share"}
