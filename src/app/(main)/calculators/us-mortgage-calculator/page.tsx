@@ -15,9 +15,11 @@ import { RelatedArticles } from '@/components/calculators/related-articles';
 import { StructuredData } from '@/components/seo/structured-data';
 import { calculateEMI } from '@/lib/calculations/loan';
 import { CalculatorHeader } from '@/components/calculators/calculator-header';
+import { GoalPresets } from '@/components/calculators/goal-presets';
 
 export default function USMortgageCalculatorPage() {
   const { format, currency } = useCurrency();
+  const [activePreset, setActivePreset] = useState<string | null>(null);
 
   const [homePrice, setHomePrice] = useState(400000);
   const [downPaymentPercent, setDownPaymentPercent] = useState(20);
@@ -28,6 +30,16 @@ export default function USMortgageCalculatorPage() {
   const [propertyTaxRate, setPropertyTaxRate] = useState(1.2);
   const [annualInsurance, setAnnualInsurance] = useState(1200);
   const [pmiRate, setPmiRate] = useState(0.5);
+
+  const handleApplyPreset = (values: Record<string, number>) => {
+    if (values.homePrice !== undefined) setHomePrice(values.homePrice);
+    if (values.downPayment !== undefined && values.homePrice) {
+      setDownPaymentPercent(Math.round((values.downPayment / values.homePrice) * 100));
+    }
+    if (values.interestRate !== undefined) setInterestRate(values.interestRate);
+    if (values.loanTerm !== undefined) setLoanTerm(values.loanTerm);
+    if (values.propertyTax !== undefined) setPropertyTaxRate(values.propertyTax);
+  };
 
   // Sync state with URL on mount for shareable links
   useEffect(() => {
@@ -136,11 +148,23 @@ Calculate your own: ${shareUrl}`;
     },
   ];
 
-  const relatedCalcs = getRelatedCalculators('us-mortgage-calculator');
+  const formatUSD = (val: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    }).format(val);
+  };
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-6xl">
       <CalculatorHeader title="US Mortgage Calculator" />
+
+      <GoalPresets
+        slug="us-mortgage-calculator"
+        onApplyPreset={handleApplyPreset}
+        activePresetId={activePreset}
+      />
 
       <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
         <div className="lg:col-span-6 space-y-6">
@@ -148,12 +172,12 @@ Calculate your own: ${shareUrl}`;
             <CardContent className="p-5 md:p-6 space-y-6">
               <SliderInput
                 label="Home Price"
-                value={homePrice * currency.rate}
-                min={50000 * currency.rate}
-                max={5000000 * currency.rate}
-                step={5000 * currency.rate}
-                onChange={(val) => setHomePrice(val / currency.rate)}
-                symbol={currency.symbol}
+                value={homePrice}
+                min={50000}
+                max={5000000}
+                step={5000}
+                onChange={setHomePrice}
+                symbol="$"
               />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <SliderInput
@@ -200,12 +224,12 @@ Calculate your own: ${shareUrl}`;
                     />
                     <SliderInput
                       label="Annual Insurance"
-                      value={annualInsurance * currency.rate}
+                      value={annualInsurance}
                       min={0}
-                      max={10000 * currency.rate}
-                      step={100 * currency.rate}
-                      onChange={(val) => setAnnualInsurance(val / currency.rate)}
-                      symbol={currency.symbol}
+                      max={10000}
+                      step={100}
+                      onChange={setAnnualInsurance}
+                      symbol="$"
                     />
                   </div>
                   {downPaymentPercent < 20 && (
@@ -234,7 +258,7 @@ Calculate your own: ${shareUrl}`;
             <CardContent className="p-5 md:p-6 pt-0">
               <div className="text-center mb-6 mt-4">
                 <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary">
-                  {format(result.totalMonthlyPayment)}
+                  {formatUSD(result.totalMonthlyPayment)}
                 </h2>
                 <p className="text-sm text-muted-foreground mt-2">Total Monthly PITI</p>
               </div>
@@ -245,7 +269,7 @@ Calculate your own: ${shareUrl}`;
                     Principal & Interest
                   </p>
                   <p className="text-base md:text-xl font-bold text-blue-600 dark:text-blue-400">
-                    {format(result.monthlyPI)}
+                    {formatUSD(result.monthlyPI)}
                   </p>
                 </div>
                 <div className="p-3 md:p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
@@ -253,7 +277,7 @@ Calculate your own: ${shareUrl}`;
                     Property Tax
                   </p>
                   <p className="text-base md:text-xl font-bold text-emerald-600 dark:text-emerald-400">
-                    {format(result.monthlyTax)}
+                    {formatUSD(result.monthlyTax)}
                   </p>
                 </div>
                 <div className="p-3 md:p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
@@ -261,14 +285,14 @@ Calculate your own: ${shareUrl}`;
                     Home Insurance
                   </p>
                   <p className="text-base md:text-xl font-bold text-amber-600 dark:text-amber-400">
-                    {format(result.monthlyInsurance)}
+                    {formatUSD(result.monthlyInsurance)}
                   </p>
                 </div>
                 {result.monthlyPMI > 0 && (
                   <div className="p-3 md:p-4 rounded-lg bg-rose-500/10 border border-rose-500/20">
                     <p className="text-xs md:text-sm text-rose-600 dark:text-rose-400 font-medium mb-1">PMI</p>
                     <p className="text-base md:text-xl font-bold text-rose-600 dark:text-rose-400">
-                      {format(result.monthlyPMI)}
+                      {formatUSD(result.monthlyPMI)}
                     </p>
                   </div>
                 )}
@@ -278,7 +302,12 @@ Calculate your own: ${shareUrl}`;
                 <BreakdownChart data={pieData} />
               </div>
 
-              <ResultActions shareUrl={shareUrl} copyPayload={copyPayload} />
+              <ResultActions
+                shareUrl={shareUrl}
+                copyPayload={copyPayload}
+                slug="us-mortgage-calculator"
+                calculatorName="US Mortgage Calculator"
+              />
             </CardContent>
           </Card>
         </div>

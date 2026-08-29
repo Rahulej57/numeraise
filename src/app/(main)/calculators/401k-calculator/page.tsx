@@ -164,6 +164,14 @@ Calculate your own: ${shareUrl}`;
 
   const relatedCalcs = getRelatedCalculators('401k-calculator');
 
+  const formatUSD = (val: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    }).format(val);
+  };
+
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-6xl">
       <CalculatorHeader title="401(k) Calculator" />
@@ -200,21 +208,21 @@ Calculate your own: ${shareUrl}`;
               </div>
               <SliderInput
                 label="Current 401(k) Balance"
-                value={currentBalance * currency.rate}
+                value={currentBalance}
                 min={0}
-                max={2000000 * currency.rate}
-                step={1000 * currency.rate}
-                onChange={(val) => setCurrentBalance(val / currency.rate)}
-                symbol={currency.symbol}
+                max={2000000}
+                step={1000}
+                onChange={setCurrentBalance}
+                symbol="$"
               />
               <SliderInput
                 label="Annual Salary"
-                value={annualSalary * currency.rate}
-                min={10000 * currency.rate}
-                max={1000000 * currency.rate}
-                step={1000 * currency.rate}
-                onChange={(val) => setAnnualSalary(val / currency.rate)}
-                symbol={currency.symbol}
+                value={annualSalary}
+                min={10000}
+                max={1000000}
+                step={1000}
+                onChange={setAnnualSalary}
+                symbol="$"
               />
               <SliderInput
                 label="Your Contribution"
@@ -284,7 +292,7 @@ Calculate your own: ${shareUrl}`;
             <CardContent className="p-5 md:p-6 pt-0">
               <div className="text-center mb-6 mt-4">
                 <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary">
-                  {format(result.finalBalance)}
+                  {formatUSD(result.finalBalance)}
                 </h2>
               </div>
 
@@ -292,7 +300,7 @@ Calculate your own: ${shareUrl}`;
                 <div className="p-3 md:p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <p className="text-xs md:text-sm text-blue-600 dark:text-blue-400 font-medium mb-1">Your Contribs</p>
                   <p className="text-base md:text-xl font-bold text-blue-600 dark:text-blue-400">
-                    {format(result.totalEmployee)}
+                    {formatUSD(result.totalEmployee)}
                   </p>
                 </div>
                 <div className="p-3 md:p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
@@ -300,13 +308,13 @@ Calculate your own: ${shareUrl}`;
                     Employer Match
                   </p>
                   <p className="text-base md:text-xl font-bold text-emerald-600 dark:text-emerald-400">
-                    {format(result.totalEmployer)}
+                    {formatUSD(result.totalEmployer)}
                   </p>
                 </div>
                 <div className="p-3 md:p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="text-xs md:text-sm text-amber-600 dark:text-amber-400 font-medium mb-1">Interest</p>
                   <p className="text-base md:text-xl font-bold text-amber-600 dark:text-amber-400">
-                    {format(result.totalInterest)}
+                    {formatUSD(result.totalInterest)}
                   </p>
                 </div>
               </div>

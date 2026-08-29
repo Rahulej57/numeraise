@@ -115,22 +115,22 @@ export function ResultActions({ csvData, csvFilename = "export.csv", shareUrl, o
   };
 
   return (
-    <div className="flex flex-wrap gap-2 mt-6 p-4 bg-muted/30 rounded-lg border border-border/50 print:hidden">
-      <Button variant="outline" size="sm" onClick={handleExportCSV} disabled={!csvData} className="flex-1 sm:flex-none">
-        <Download className="w-4 h-4 mr-2" />
+    <div className="flex flex-wrap items-center gap-2 mt-6 p-3.5 bg-muted/30 rounded-xl border border-border/50 print:hidden">
+      <Button variant="outline" size="sm" onClick={handleExportCSV} disabled={!csvData} className="flex-1 sm:flex-initial">
+        <Download className="w-4 h-4 mr-1.5" />
         CSV
       </Button>
-      <Button variant="outline" size="sm" onClick={handlePrint} className="flex-1 sm:flex-none">
-        <Printer className="w-4 h-4 mr-2" />
-        Print/PDF
+      <Button variant="outline" size="sm" onClick={handlePrint} className="flex-1 sm:flex-initial">
+        <Printer className="w-4 h-4 mr-1.5" />
+        PDF
       </Button>
-      <Button variant="outline" size="sm" onClick={handleCopy} disabled={!copyPayload} className="flex-1 sm:flex-none">
-        {copiedText ? <Check className="w-4 h-4 mr-2 text-green-500" /> : <Copy className="w-4 h-4 mr-2" />}
-        {copiedText ? "Copied" : "Copy Info"}
+      <Button variant="outline" size="sm" onClick={handleCopy} disabled={!copyPayload} className="flex-1 sm:flex-initial">
+        {copiedText ? <Check className="w-4 h-4 mr-1.5 text-green-500" /> : <Copy className="w-4 h-4 mr-1.5" />}
+        {copiedText ? "Copied" : "Copy"}
       </Button>
       {slug && <EmbedModal slug={slug} calculatorName={calculatorName || "Financial Calculator"} />}
-      <Button variant="default" size="sm" onClick={handleShare} className="flex-1 sm:flex-none ml-auto">
-        {copiedShare ? <Check className="w-4 h-4 mr-2 text-primary-foreground" /> : <Share2 className="w-4 h-4 mr-2" />}
+      <Button variant="outline" size="sm" onClick={handleShare} className="flex-1 sm:flex-initial text-primary border-primary/30 hover:bg-primary/10">
+        {copiedShare ? <Check className="w-4 h-4 mr-1.5 text-green-500" /> : <Share2 className="w-4 h-4 mr-1.5" />}
         {copiedShare ? "Link Copied" : "Share"}
       </Button>
     </div>

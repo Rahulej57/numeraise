@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 type Currency = {
   code: string;
@@ -104,6 +105,7 @@ interface CurrencyContextType {
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const [rates, setRates] = useState<Record<string, number>>(FALLBACK_RATES);
   const [ratesLoading, setRatesLoading] = useState(true);
   const [currencies, setCurrencies] = useState(() => buildCurrencies(FALLBACK_RATES));
@@ -119,24 +121,11 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
-  // Detect user preferred currency from storage or timezone
+  // Detect and update currency whenever route changes
   useEffect(() => {
-    const pathname = window.location.pathname;
-    
-    // 1. Strongly typed URLs should force a specific currency on first load
-    const indiaTools = [
-      '/gst-calculator', '/sip-calculator', '/step-up-sip', '/epf-calculator',
-      '/pomis-calculator', '/scss-calculator', '/ppf-calculator', '/ssy-calculator',
-      '/nps-calculator', '/hra-exemption', '/income-tax-calculator', '/gratuity-calculator',
-      '/rd-calculator', '/fd-calculator', '/mutual-fund-returns', '/advance-tax',
-      '/tds-calculator', '/nsc-calculator', '/pension-calculator', '/flat-vs-reducing-loan',
-      '/lumpsum-calculator', '/swp-calculator', '/cagr-calculator'
-    ];
-    if (indiaTools.some(tool => pathname.includes(tool))) {
-      setCurrencyCode('INR');
-      return;
-    }
+    if (!pathname) return;
 
+    // US Tools -> strictly USD
     const usTools = [
       '/sales-tax-calculator', '/us-mortgage-calculator', '/401k-calculator',
       '/cd-calculator', '/paycheck-calculator', '/roth-ira', '/traditional-ira'
@@ -146,18 +135,32 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
+    // UK Tools -> strictly GBP
     const ukTools = ['/vat-calculator', '/uk-mortgage-calculator', '/isa-calculator'];
     if (ukTools.some(tool => pathname.includes(tool))) {
       setCurrencyCode('GBP');
       return;
     }
 
-    // 2. Check localStorage
+    // India-Specific Regulations -> strictly INR
+    const indiaTools = [
+      '/gst-calculator', '/epf-calculator', '/pomis-calculator', '/scss-calculator',
+      '/ppf-calculator', '/ssy-calculator', '/nps-calculator', '/hra-exemption',
+      '/income-tax-calculator', '/gratuity-calculator', '/advance-tax',
+      '/tds-calculator', '/nsc-calculator', '/pension-calculator', '/flat-vs-reducing-loan'
+    ];
+    if (indiaTools.some(tool => pathname.includes(tool))) {
+      setCurrencyCode('INR');
+      return;
+    }
+
+    // Check localStorage for universal tools
     const saved = localStorage.getItem('preferredCurrency');
     if (saved && CURRENCY_META[saved]) {
       setCurrencyCode(saved);
       return;
     }
+
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (tz.includes('Kolkata') || tz.includes('Calcutta')) setCurrencyCode('INR');
@@ -167,8 +170,9 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
       else if (tz.startsWith('Australia/')) setCurrencyCode('AUD');
       else if (tz.includes('Singapore')) setCurrencyCode('SGD');
       else if (tz.includes('Dubai')) setCurrencyCode('AED');
-    } catch { /* silent fallback to USD */ }
-  }, []);
+      else setCurrencyCode('USD');
+    } catch {
+  }, [pathname]);
 
   const currency = currencies[currencyCode] ?? currencies['USD'];
   const economicRates = GLOBAL_RATES[currencyCode] ?? GLOBAL_RATES['USD'];
