@@ -1,6 +1,35 @@
 import { CalculatorConfig } from "./calculator-engine";
 
 export const investmentCalculators: Record<string, CalculatorConfig> = {
+  "sip-calculator": {
+    slug: "sip-calculator",
+    name: "SIP Calculator",
+    description: "Calculate the future value of your Systematic Investment Plan (SIP).",
+    inputs: [
+      { id: "monthly", label: "Monthly Investment", type: "currency", min: 500, max: 10000000, step: 500, default: 25000 },
+      { id: "rate", label: "Expected Return Rate (p.a)", type: "percentage", min: 1, max: 30, step: 0.5, default: 12 },
+      { id: "years", label: "Time Period", type: "years", min: 1, max: 40, step: 1, default: 10 }
+    ],
+    calculate: (inputs) => {
+      const p = inputs.monthly || 25000;
+      const i = (inputs.rate || 12) / 12 / 100;
+      const n = (inputs.years || 10) * 12;
+      const amount = i > 0 ? p * ((Math.pow(1 + i, n) - 1) / i) * (1 + i) : p * n;
+      const invested = p * n;
+
+      return {
+        primaryLabel: "Total Expected Amount",
+        primaryValue: Math.round(amount),
+        primaryType: "currency",
+        secondaryLabel: "Amount Invested",
+        secondaryValue: Math.round(invested),
+        secondaryType: "currency",
+        tertiaryLabel: "Wealth Gained",
+        tertiaryValue: Math.round(amount - invested),
+        tertiaryType: "currency"
+      };
+    }
+  },
   "401k-calculator": {
     slug: "401k-calculator",
     name: "401(k) Calculator",

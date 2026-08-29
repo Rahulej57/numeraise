@@ -1,5 +1,5 @@
 /* Hide standard site navigation & footer inside iframe embeds */
-header,
+header:not(.embed-header),
 .print\:hidden:not(.embed-safe),
 footer:not(.embed-footer),
 div:has(> button[aria-label="Open quick calculators"]),

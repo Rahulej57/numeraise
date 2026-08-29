@@ -1,6 +1,35 @@
 import { CalculatorConfig } from "./calculator-engine";
 
 export const loanCalculators: Record<string, CalculatorConfig> = {
+  "emi-calculator": {
+    slug: "emi-calculator",
+    name: "EMI Calculator",
+    description: "Calculate your Equated Monthly Installment (EMI) for home, car, or personal loans.",
+    inputs: [
+      { id: "principal", label: "Loan Amount", type: "currency", min: 10000, max: 100000000, step: 10000, default: 2500000 },
+      { id: "rate", label: "Interest Rate (p.a)", type: "percentage", min: 1, max: 30, step: 0.1, default: 8.5 },
+      { id: "years", label: "Loan Tenure (Years)", type: "years", min: 1, max: 30, step: 1, default: 20 }
+    ],
+    calculate: (inputs) => {
+      const p = inputs.principal || 2500000;
+      const r = (inputs.rate || 8.5) / 12 / 100;
+      const n = (inputs.years || 20) * 12;
+      const emi = r > 0 ? (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1) : p / n;
+      const totalPayable = emi * n;
+
+      return {
+        primaryLabel: "Monthly Loan EMI",
+        primaryValue: Math.round(emi),
+        primaryType: "currency",
+        secondaryLabel: "Principal Amount",
+        secondaryValue: Math.round(p),
+        secondaryType: "currency",
+        tertiaryLabel: "Total Interest Amount",
+        tertiaryValue: Math.round(totalPayable - p),
+        tertiaryType: "currency"
+      };
+    }
+  },
   "us-mortgage-calculator": {
     slug: "us-mortgage-calculator",
     name: "US Mortgage Calculator",
