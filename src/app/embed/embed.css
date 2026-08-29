@@ -1,6 +1,5 @@
-/* Hide standard site navigation & footer inside iframe embeds */
+/* Hide standard site navigation, search modals, and footer inside iframe embeds */
 header:not(.embed-header),
-.print\:hidden:not(.embed-safe),
 footer:not(.embed-footer),
 div:has(> button[aria-label="Open quick calculators"]),
 div:has(> button[aria-label="Open menu"]) {
