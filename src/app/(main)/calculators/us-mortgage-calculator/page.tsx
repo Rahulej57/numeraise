@@ -156,6 +156,8 @@ Calculate your own: ${shareUrl}`;
     }).format(val);
   };
 
+  const relatedCalcs = getRelatedCalculators('us-mortgage-calculator');
+
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-6xl">
       <CalculatorHeader title="US Mortgage Calculator" />
