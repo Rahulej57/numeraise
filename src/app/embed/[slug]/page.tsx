@@ -7,6 +7,7 @@ import { SITE_URL, SITE_NAME } from "@/config/site";
 
 interface EmbedPageProps {
   params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ theme?: string }>;
 }
 
 export async function generateStaticParams() {
@@ -41,8 +42,11 @@ export async function generateMetadata({ params }: EmbedPageProps): Promise<Meta
   };
 }
 
-export default async function EmbedCalculatorPage({ params }: EmbedPageProps) {
+export default async function EmbedCalculatorPage({ params, searchParams }: EmbedPageProps) {
   const { slug } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : {};
+  const theme = resolvedSearchParams.theme || "auto";
+  const isDark = theme === "dark";
 
   let calcName: string | null = null;
   for (const category of CALCULATOR_DIRECTORY) {
@@ -58,7 +62,7 @@ export default async function EmbedCalculatorPage({ params }: EmbedPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col justify-between p-2 sm:p-4">
+    <div className={`min-h-screen bg-background text-foreground flex flex-col justify-between p-2 sm:p-4 ${isDark ? "dark" : ""}`}>
       <div className="w-full max-w-5xl mx-auto flex-1">
         <DynamicCalculatorClient slug={slug} name={calcName} />
       </div>

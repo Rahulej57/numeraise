@@ -1,6 +1,48 @@
 import { CalculatorConfig } from "./calculator-engine";
 
 export const loanCalculators: Record<string, CalculatorConfig> = {
+  "us-mortgage-calculator": {
+    slug: "us-mortgage-calculator",
+    name: "US Mortgage Calculator",
+    description: "Calculate your monthly PITI mortgage payment including taxes, insurance, and PMI.",
+    inputs: [
+      { id: "homePrice", label: "Home Purchase Price", type: "currency", min: 50000, max: 5000000, step: 5000, default: 400000 },
+      { id: "downPayment", label: "Down Payment (%)", type: "percentage", min: 0, max: 100, step: 1, default: 20 },
+      { id: "rate", label: "Mortgage Interest Rate (%)", type: "percentage", min: 1, max: 15, step: 0.1, default: 7 },
+      { id: "years", label: "Loan Term (Years)", type: "years", min: 5, max: 40, step: 5, default: 30 },
+      { id: "propertyTax", label: "Property Tax Rate (%)", type: "percentage", min: 0, max: 5, step: 0.1, default: 1.2 },
+      { id: "insurance", label: "Annual Home Insurance", type: "currency", min: 0, max: 10000, step: 100, default: 1200 }
+    ],
+    calculate: (inputs) => {
+      const homePrice = inputs.homePrice || 400000;
+      const downPayment = inputs.downPayment !== undefined ? inputs.downPayment : 20;
+      const rate = inputs.rate || 7;
+      const years = inputs.years || 30;
+      const propertyTax = inputs.propertyTax !== undefined ? inputs.propertyTax : 1.2;
+      const insurance = inputs.insurance !== undefined ? inputs.insurance : 1200;
+
+      const loanAmount = homePrice * (1 - downPayment / 100);
+      const monthlyRate = rate / 12 / 100;
+      const months = years * 12;
+      const monthlyPI = monthlyRate > 0 ? (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1) : loanAmount / months;
+      const monthlyTax = (homePrice * (propertyTax / 100)) / 12;
+      const monthlyIns = insurance / 12;
+      const monthlyPMI = downPayment < 20 ? (loanAmount * 0.005) / 12 : 0;
+      const totalMonthly = monthlyPI + monthlyTax + monthlyIns + monthlyPMI;
+
+      return {
+        primaryLabel: "Total Monthly Payment (PITI)",
+        primaryValue: Math.round(totalMonthly),
+        primaryType: "currency",
+        secondaryLabel: "Principal & Interest (P&I)",
+        secondaryValue: Math.round(monthlyPI),
+        secondaryType: "currency",
+        tertiaryLabel: "Taxes, Insurance & PMI",
+        tertiaryValue: Math.round(monthlyTax + monthlyIns + monthlyPMI),
+        tertiaryType: "currency"
+      };
+    }
+  },
   "car-loan-emi": {
     slug: "car-loan-emi", name: "Car Loan EMI", description: "Calculate your monthly EMI for a car loan.",
     inputs: [

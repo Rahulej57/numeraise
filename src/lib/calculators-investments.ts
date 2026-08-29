@@ -1,6 +1,56 @@
 import { CalculatorConfig } from "./calculator-engine";
 
 export const investmentCalculators: Record<string, CalculatorConfig> = {
+  "401k-calculator": {
+    slug: "401k-calculator",
+    name: "401(k) Calculator",
+    description: "Calculate your 401(k) retirement balance with employer match and compound growth.",
+    inputs: [
+      { id: "currentBalance", label: "Current 401(k) Balance", type: "currency", min: 0, max: 2000000, step: 1000, default: 50000 },
+      { id: "salary", label: "Annual Salary", type: "currency", min: 10000, max: 1000000, step: 1000, default: 75000 },
+      { id: "contribution", label: "Your Contribution (%)", type: "percentage", min: 0, max: 50, step: 1, default: 10 },
+      { id: "employerMatch", label: "Employer Match (%)", type: "percentage", min: 0, max: 100, step: 5, default: 50 },
+      { id: "matchLimit", label: "Match Limit (% of Salary)", type: "percentage", min: 0, max: 15, step: 1, default: 6 },
+      { id: "returnRate", label: "Expected Annual Return (%)", type: "percentage", min: 1, max: 15, step: 0.5, default: 7 },
+      { id: "years", label: "Years to Retirement", type: "years", min: 1, max: 50, step: 1, default: 35 }
+    ],
+    calculate: (inputs) => {
+      const currentBalance = inputs.currentBalance || 50000;
+      const salary = inputs.salary || 75000;
+      const contribution = inputs.contribution || 10;
+      const employerMatch = inputs.employerMatch || 50;
+      const matchLimit = inputs.matchLimit || 6;
+      const returnRate = inputs.returnRate || 7;
+      const years = inputs.years || 35;
+
+      const rate = returnRate / 100;
+      let balance = currentBalance;
+      let totalEmployee = 0;
+      let totalEmployer = 0;
+      
+      const effectiveMatch = Math.min(contribution, matchLimit) * (employerMatch / 100);
+      const annualEmployee = salary * (contribution / 100);
+      const annualEmployer = salary * (effectiveMatch / 100);
+
+      for (let y = 0; y < years; y++) {
+        balance = (balance + annualEmployee + annualEmployer) * (1 + rate);
+        totalEmployee += annualEmployee;
+        totalEmployer += annualEmployer;
+      }
+
+      return {
+        primaryLabel: "Projected 401(k) Balance",
+        primaryValue: Math.round(balance),
+        primaryType: "currency",
+        secondaryLabel: "Your Total Contributions",
+        secondaryValue: Math.round(totalEmployee),
+        secondaryType: "currency",
+        tertiaryLabel: "Employer Match Total",
+        tertiaryValue: Math.round(totalEmployer),
+        tertiaryType: "currency"
+      };
+    }
+  },
   "mutual-fund-returns": {
     slug: "mutual-fund-returns", name: "Mutual Fund Returns", description: "Calculate absolute and annualized returns on mutual funds.",
     inputs: [
