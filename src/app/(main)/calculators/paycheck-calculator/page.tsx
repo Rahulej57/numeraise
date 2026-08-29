@@ -14,9 +14,11 @@ import { getRelatedCalculators } from '@/config/calculators';
 import { RelatedArticles } from '@/components/calculators/related-articles';
 import { StructuredData } from '@/components/seo/structured-data';
 import { CalculatorHeader } from '@/components/calculators/calculator-header';
+import { GoalPresets } from '@/components/calculators/goal-presets';
 
 export default function PaycheckCalculatorPage() {
   const { format, currency } = useCurrency();
+  const [activePreset, setActivePreset] = useState<string | null>(null);
 
   const [annualSalary, setAnnualSalary] = useState(75000);
   const [payPeriods, setPayPeriods] = useState(26); // Bi-weekly by default
@@ -229,11 +231,26 @@ Calculate your own: ${shareUrl}`;
     },
   ];
 
+  const handleApplyPreset = (values: Record<string, number>) => {
+    if (values.grossSalary !== undefined) {
+      userEditedSalary.current = true;
+      setAnnualSalary(values.grossSalary);
+    }
+    if (values.payFrequency !== undefined) setPayPeriods(values.payFrequency);
+    if (values.stateRate !== undefined) setStateTaxRate(values.stateRate);
+  };
+
   const relatedCalcs = getRelatedCalculators('paycheck-calculator');
 
   return (
     <div className="container mx-auto px-4 py-6 md:py-8 max-w-6xl">
       <CalculatorHeader title="Paycheck Estimator" />
+
+      <GoalPresets
+        slug="paycheck-calculator"
+        onApplyPreset={handleApplyPreset}
+        activePresetId={activePreset}
+      />
 
       <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
         <div className="lg:col-span-6 space-y-6">
@@ -371,7 +388,12 @@ Calculate your own: ${shareUrl}`;
                 <BreakdownChart data={pieData} />
               </div>
 
-              <ResultActions shareUrl={shareUrl} copyPayload={copyPayload} />
+              <ResultActions
+                shareUrl={shareUrl}
+                copyPayload={copyPayload}
+                slug="paycheck-calculator"
+                calculatorName="Paycheck Estimator"
+              />
             </CardContent>
           </Card>
         </div>

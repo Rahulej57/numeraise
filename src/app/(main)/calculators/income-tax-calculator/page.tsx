@@ -330,7 +330,12 @@ Calculate your own: ${shareUrl}`;
                 </div>
               </div>
 
-              <ResultActions shareUrl={shareUrl} copyPayload={copyPayload} />
+              <ResultActions
+                shareUrl={shareUrl}
+                copyPayload={copyPayload}
+                slug="income-tax-calculator"
+                calculatorName="Income Tax Calculator"
+              />
             </CardContent>
           </Card>
         </div>
