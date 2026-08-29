@@ -172,6 +172,8 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
       else if (tz.includes('Dubai')) setCurrencyCode('AED');
       else setCurrencyCode('USD');
     } catch {
+      setCurrencyCode('USD');
+    }
   }, [pathname]);
 
   const currency = currencies[currencyCode] ?? currencies['USD'];
