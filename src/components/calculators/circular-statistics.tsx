@@ -40,8 +40,7 @@ export function CircularStatistics({ data, title }: CircularStatisticsProps) {
               paddingAngle={5}
               dataKey="value"
               stroke="none"
-              animationBegin={200}
-              animationDuration={1000}
+              isAnimationActive={false}
             >
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />

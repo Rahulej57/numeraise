@@ -23,6 +23,7 @@ export const BreakdownChart = memo(function BreakdownChart({ data }: BreakdownCh
           outerRadius={80}
           paddingAngle={5}
           dataKey="value"
+          isAnimationActive={false}
         >
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={entry.color} />

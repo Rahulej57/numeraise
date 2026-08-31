@@ -51,8 +51,17 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
   const sliderId = `${fieldId}-slider`;
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const rafRef = useRef<number | null>(null);
   const isDragging = useRef(false);
   const lastCallRef = useRef(0);
+
+  // Clean up timers on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
   /*
    * Large amounts rendered as a raw digit string — "112133000" — are genuinely
@@ -81,10 +90,6 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     isDragging.current = true;
-    // The field is type="text" so it can display grouping separators. Strip
-    // anything that is not a digit, a decimal point or a leading minus before
-    // parsing — otherwise a pasted "1,12,133" would evaluate to NaN and the
-    // value would silently stop updating.
     const val = e.target.value.replace(/[^\d.-]/g, '');
     setInputValue(val);
 
@@ -101,9 +106,6 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
   };
 
   const handleSliderChange = (vals: any) => {
-    if (typeof document !== 'undefined' && document.activeElement instanceof HTMLInputElement) {
-      document.activeElement.blur();
-    }
     isDragging.current = true;
     const rawPosition = Array.isArray(vals) ? vals[0] : (typeof vals === 'number' ? vals : 0);
     
@@ -121,10 +123,13 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
     setLocalValue(newVal);
     setInputValue(newVal.toString());
     
-    // Throttle the heavy parent update to 25 FPS (40ms) to save CPU on mobile
+    // Throttle parent propagation to 30 FPS using requestAnimationFrame to eliminate CPU lock
     const now = Date.now();
-    if (now - lastCallRef.current >= 40) {
-      onChange(newVal);
+    if (now - lastCallRef.current >= 33) {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => {
+        onChange(newVal);
+      });
       lastCallRef.current = now;
     }
     
@@ -132,9 +137,8 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       onChange(newVal);
-      // Wait a fraction of a second before unlocking to prevent incoming parent renders from snapping the thumb
-      setTimeout(() => { isDragging.current = false; }, 50);
-    }, 50); 
+      isDragging.current = false;
+    }, 60); 
   };
 
   const getSliderPosition = (val: number) => {
@@ -146,13 +150,6 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
 
   return (
     <div className="space-y-2 lg:space-y-4">
-      {/*
-        gap-3 rather than justify-between alone, and min-w-0 on the label so
-        flexbox is allowed to shrink it. Without min-w-0 a long label refuses to
-        wrap, pushes the value box past the container and clips it at the
-        viewport edge — which is exactly what happened to "Retirement Age" and
-        "Down Payment / Due at Signing" on a 360px screen.
-      */}
       <div className="flex items-start justify-between gap-3">
         <Label
           htmlFor={inputId}
@@ -168,8 +165,6 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
           )}
           <Input
             id={inputId}
-            // Text while blurred so grouping separators can render; a number
-            // input silently rejects commas. See the note on displayValue.
             type="text"
             inputMode="decimal"
             enterKeyHint="done"
@@ -202,8 +197,12 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
         max={RESOLUTION}
         step={1}
         onValueChange={handleSliderChange}
+        onPointerDown={() => {
+          if (typeof document !== 'undefined' && document.activeElement instanceof HTMLInputElement) {
+            document.activeElement.blur();
+          }
+        }}
         aria-label={`${label} slider`}
-        // Announced in place of the raw 0-10000 track position. See slider.tsx.
         valueText={`${symbol ?? ''}${localValue}${suffix ? ` ${suffix}` : ''}`}
         className="py-4 touch-pan-y print:hidden"
       />

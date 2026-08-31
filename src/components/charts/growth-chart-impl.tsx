@@ -61,6 +61,7 @@ export const GrowthChart = memo(function GrowthChart({ data, xAxisKey, areas }: 
             stroke={area.color}
             fillOpacity={1}
             fill={`url(#color${area.key})`}
+            isAnimationActive={false}
           />
         ))}
       </AreaChart>
