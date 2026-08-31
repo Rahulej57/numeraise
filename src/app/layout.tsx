@@ -12,6 +12,7 @@ import { ROBOTS_DIRECTIVE } from '@/config/deployment';
 import { bylineFor } from '@/config/authors';
 import { Suspense } from 'react';
 import { NavigationProgress } from '@/components/layout/navigation-progress';
+import { MobileKeyboardDismiss } from '@/components/layout/mobile-keyboard-dismiss';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -100,6 +101,7 @@ export default function RootLayout({
             <Suspense fallback={null}>
               <NavigationProgress />
             </Suspense>
+            <MobileKeyboardDismiss />
             <div className="relative flex min-h-screen flex-col">
               <Navbar />
               <main className="flex-1 flex flex-col">

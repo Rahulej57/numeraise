@@ -101,6 +101,9 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
   };
 
   const handleSliderChange = (vals: any) => {
+    if (typeof document !== 'undefined' && document.activeElement instanceof HTMLInputElement) {
+      document.activeElement.blur();
+    }
     isDragging.current = true;
     const rawPosition = Array.isArray(vals) ? vals[0] : (typeof vals === 'number' ? vals : 0);
     
@@ -169,8 +172,14 @@ export function SliderInput({ label, value, min, max, step = 1, onChange, symbol
             // input silently rejects commas. See the note on displayValue.
             type="text"
             inputMode="decimal"
+            enterKeyHint="done"
             value={displayValue}
             onChange={handleInputChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                (e.target as HTMLInputElement).blur();
+              }
+            }}
             onFocus={() => {
               setIsFocused(true);
               setInputValue(String(localValue));
