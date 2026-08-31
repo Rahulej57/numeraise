@@ -30,6 +30,129 @@ export const investmentCalculators: Record<string, CalculatorConfig> = {
       };
     }
   },
+  "lumpsum-calculator": {
+    slug: "lumpsum-calculator",
+    name: "Lump Sum Calculator",
+    description: "Calculate the future value of a one-time lump sum mutual fund or stock investment.",
+    inputs: [
+      { id: "investment", label: "Total Investment", type: "currency", min: 1000, max: 10000000, step: 1000, default: 100000 },
+      { id: "rate", label: "Expected Return Rate (p.a)", type: "percentage", min: 1, max: 30, step: 0.5, default: 12 },
+      { id: "years", label: "Time Period (Years)", type: "years", min: 1, max: 40, step: 1, default: 10 }
+    ],
+    calculate: (inputs) => {
+      const p = inputs.investment || 100000;
+      const r = (inputs.rate || 12) / 100;
+      const t = inputs.years || 10;
+      const maturity = p * Math.pow(1 + r, t);
+      return {
+        primaryLabel: "Total Maturity Value",
+        primaryValue: Math.round(maturity),
+        primaryType: "currency",
+        secondaryLabel: "Amount Invested",
+        secondaryValue: Math.round(p),
+        secondaryType: "currency",
+        tertiaryLabel: "Wealth Gained",
+        tertiaryValue: Math.round(maturity - p),
+        tertiaryType: "currency"
+      };
+    }
+  },
+  "cagr-calculator": {
+    slug: "cagr-calculator",
+    name: "CAGR Calculator",
+    description: "Calculate Compound Annual Growth Rate (CAGR) for your investments.",
+    inputs: [
+      { id: "initial", label: "Initial Investment Value", type: "currency", min: 1000, max: 10000000, step: 1000, default: 100000 },
+      { id: "final", label: "Final Investment Value", type: "currency", min: 1000, max: 50000000, step: 1000, default: 250000 },
+      { id: "years", label: "Holding Period (Years)", type: "years", min: 1, max: 40, step: 1, default: 5 }
+    ],
+    calculate: (inputs) => {
+      const initial = inputs.initial || 100000;
+      const final = inputs.final || 250000;
+      const years = inputs.years || 5;
+      const cagr = initial > 0 && years > 0 ? (Math.pow(final / initial, 1 / years) - 1) * 100 : 0;
+      const absReturn = initial > 0 ? ((final - initial) / initial) * 100 : 0;
+      return {
+        primaryLabel: "Compound Annual Growth (CAGR)",
+        primaryValue: Number(cagr.toFixed(2)),
+        primaryType: "percentage",
+        secondaryLabel: "Total Profit / Gain",
+        secondaryValue: Math.round(final - initial),
+        secondaryType: "currency",
+        tertiaryLabel: "Absolute Return",
+        tertiaryValue: Number(absReturn.toFixed(2)),
+        tertiaryType: "percentage"
+      };
+    }
+  },
+  "fd-calculator": {
+    slug: "fd-calculator",
+    name: "FD Calculator",
+    description: "Calculate fixed deposit interest and maturity value with compounding.",
+    inputs: [
+      { id: "deposit", label: "Total Deposit Amount", type: "currency", min: 1000, max: 10000000, step: 1000, default: 100000 },
+      { id: "rate", label: "Interest Rate (p.a)", type: "percentage", min: 1, max: 15, step: 0.1, default: 7 },
+      { id: "years", label: "Time Period (Years)", type: "years", min: 1, max: 20, step: 1, default: 5 }
+    ],
+    calculate: (inputs) => {
+      const p = inputs.deposit || 100000;
+      const r = (inputs.rate || 7) / 100;
+      const t = inputs.years || 5;
+      // Quarterly compounding (n=4) standard for Fixed Deposits
+      const maturity = p * Math.pow(1 + r / 4, 4 * t);
+      return {
+        primaryLabel: "Maturity Amount",
+        primaryValue: Math.round(maturity),
+        primaryType: "currency",
+        secondaryLabel: "Deposit Amount",
+        secondaryValue: Math.round(p),
+        secondaryType: "currency",
+        tertiaryLabel: "Total Interest Earned",
+        tertiaryValue: Math.round(maturity - p),
+        tertiaryType: "currency"
+      };
+    }
+  },
+  "retirement-calculator": {
+    slug: "retirement-calculator",
+    name: "Retirement Calculator",
+    description: "Calculate how much money you need to retire comfortably.",
+    inputs: [
+      { id: "currentAge", label: "Current Age", type: "years", min: 18, max: 70, step: 1, default: 30 },
+      { id: "retirementAge", label: "Target Retirement Age", type: "years", min: 30, max: 80, step: 1, default: 60 },
+      { id: "monthlyExpense", label: "Current Monthly Expenses", type: "currency", min: 5000, max: 1000000, step: 5000, default: 50000 },
+      { id: "inflation", label: "Expected Inflation (%)", type: "percentage", min: 1, max: 15, step: 0.5, default: 6 },
+      { id: "postReturn", label: "Post-Retirement Return (%)", type: "percentage", min: 1, max: 15, step: 0.5, default: 8 }
+    ],
+    calculate: (inputs) => {
+      const currentAge = inputs.currentAge || 30;
+      const retirementAge = inputs.retirementAge || 60;
+      const monthlyExp = inputs.monthlyExpense || 50000;
+      const inflation = (inputs.inflation || 6) / 100;
+      const postReturn = (inputs.postReturn || 8) / 100;
+      const yearsToRetire = Math.max(1, retirementAge - currentAge);
+      const lifeExpectancy = 85;
+      const retirementDuration = Math.max(5, lifeExpectancy - retirementAge);
+
+      const futureAnnualExpense = monthlyExp * 12 * Math.pow(1 + inflation, yearsToRetire);
+      const realRate = (1 + postReturn) / (1 + inflation) - 1;
+      const corpus = realRate > 0
+        ? futureAnnualExpense * ((1 - Math.pow(1 + realRate, -retirementDuration)) / realRate)
+        : futureAnnualExpense * retirementDuration;
+
+      return {
+        primaryLabel: "Target Retirement Corpus",
+        primaryValue: Math.round(corpus),
+        primaryType: "currency",
+        secondaryLabel: "Future Monthly Expense",
+        secondaryValue: Math.round(futureAnnualExpense / 12),
+        secondaryType: "currency",
+        tertiaryLabel: "Years in Retirement",
+        tertiaryValue: retirementDuration,
+        tertiaryType: "number"
+      };
+    }
+  },
   "401k-calculator": {
     slug: "401k-calculator",
     name: "401(k) Calculator",

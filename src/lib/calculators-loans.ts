@@ -30,6 +30,72 @@ export const loanCalculators: Record<string, CalculatorConfig> = {
       };
     }
   },
+  "home-loan-calculator": {
+    slug: "home-loan-calculator",
+    name: "Home Loan Calculator",
+    description: "Calculate your monthly home loan EMI, total interest, and amortisation schedule.",
+    inputs: [
+      { id: "amount", label: "Home Loan Amount", type: "currency", min: 100000, max: 100000000, step: 50000, default: 5000000 },
+      { id: "rate", label: "Interest Rate (p.a)", type: "percentage", min: 1, max: 20, step: 0.05, default: 8.5 },
+      { id: "years", label: "Loan Tenure (Years)", type: "years", min: 1, max: 30, step: 1, default: 20 }
+    ],
+    calculate: (inputs) => {
+      const p = inputs.amount || 5000000;
+      const r = (inputs.rate || 8.5) / 12 / 100;
+      const n = (inputs.years || 20) * 12;
+      const emi = r > 0 ? (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1) : p / n;
+      const total = emi * n;
+      return {
+        primaryLabel: "Monthly Home Loan EMI",
+        primaryValue: Math.round(emi),
+        primaryType: "currency",
+        secondaryLabel: "Total Amount Payable",
+        secondaryValue: Math.round(total),
+        secondaryType: "currency",
+        tertiaryLabel: "Total Interest Amount",
+        tertiaryValue: Math.round(total - p),
+        tertiaryType: "currency"
+      };
+    }
+  },
+  "home-loan-prepayment": {
+    slug: "home-loan-prepayment",
+    name: "Home Loan Prepayment",
+    description: "Calculate interest savings and tenure reduction by making prepayments.",
+    inputs: [
+      { id: "amount", label: "Existing Loan Balance", type: "currency", min: 100000, max: 100000000, step: 50000, default: 4000000 },
+      { id: "rate", label: "Interest Rate (p.a)", type: "percentage", min: 1, max: 20, step: 0.1, default: 8.5 },
+      { id: "years", label: "Remaining Tenure (Years)", type: "years", min: 1, max: 30, step: 1, default: 18 },
+      { id: "prepayment", label: "Lump Sum Prepayment", type: "currency", min: 10000, max: 10000000, step: 10000, default: 500000 }
+    ],
+    calculate: (inputs) => {
+      const p = inputs.amount || 4000000;
+      const r = (inputs.rate || 8.5) / 12 / 100;
+      const n = (inputs.years || 18) * 12;
+      const prepay = Math.min(inputs.prepayment || 500000, p - 10000);
+      const emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+      
+      const newPrincipal = p - prepay;
+      // New tenure in months: -log(1 - (newP * r / emi)) / log(1 + r)
+      const newN = Math.ceil(-Math.log(1 - (newPrincipal * r / emi)) / Math.log(1 + r));
+      const oldInterest = emi * n - p;
+      const newInterest = emi * newN - newPrincipal;
+      const savings = Math.max(0, oldInterest - newInterest);
+      const yearsSaved = Number(((n - newN) / 12).toFixed(1));
+
+      return {
+        primaryLabel: "Total Interest Saved",
+        primaryValue: Math.round(savings),
+        primaryType: "currency",
+        secondaryLabel: "Tenure Reduced By",
+        secondaryValue: yearsSaved,
+        secondaryType: "number",
+        tertiaryLabel: "New Loan Tenure",
+        tertiaryValue: Number((newN / 12).toFixed(1)),
+        tertiaryType: "number"
+      };
+    }
+  },
   "us-mortgage-calculator": {
     slug: "us-mortgage-calculator",
     name: "US Mortgage Calculator",

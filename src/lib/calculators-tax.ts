@@ -1,6 +1,116 @@
 import { CalculatorConfig } from "./calculator-engine";
 
 export const taxCalculators: Record<string, CalculatorConfig> = {
+  "gst-calculator": {
+    slug: "gst-calculator",
+    name: "GST Calculator",
+    description: "Calculate Goods and Services Tax (GST) inclusive and exclusive amounts.",
+    inputs: [
+      { id: "amount", label: "Amount / Price", type: "currency", min: 100, max: 10000000, step: 100, default: 10000 },
+      { id: "gstRate", label: "GST Rate (%)", type: "percentage", min: 0, max: 40, step: 0.5, default: 18 }
+    ],
+    calculate: (inputs) => {
+      const amount = inputs.amount || 10000;
+      const rate = (inputs.gstRate || 18) / 100;
+      const gstAmount = amount * rate;
+      const totalAmount = amount + gstAmount;
+      return {
+        primaryLabel: "Total Amount (with GST)",
+        primaryValue: Math.round(totalAmount),
+        primaryType: "currency",
+        secondaryLabel: "Net Amount (without GST)",
+        secondaryValue: Math.round(amount),
+        secondaryType: "currency",
+        tertiaryLabel: "GST Tax Amount",
+        tertiaryValue: Math.round(gstAmount),
+        tertiaryType: "currency"
+      };
+    }
+  },
+  "sales-tax-calculator": {
+    slug: "sales-tax-calculator",
+    name: "Sales Tax Calculator",
+    description: "Calculate sales tax and total purchase price.",
+    inputs: [
+      { id: "price", label: "Pre-Tax Price", type: "currency", min: 1, max: 1000000, step: 1, default: 100 },
+      { id: "rate", label: "Sales Tax Rate (%)", type: "percentage", min: 0, max: 30, step: 0.25, default: 8.25 }
+    ],
+    calculate: (inputs) => {
+      const p = inputs.price || 100;
+      const r = (inputs.rate || 8.25) / 100;
+      const tax = p * r;
+      const total = p + tax;
+      return {
+        primaryLabel: "Total Purchase Price",
+        primaryValue: Number(total.toFixed(2)),
+        primaryType: "currency",
+        secondaryLabel: "Pre-Tax Price",
+        secondaryValue: Number(p.toFixed(2)),
+        secondaryType: "currency",
+        tertiaryLabel: "Sales Tax Amount",
+        tertiaryValue: Number(tax.toFixed(2)),
+        tertiaryType: "currency"
+      };
+    }
+  },
+  "vat-calculator": {
+    slug: "vat-calculator",
+    name: "VAT Calculator",
+    description: "Calculate Value Added Tax (VAT) amounts and gross price.",
+    inputs: [
+      { id: "price", label: "Net Price", type: "currency", min: 1, max: 1000000, step: 1, default: 1000 },
+      { id: "rate", label: "VAT Rate (%)", type: "percentage", min: 0, max: 40, step: 0.5, default: 20 }
+    ],
+    calculate: (inputs) => {
+      const p = inputs.price || 1000;
+      const r = (inputs.rate || 20) / 100;
+      const vat = p * r;
+      const gross = p + vat;
+      return {
+        primaryLabel: "Gross Price (incl. VAT)",
+        primaryValue: Number(gross.toFixed(2)),
+        primaryType: "currency",
+        secondaryLabel: "Net Price",
+        secondaryValue: Number(p.toFixed(2)),
+        secondaryType: "currency",
+        tertiaryLabel: "VAT Amount",
+        tertiaryValue: Number(vat.toFixed(2)),
+        tertiaryType: "currency"
+      };
+    }
+  },
+  "salary-calculator": {
+    slug: "salary-calculator",
+    name: "Salary Calculator",
+    description: "Calculate gross to net take-home salary and deductions.",
+    inputs: [
+      { id: "gross", label: "Annual Gross Salary", type: "currency", min: 50000, max: 50000000, step: 10000, default: 1200000 },
+      { id: "deductions", label: "Monthly Deductions / EPF / Insurance", type: "currency", min: 0, max: 100000, step: 500, default: 10000 },
+      { id: "taxPercent", label: "Estimated Effective Tax Rate (%)", type: "percentage", min: 0, max: 45, step: 0.5, default: 10 }
+    ],
+    calculate: (inputs) => {
+      const gross = inputs.gross || 1200000;
+      const monthlyDeductions = inputs.deductions || 10000;
+      const taxRate = (inputs.taxPercent || 10) / 100;
+      
+      const annualTax = gross * taxRate;
+      const annualDeductions = monthlyDeductions * 12;
+      const netAnnual = Math.max(0, gross - annualTax - annualDeductions);
+      const netMonthly = Math.round(netAnnual / 12);
+
+      return {
+        primaryLabel: "Monthly In-Hand Salary",
+        primaryValue: netMonthly,
+        primaryType: "currency",
+        secondaryLabel: "Annual Take-Home",
+        secondaryValue: Math.round(netAnnual),
+        secondaryType: "currency",
+        tertiaryLabel: "Annual Tax & Deductions",
+        tertiaryValue: Math.round(annualTax + annualDeductions),
+        tertiaryType: "currency"
+      };
+    }
+  },
   "hra-exemption": {
     slug: "hra-exemption", name: "HRA Exemption Calculator", description: "Calculate your House Rent Allowance exemption.",
     inputs: [

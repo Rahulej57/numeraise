@@ -1,6 +1,177 @@
 import { CalculatorConfig } from "./calculator-engine";
 
 export const otherCalculators: Record<string, CalculatorConfig> = {
+  "percentage-calculator": {
+    slug: "percentage-calculator",
+    name: "Percentage Calculator",
+    description: "Calculate percentages, percentage increases, decreases, and fractions.",
+    inputs: [
+      { id: "percentage", label: "Percentage (%)", type: "percentage", min: 0, max: 1000, step: 0.5, default: 15 },
+      { id: "total", label: "Of Total Number", type: "number", min: 1, max: 10000000, step: 1, default: 500 }
+    ],
+    calculate: (inputs) => {
+      const p = inputs.percentage || 15;
+      const total = inputs.total || 500;
+      const result = (p / 100) * total;
+      return {
+        primaryLabel: "Calculated Value",
+        primaryValue: Number(result.toFixed(2)),
+        primaryType: "number",
+        secondaryLabel: "Total After Addition (+)",
+        secondaryValue: Number((total + result).toFixed(2)),
+        secondaryType: "number",
+        tertiaryLabel: "Total After Subtraction (-)",
+        tertiaryValue: Number((total - result).toFixed(2)),
+        tertiaryType: "number"
+      };
+    }
+  },
+  "tip-calculator": {
+    slug: "tip-calculator",
+    name: "Tip Calculator",
+    description: "Calculate tip amount and split the total bill among friends.",
+    inputs: [
+      { id: "bill", label: "Bill Amount", type: "currency", min: 1, max: 100000, step: 1, default: 100 },
+      { id: "tipPercent", label: "Tip Percentage (%)", type: "percentage", min: 0, max: 50, step: 1, default: 18 },
+      { id: "people", label: "Number of People", type: "number", min: 1, max: 50, step: 1, default: 2 }
+    ],
+    calculate: (inputs) => {
+      const bill = inputs.bill || 100;
+      const tipPct = (inputs.tipPercent || 18) / 100;
+      const people = Math.max(1, inputs.people || 2);
+      const tipAmount = bill * tipPct;
+      const totalBill = bill + tipAmount;
+      const perPerson = totalBill / people;
+
+      return {
+        primaryLabel: "Total Per Person",
+        primaryValue: Number(perPerson.toFixed(2)),
+        primaryType: "currency",
+        secondaryLabel: "Total Bill (incl. Tip)",
+        secondaryValue: Number(totalBill.toFixed(2)),
+        secondaryType: "currency",
+        tertiaryLabel: "Total Tip Amount",
+        tertiaryValue: Number(tipAmount.toFixed(2)),
+        tertiaryType: "currency"
+      };
+    }
+  },
+  "bmi-calculator": {
+    slug: "bmi-calculator",
+    name: "BMI Calculator",
+    description: "Calculate Body Mass Index (BMI) and healthy weight range.",
+    inputs: [
+      { id: "weight", label: "Weight (kg)", type: "number", min: 20, max: 250, step: 0.5, default: 70 },
+      { id: "height", label: "Height (cm)", type: "number", min: 80, max: 250, step: 1, default: 175 }
+    ],
+    calculate: (inputs) => {
+      const weight = inputs.weight || 70;
+      const heightM = (inputs.height || 175) / 100;
+      const bmi = heightM > 0 ? weight / (heightM * heightM) : 0;
+      const idealMin = Number((18.5 * heightM * heightM).toFixed(1));
+      const idealMax = Number((24.9 * heightM * heightM).toFixed(1));
+
+      return {
+        primaryLabel: "Your BMI Score",
+        primaryValue: Number(bmi.toFixed(1)),
+        primaryType: "number",
+        secondaryLabel: "Ideal Weight Min (kg)",
+        secondaryValue: idealMin,
+        secondaryType: "number",
+        tertiaryLabel: "Ideal Weight Max (kg)",
+        tertiaryValue: idealMax,
+        tertiaryType: "number"
+      };
+    }
+  },
+  "bmr-calculator": {
+    slug: "bmr-calculator",
+    name: "BMR Calculator",
+    description: "Calculate Basal Metabolic Rate (BMR) and daily calorie needs (Mifflin-St Jeor formula).",
+    inputs: [
+      { id: "weight", label: "Weight (kg)", type: "number", min: 20, max: 250, step: 0.5, default: 70 },
+      { id: "height", label: "Height (cm)", type: "number", min: 80, max: 250, step: 1, default: 175 },
+      { id: "age", label: "Age (Years)", type: "years", min: 15, max: 100, step: 1, default: 30 },
+      { id: "gender", label: "Gender (1=Male, 2=Female)", type: "number", min: 1, max: 2, step: 1, default: 1 }
+    ],
+    calculate: (inputs) => {
+      const w = inputs.weight || 70;
+      const h = inputs.height || 175;
+      const a = inputs.age || 30;
+      const isMale = inputs.gender !== 2;
+      // Mifflin-St Jeor Formula
+      const bmr = (10 * w) + (6.25 * h) - (5 * a) + (isMale ? 5 : -161);
+      const maintenance = Math.round(bmr * 1.55); // Moderate activity
+
+      return {
+        primaryLabel: "Base Metabolic Rate (BMR)",
+        primaryValue: Math.round(bmr),
+        primaryType: "number",
+        secondaryLabel: "Daily Maintenance Calories",
+        secondaryValue: maintenance,
+        secondaryType: "number",
+        tertiaryLabel: "Weight Loss Calories (-500)",
+        tertiaryValue: Math.max(1200, maintenance - 500),
+        tertiaryType: "number"
+      };
+    }
+  },
+  "body-fat-calculator": {
+    slug: "body-fat-calculator",
+    name: "Body Fat Calculator",
+    description: "Estimate your body fat percentage using US Navy circumference method.",
+    inputs: [
+      { id: "waist", label: "Waist Circumference (cm)", type: "number", min: 40, max: 200, step: 0.5, default: 85 },
+      { id: "neck", label: "Neck Circumference (cm)", type: "number", min: 20, max: 80, step: 0.5, default: 38 },
+      { id: "height", label: "Height (cm)", type: "number", min: 100, max: 250, step: 1, default: 175 }
+    ],
+    calculate: (inputs) => {
+      const waist = inputs.waist || 85;
+      const neck = inputs.neck || 38;
+      const height = inputs.height || 175;
+      // US Navy Male Body Fat Formula: 495 / (1.0324 - 0.19077 * log10(waist - neck) + 0.15456 * log10(height)) - 450
+      const diff = Math.max(1, waist - neck);
+      const bodyFat = Math.max(3, Math.min(50, 495 / (1.0324 - 0.19077 * Math.log10(diff) + 0.15456 * Math.log10(height)) - 450));
+
+      return {
+        primaryLabel: "Estimated Body Fat",
+        primaryValue: Number(bodyFat.toFixed(1)),
+        primaryType: "percentage",
+        secondaryLabel: "Fat Category",
+        secondaryValue: bodyFat < 14 ? 1 : bodyFat < 24 ? 2 : 3,
+        secondaryType: "number",
+        tertiaryLabel: "Waist-to-Neck Diff (cm)",
+        tertiaryValue: Number(diff.toFixed(1)),
+        tertiaryType: "number"
+      };
+    }
+  },
+  "budget-calculator": {
+    slug: "budget-calculator",
+    name: "Budget Calculator",
+    description: "Plan your monthly budget using the popular 50/30/20 rule.",
+    inputs: [
+      { id: "income", label: "Monthly After-Tax Income", type: "currency", min: 5000, max: 5000000, step: 5000, default: 75000 }
+    ],
+    calculate: (inputs) => {
+      const income = inputs.income || 75000;
+      const needs = income * 0.50;
+      const wants = income * 0.30;
+      const savings = income * 0.20;
+
+      return {
+        primaryLabel: "Needs (50% Essentials)",
+        primaryValue: Math.round(needs),
+        primaryType: "currency",
+        secondaryLabel: "Wants (30% Lifestyle)",
+        secondaryValue: Math.round(wants),
+        secondaryType: "currency",
+        tertiaryLabel: "Savings & Debt (20%)",
+        tertiaryValue: Math.round(savings),
+        tertiaryType: "currency"
+      };
+    }
+  },
   "health-insurance-calculator": {
     slug: "health-insurance-calculator", name: "Health Insurance Needs", description: "Estimate your optimal health insurance coverage.",
     inputs: [
