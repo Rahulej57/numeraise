@@ -18,6 +18,7 @@ import { getRelatedCalculators } from '@/config/calculators';
 import { StructuredData } from '@/components/seo/structured-data';
 import { CalculatorHeader } from '@/components/calculators/calculator-header';
 import { GoalPresets } from '@/components/calculators/goal-presets';
+import { SmartInsights } from '@/components/calculators/smart-insights';
 
 export default function SIPCalculatorPage() {
   const { format, currency } = useCurrency();
@@ -245,6 +246,18 @@ Calculate your own: ${shareUrl}`;
           </Card>
         </div>
       </div>
+
+      <SmartInsights
+        type="sip"
+        data={{
+          monthlyInvestment,
+          expectedReturnRate,
+          timePeriodYears,
+          totalValue: result.totalValue,
+          investedAmount: result.investedAmount,
+          estimatedReturns: result.estimatedReturns,
+        }}
+      />
 
       {/* Massive Content Section for SEO */}
       <CalculatorContent>

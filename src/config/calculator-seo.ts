@@ -23,46 +23,46 @@ export interface CalculatorSeo {
 export const CALCULATOR_SEO: Record<string, CalculatorSeo> = {
   // ---------------------------------------------------------------- investments
   'sip-calculator': {
-    title: 'SIP Calculator: Mutual Fund Return Estimator',
+    title: 'SIP Calculator (2026): Step-Up & Inflation',
     description:
-      'Calculate SIP returns with year-by-year growth charts and a full contribution schedule. See exactly how much of your corpus is compounding versus deposits.',
-    keywords: ['sip calculator', 'mutual fund sip returns', 'systematic investment plan calculator', 'sip return calculator'],
+      'Calculate SIP mutual fund returns with year-by-year compounding, 10% annual step-up impact, and inflation-adjusted corpus schedules. Free & instant.',
+    keywords: ['sip calculator 2026', 'sip calculator with step up', 'mutual fund sip returns', 'sip inflation calculator', 'systematic investment plan calculator'],
   },
   'sip-vs-lumpsum': {
-    title: 'SIP vs Lumpsum Calculator',
+    title: 'SIP vs Lumpsum Calculator (2026)',
     description:
-      'Compare a monthly SIP against a one-time lumpsum on identical assumptions. See which strategy produces more wealth over your chosen horizon and why.',
-    keywords: ['sip vs lumpsum', 'lumpsum or sip', 'sip vs one time investment', 'rupee cost averaging'],
+      'Compare a monthly SIP against a one-time lumpsum on identical CAGR assumptions. See which strategy creates more wealth over 5, 10, and 20 years.',
+    keywords: ['sip vs lumpsum 2026', 'lumpsum or sip', 'sip vs one time investment', 'rupee cost averaging'],
   },
   'lumpsum-calculator': {
-    title: 'Lumpsum Investment Calculator',
+    title: 'Lumpsum Calculator (2026): Mutual Fund Growth',
     description:
       'Project the future value of a one-time investment with annual compounding. Enter amount, expected return and tenure to see the full growth trajectory.',
-    keywords: ['lumpsum calculator', 'one time investment calculator', 'compound interest calculator', 'future value calculator'],
+    keywords: ['lumpsum calculator 2026', 'one time investment calculator', 'compound interest calculator', 'future value calculator'],
   },
   'cagr-calculator': {
-    title: 'CAGR Calculator: Annual Growth Rate',
+    title: 'CAGR Calculator (2026): Annual Growth Rate',
     description:
       'Calculate the compound annual growth rate between any two values. CAGR smooths volatile year-to-year returns into the single rate that actually compounded.',
     keywords: ['cagr calculator', 'compound annual growth rate', 'annualised return calculator', 'investment growth rate'],
   },
   'swp-calculator': {
-    title: 'SWP Calculator: Systematic Withdrawal',
+    title: 'SWP Calculator (2026): Systematic Withdrawal',
     description:
       'Model a systematic withdrawal plan and find out how long your corpus lasts. See the balance remaining after each withdrawal at your expected return rate.',
-    keywords: ['swp calculator', 'systematic withdrawal plan', 'monthly income from mutual fund', 'corpus depletion calculator'],
+    keywords: ['swp calculator 2026', 'systematic withdrawal plan', 'monthly income from mutual fund', 'corpus depletion calculator'],
   },
   'mutual-fund-returns': {
-    title: 'Mutual Fund Returns Calculator',
+    title: 'Mutual Fund Returns Calculator (2026)',
     description:
       'Work out absolute and annualised returns on a mutual fund holding. Compare what you invested against current value with a clear CAGR breakdown.',
     keywords: ['mutual fund returns calculator', 'mutual fund return', 'absolute vs annualised return', 'fund performance calculator'],
   },
   'step-up-sip': {
-    title: 'Step-Up SIP Calculator',
+    title: 'Step-Up SIP Calculator (2026): Annual Increment',
     description:
       'See what happens when you raise your SIP by a fixed percentage each year. A 10% annual step-up often adds more to the final corpus than a higher return rate.',
-    keywords: ['step up sip calculator', 'top up sip', 'increasing sip calculator', 'annual sip increment'],
+    keywords: ['step up sip calculator 2026', 'top up sip', 'increasing sip calculator', 'annual sip increment'],
   },
   'stock-profit': {
     title: 'Stock Profit & Loss Calculator',
@@ -71,13 +71,13 @@ export const CALCULATOR_SEO: Record<string, CalculatorSeo> = {
     keywords: ['stock profit calculator', 'share profit loss calculator', 'equity return calculator', 'trading profit calculator'],
   },
   'net-worth-calculator': {
-    title: 'Net Worth Calculator',
+    title: 'Net Worth Calculator: Track Assets & Debt',
     description:
       'Add up assets, subtract liabilities and get a clear picture of your financial position. The single number that tracks progress better than income does.',
     keywords: ['net worth calculator', 'personal net worth', 'assets minus liabilities', 'wealth calculator'],
   },
   'dividend-yield': {
-    title: 'Dividend Yield Calculator',
+    title: 'Dividend Yield Calculator: Stock Income',
     description:
       'Calculate dividend yield from share price and annual payout, plus yield on cost for holdings you already own. Useful for comparing income stocks.',
     keywords: ['dividend yield calculator', 'yield on cost', 'dividend income calculator', 'stock dividend return'],
@@ -85,25 +85,25 @@ export const CALCULATOR_SEO: Record<string, CalculatorSeo> = {
 
   // ---------------------------------------------------------------------- loans
   'emi-calculator': {
-    title: 'EMI Calculator with Amortisation Schedule',
+    title: 'EMI Calculator (2026): Amortization & Savings',
     description:
-      'Calculate your loan EMI and see the full amortisation schedule. Shows how much of each payment services interest versus principal, month by month.',
-    keywords: ['emi calculator', 'loan emi calculator', 'amortisation schedule', 'monthly installment calculator'],
+      'Calculate loan EMI, full month-by-month amortization schedule, and test the 1-extra-EMI prepayment hack to save lakhs in bank interest.',
+    keywords: ['emi calculator 2026', 'loan emi calculator', 'amortisation schedule', 'monthly installment calculator', 'emi prepayment calculator'],
   },
   'home-loan-calculator': {
-    title: 'Home Loan EMI Calculator',
+    title: 'Home Loan EMI Calculator (2026)',
     description:
-      'Calculate home loan EMI, total interest payable and the complete repayment schedule. See the true multiple of the borrowed amount you will repay.',
-    keywords: ['home loan emi calculator', 'housing loan calculator', 'mortgage emi', 'home loan interest calculator'],
+      'Calculate home loan EMI, total interest payable and the complete repayment schedule. See how part-prepayments reduce your loan tenure by years.',
+    keywords: ['home loan emi calculator 2026', 'housing loan calculator', 'mortgage emi', 'home loan interest calculator'],
   },
   'car-loan-emi': {
-    title: 'Car Loan EMI Calculator',
+    title: 'Car Loan EMI Calculator (2026)',
     description:
       'Work out monthly payments on a vehicle loan including total interest cost. Compare tenures to see what stretching the loan actually costs you.',
     keywords: ['car loan emi calculator', 'auto loan calculator', 'vehicle finance calculator', 'car loan interest'],
   },
   'personal-loan-calculator': {
-    title: 'Personal Loan EMI Calculator',
+    title: 'Personal Loan EMI Calculator (2026)',
     description:
       'Calculate EMI and total interest on an unsecured personal loan. Because rates run high, the total cost is usually far larger than borrowers expect.',
     keywords: ['personal loan emi calculator', 'unsecured loan calculator', 'personal loan interest', 'loan repayment calculator'],
@@ -115,13 +115,13 @@ export const CALCULATOR_SEO: Record<string, CalculatorSeo> = {
     keywords: ['education loan calculator', 'student loan emi', 'study loan repayment', 'education loan moratorium'],
   },
   'home-loan-prepayment': {
-    title: 'Home Loan Prepayment Calculator',
+    title: 'Home Loan Prepayment Calculator (2026)',
     description:
       'See how much interest a lump sum prepayment saves and how many months it removes from your tenure. Early prepayments are worth several times later ones.',
     keywords: ['home loan prepayment calculator', 'loan part payment', 'prepayment interest saving', 'reduce loan tenure'],
   },
   'loan-refinance': {
-    title: 'Loan Refinance & Balance Transfer',
+    title: 'Loan Refinance & Balance Transfer Calculator',
     description:
       'Check whether switching lenders is worth it. Compares interest saved against processing fees and legal costs to find your real break-even month.',
     keywords: ['loan refinance calculator', 'balance transfer calculator', 'home loan transfer savings', 'refinance break even'],
@@ -133,10 +133,10 @@ export const CALCULATOR_SEO: Record<string, CalculatorSeo> = {
     keywords: ['credit card payoff calculator', 'credit card interest calculator', 'minimum payment trap', 'debt payoff calculator'],
   },
   'flat-vs-reducing-loan': {
-    title: 'Flat vs Reducing Balance Interest',
+    title: 'Flat vs Reducing Loan Calculator (2026)',
     description:
-      'A flat 7% and a reducing-balance 7% are not the same loan. Compare both methods side by side and see the effective rate you are genuinely being charged.',
-    keywords: ['flat vs reducing interest', 'flat rate vs reducing balance', 'effective interest rate', 'loan interest comparison'],
+      'A flat 7% and a reducing 7% are not the same loan. Compare both methods side by side and calculate the hidden effective APR charged by lenders.',
+    keywords: ['flat vs reducing interest 2026', 'flat rate vs reducing balance', 'effective interest rate', 'loan interest comparison'],
   },
   'lease-vs-buy': {
     title: 'Lease vs Buy a Car Calculator',
@@ -147,49 +147,49 @@ export const CALCULATOR_SEO: Record<string, CalculatorSeo> = {
 
   // -------------------------------------------------------------------- savings
   'fd-calculator': {
-    title: 'FD Calculator: Fixed Deposit Maturity',
+    title: 'FD Calculator (2026): Fixed Deposit Maturity',
     description:
       'Calculate fixed deposit maturity value at any compounding frequency, plus the post-tax return that determines what you actually keep.',
-    keywords: ['fd calculator', 'fixed deposit calculator', 'fd maturity value', 'fd interest calculator'],
+    keywords: ['fd calculator 2026', 'fixed deposit calculator', 'fd maturity value', 'fd interest calculator'],
   },
   'rd-calculator': {
-    title: 'RD Calculator: Recurring Deposit',
+    title: 'RD Calculator (2026): Recurring Deposit',
     description:
       'Work out recurring deposit maturity value and total interest earned. Each monthly instalment compounds for a different period, which this accounts for.',
     keywords: ['rd calculator', 'recurring deposit calculator', 'rd maturity amount', 'monthly deposit interest'],
   },
   'ppf-calculator': {
-    title: 'PPF Calculator: Maturity & Interest',
+    title: 'PPF Calculator 2026: Maturity & Interest (7.1%)',
     description:
       'Calculate PPF maturity over the 15-year lock-in with yearly balance breakdown. Includes the before-the-5th deposit rule that affects your interest.',
-    keywords: ['ppf calculator', 'public provident fund calculator', 'ppf maturity amount', 'ppf interest calculator'],
+    keywords: ['ppf calculator 2026', 'public provident fund calculator', 'ppf maturity amount', 'ppf interest calculator 7.1'],
   },
   'epf-calculator': {
-    title: 'EPF Calculator: Provident Fund Balance',
+    title: 'EPF Calculator 2026: Provident Fund Balance',
     description:
       'Project your EPF corpus at retirement from current balance, salary and expected increments. Includes both employee and employer contribution shares.',
-    keywords: ['epf calculator', 'provident fund calculator', 'pf balance projection', 'epf maturity calculator'],
+    keywords: ['epf calculator 2026', 'provident fund calculator', 'pf balance projection', 'epf maturity calculator'],
   },
   'pomis-calculator': {
-    title: 'Post Office MIS Calculator',
+    title: 'POMIS Calculator 2026: Post Office MIS (7.4%)',
     description:
-      'Calculate monthly income from a Post Office Monthly Income Scheme deposit, including the total interest earned across the five-year term.',
-    keywords: ['post office mis calculator', 'pomis calculator', 'monthly income scheme', 'post office monthly income'],
+      'Calculate monthly income from Post Office Monthly Income Scheme (POMIS) at the updated 7.4% rate, with ₹9L individual and ₹15L joint ceilings.',
+    keywords: ['post office mis calculator 2026', 'pomis calculator 2026', 'monthly income scheme 7.4', 'post office monthly income'],
   },
   'scss-calculator': {
-    title: 'SCSS Calculator: Senior Citizen Savings',
+    title: 'SCSS Calculator 2026: Senior Citizen Scheme (8.2%)',
     description:
-      'Calculate quarterly payouts and total interest from the Senior Citizen Savings Scheme over its five-year term, with the current deposit ceiling applied.',
-    keywords: ['scss calculator', 'senior citizen savings scheme', 'scss interest calculator', 'quarterly payout calculator'],
+      'Calculate quarterly payouts and total interest from the Senior Citizen Savings Scheme over its five-year term at the official 8.2% interest ceiling.',
+    keywords: ['scss calculator 2026', 'senior citizen savings scheme 8.2', 'scss interest calculator', 'quarterly payout calculator'],
   },
   'ssy-calculator': {
-    title: 'Sukanya Samriddhi (SSY) Calculator',
+    title: 'Sukanya Samriddhi (SSY) Calculator 2026',
     description:
-      'Calculate SSY maturity value for a girl child, accounting for the 15-year contribution window and 21-year maturity that most calculators get wrong.',
-    keywords: ['sukanya samriddhi calculator', 'ssy calculator', 'girl child savings scheme', 'ssy maturity amount'],
+      'Calculate SSY maturity value for a girl child, accounting for the 15-year contribution window and 21-year maturity at current small savings rates.',
+    keywords: ['sukanya samriddhi calculator 2026', 'ssy calculator', 'girl child savings scheme', 'ssy maturity amount'],
   },
   'nsc-calculator': {
-    title: 'NSC Calculator: National Savings Certificate',
+    title: 'NSC Calculator: National Savings Certificate (7.7%)',
     description:
       'Calculate National Savings Certificate maturity value with annual compounding, plus the reinvested-interest deduction available in the early years.',
     keywords: ['nsc calculator', 'national savings certificate', 'nsc maturity value', 'nsc interest calculator'],
@@ -197,13 +197,13 @@ export const CALCULATOR_SEO: Record<string, CalculatorSeo> = {
 
   // ----------------------------------------------------------------------- tax
   'income-tax-calculator': {
-    title: 'Income Tax Calculator: Old vs New Regime',
+    title: 'Income Tax Calculator 2026-27 (Old vs New)',
     description:
-      'Compare your tax liability under both regimes with a slab-by-slab breakdown, and find the exact deduction amount at which the old regime starts winning.',
-    keywords: ['income tax calculator', 'old vs new tax regime', 'tax slab calculator', 'income tax comparison'],
+      'Compare your tax liability under Old vs New Tax Regime with a slab-by-slab breakdown, and find the exact deduction amount at which old regime wins.',
+    keywords: ['income tax calculator 2026-27', 'old vs new tax regime', 'income tax slabs 2026', 'tax calculator india'],
   },
   'paycheck-calculator': {
-    title: 'Paycheck Calculator: Take-Home Pay',
+    title: 'Paycheck Calculator: Take-Home Pay (2026)',
     description:
       'Convert gross salary into actual take-home pay after tax and deductions. Shows the full gap between your CTC and what reaches your bank account.',
     keywords: ['paycheck calculator', 'take home salary calculator', 'net pay calculator', 'in hand salary calculator'],
@@ -227,28 +227,28 @@ export const CALCULATOR_SEO: Record<string, CalculatorSeo> = {
     keywords: ['vat calculator', 'remove vat', 'add vat calculator', 'vat inclusive calculator'],
   },
   'hra-exemption': {
-    title: 'HRA Exemption Calculator',
+    title: 'HRA Calculator 2026: 8 Metro Cities Exemption',
     description:
-      'HRA exemption is the lowest of three formulas, not the allowance on your payslip. This calculates all three and shows which one caps your claim.',
-    keywords: ['hra exemption calculator', 'house rent allowance', 'hra tax exemption', 'hra calculation formula'],
+      'Calculate House Rent Allowance (HRA) exemption under Section 10(13A). Updated for 8 metro cities (50% list includes Bengaluru, Hyderabad, Pune, Ahmedabad).',
+    keywords: ['hra exemption calculator 2026', 'hra calculator bangalore', 'house rent allowance exemption', 'hra calculation formula rule 279'],
   },
   'capital-gains-tax': {
-    title: 'Capital Gains Tax Calculator',
+    title: 'Capital Gains Tax Calculator (2026): STCG & LTCG',
     description:
-      'Calculate short and long-term capital gains tax on equity, property and debt. Holding period changes the rate substantially, so timing matters.',
-    keywords: ['capital gains tax calculator', 'stcg ltcg calculator', 'long term capital gains', 'capital gains on property'],
+      'Calculate short-term and long-term capital gains tax on equity, mutual funds, and real estate under updated 2026 budget tax rates.',
+    keywords: ['capital gains tax calculator 2026', 'stcg ltcg calculator', 'long term capital gains 2026', 'capital gains on property'],
   },
   'tds-calculator': {
-    title: 'TDS Calculator',
+    title: 'TDS Calculator (2026): Rates & Section Slabs',
     description:
-      'Estimate tax deducted at source across common payment types and threshold limits, so you know what to expect before it hits your account.',
-    keywords: ['tds calculator', 'tax deducted at source', 'tds rate calculator', 'tds threshold limit'],
+      'Estimate tax deducted at source across common payment types (salary, rent, professional fees) and threshold limits for FY 2026-27.',
+    keywords: ['tds calculator 2026', 'tax deducted at source', 'tds rate calculator', 'tds threshold limit 2026'],
   },
   'advance-tax': {
-    title: 'Advance Tax Calculator & Due Dates',
+    title: 'Advance Tax Calculator 2026-27: Installment Dates',
     description:
-      'Work out advance tax instalments and the quarterly due dates. Missing an instalment triggers interest, so this shows what is owed and when.',
-    keywords: ['advance tax calculator', 'advance tax due dates', 'quarterly tax instalment', 'advance tax interest'],
+      'Work out advance tax instalments and quarterly due dates (15%, 45%, 75%, 100%) under Section 234B & 234C to avoid interest penalties.',
+    keywords: ['advance tax calculator 2026', 'advance tax due dates', 'advance tax calculation formula', 'section 234b 234c'],
   },
 
   // ------------------------------------------------------------------ insurance

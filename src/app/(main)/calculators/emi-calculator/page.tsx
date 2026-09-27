@@ -17,6 +17,7 @@ import { getRelatedCalculators } from '@/config/calculators';
 import { RelatedArticles } from '@/components/calculators/related-articles';
 import { StructuredData } from '@/components/seo/structured-data';
 import { CalculatorHeader } from '@/components/calculators/calculator-header';
+import { SmartInsights } from '@/components/calculators/smart-insights';
 
 export default function EMICalculatorPage() {
   const { format, currency } = useCurrency();
@@ -208,6 +209,19 @@ Calculate your own: ${shareUrl}`;
           </Card>
         </div>
       </div>
+
+      <SmartInsights
+        type="emi"
+        data={{
+          principal,
+          interestRate,
+          tenureYears,
+          emi: result.emi,
+          totalInterest: result.totalInterest,
+          totalPayment: result.totalPayment,
+        }}
+      />
+
       <CalculatorContent>
         <h2>What is an EMI Calculator?</h2>
         <p>
@@ -249,24 +263,24 @@ Calculate your own: ${shareUrl}`;
 
         <h3>Example EMI Calculation</h3>
         <p>
-          Let's assume you take a personal loan of {format(500000 / 83)} for a tenure of 5 years at an interest rate of
+          Let's assume you borrow {currency.code === 'INR' ? '₹5,00,000' : '$25,000'} for a tenure of 5 years at an interest rate of
           10.5% per annum.
         </p>
         <ul>
           <li>
-            <strong>Principal:</strong> {format(500000 / 83)}
+            <strong>Principal (P):</strong> {currency.code === 'INR' ? '₹5,00,000' : '$25,000'}
           </li>
           <li>
-            <strong>Monthly Interest Rate:</strong> 10.5% / 12 / 100 = 0.00875
+            <strong>Monthly Interest Rate (R):</strong> 10.5% / 12 / 100 = 0.00875
           </li>
           <li>
-            <strong>Total Months:</strong> 5 Years × 12 = 60 Months
+            <strong>Total Months (N):</strong> 5 Years × 12 = 60 Months
           </li>
         </ul>
         <p>
-          Plugging these into the formula results in an EMI of <strong>{format(10747 / 83)}</strong>. Over the 5-year
-          period, you will pay a total interest of <strong>{format(144817 / 83)}</strong>, making your total repayment
-          amount <strong>{format(644817 / 83)}</strong>.
+          Plugging these into the formula results in an EMI of <strong>{currency.code === 'INR' ? '₹10,747' : '$537'}</strong> per month. Over the 5-year
+          period, you will pay a total interest of <strong>{currency.code === 'INR' ? '₹1,44,817' : '$7,238'}</strong>, making your total repayment
+          amount <strong>{currency.code === 'INR' ? '₹6,44,817' : '$32,238'}</strong>.
         </p>
 
         <h2>The Anatomy of an EMI</h2>

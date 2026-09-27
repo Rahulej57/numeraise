@@ -102,6 +102,42 @@ interface CurrencyContextType {
   economicRates: EconomicRates;
 }
 
+export function getRouteCurrency(pathname: string | null): string {
+  if (!pathname) return 'INR';
+
+  // US Tools -> strictly USD
+  const usTools = [
+    '/sales-tax-calculator', '/us-mortgage-calculator', '/401k-calculator',
+    '/cd-calculator', '/paycheck-calculator', '/roth-ira', '/traditional-ira'
+  ];
+  if (usTools.some(tool => pathname.includes(tool))) {
+    return 'USD';
+  }
+
+  // UK Tools -> strictly GBP
+  const ukTools = ['/vat-calculator', '/uk-mortgage-calculator', '/isa-calculator'];
+  if (ukTools.some(tool => pathname.includes(tool))) {
+    return 'GBP';
+  }
+
+  // India-Specific Regulations and India-Dominated Search Query Tools -> strictly INR
+  const indiaTools = [
+    '/sip-calculator', '/sip-vs-lumpsum', '/step-up-sip', '/emi-calculator',
+    '/cagr-calculator', '/mutual-fund-returns', '/lumpsum-calculator',
+    '/home-loan-calculator', '/car-loan-emi', '/personal-loan-calculator',
+    '/fd-calculator', '/rd-calculator', '/ppf-calculator', '/epf-calculator',
+    '/pomis-calculator', '/scss-calculator', '/ssy-calculator', '/nsc-calculator',
+    '/income-tax-calculator', '/gst-calculator', '/hra-exemption',
+    '/gratuity-calculator', '/advance-tax', '/tds-calculator',
+    '/pension-calculator', '/flat-vs-reducing-loan', '/swp-calculator'
+  ];
+  if (indiaTools.some(tool => pathname.includes(tool))) {
+    return 'INR';
+  }
+
+  return 'INR';
+}
+
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
@@ -109,7 +145,13 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   const [rates, setRates] = useState<Record<string, number>>(FALLBACK_RATES);
   const [ratesLoading, setRatesLoading] = useState(true);
   const [currencies, setCurrencies] = useState(() => buildCurrencies(FALLBACK_RATES));
-  const [currencyCode, setCurrencyCode] = useState('USD');
+  const [currencyCode, setCurrencyCode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('preferredCurrency');
+      if (saved && CURRENCY_META[saved]) return saved;
+    }
+    return getRouteCurrency(pathname);
+  });
 
   // Fetch live rates on mount
   useEffect(() => {
@@ -142,12 +184,16 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    // India-Specific Regulations -> strictly INR
+    // India-Specific Regulations and India-Dominated Search Query Tools -> strictly INR
     const indiaTools = [
-      '/gst-calculator', '/epf-calculator', '/pomis-calculator', '/scss-calculator',
-      '/ppf-calculator', '/ssy-calculator', '/nps-calculator', '/hra-exemption',
-      '/income-tax-calculator', '/gratuity-calculator', '/advance-tax',
-      '/tds-calculator', '/nsc-calculator', '/pension-calculator', '/flat-vs-reducing-loan'
+      '/sip-calculator', '/sip-vs-lumpsum', '/step-up-sip', '/emi-calculator',
+      '/cagr-calculator', '/mutual-fund-returns', '/lumpsum-calculator',
+      '/home-loan-calculator', '/car-loan-emi', '/personal-loan-calculator',
+      '/fd-calculator', '/rd-calculator', '/ppf-calculator', '/epf-calculator',
+      '/pomis-calculator', '/scss-calculator', '/ssy-calculator', '/nsc-calculator',
+      '/income-tax-calculator', '/gst-calculator', '/hra-exemption',
+      '/gratuity-calculator', '/advance-tax', '/tds-calculator',
+      '/pension-calculator', '/flat-vs-reducing-loan', '/swp-calculator'
     ];
     if (indiaTools.some(tool => pathname.includes(tool))) {
       setCurrencyCode('INR');
