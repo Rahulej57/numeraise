@@ -4,6 +4,8 @@ import { getAllPosts } from '@/lib/blog';
 import { GLOSSARY_TERMS } from '@/config/glossary';
 import { COMPARISON_SLUGS } from '@/lib/comparison-engine';
 import { SITE_URL, CONTENT_REVISION_DATE } from '@/config/site';
+import { PROGRAMMATIC_SIP_SCENARIOS } from '@/config/programmatic-sip';
+import { PROGRAMMATIC_EMI_SCENARIOS } from '@/config/programmatic-emi';
 
 /**
  * `lastmod` deliberately uses a stable constant rather than `new Date()`.
@@ -58,7 +60,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const sipProgrammaticUrls = PROGRAMMATIC_SIP_SCENARIOS.map((scenario) => ({
+    url: `${SITE_URL}/sip/${scenario.slug}`,
+    lastModified: REVISED,
+    changeFrequency: 'weekly' as const,
+    priority: 0.85,
+  }));
+
+  const emiProgrammaticUrls = PROGRAMMATIC_EMI_SCENARIOS.map((scenario) => ({
+    url: `${SITE_URL}/emi/${scenario.slug}`,
+    lastModified: REVISED,
+    changeFrequency: 'weekly' as const,
+    priority: 0.85,
+  }));
+
   const staticUrls = [
+    { path: '/widgets', priority: 0.8 },
     { path: '/about', priority: 0.5 },
     { path: '/contact', priority: 0.4 },
     { path: '/authors/rahul-sharma', priority: 0.5 },
@@ -107,6 +124,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...categoryUrls,
     ...calculatorUrls,
+    ...sipProgrammaticUrls,
+    ...emiProgrammaticUrls,
     ...compareUrls,
     ...blogUrls,
     ...glossaryUrls,

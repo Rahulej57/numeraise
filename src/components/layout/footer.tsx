@@ -39,6 +39,8 @@ export function Footer() {
           <span className="text-muted-foreground/50">|</span>
           <Link href="/compare" className="hover:text-foreground hover:underline transition-colors">Compare</Link>
           <span className="text-muted-foreground/50">|</span>
+          <Link href="/widgets" className="hover:text-foreground hover:underline transition-colors text-primary font-medium">Free Widgets</Link>
+          <span className="text-muted-foreground/50">|</span>
           <Link href="/glossary" className="hover:text-foreground hover:underline transition-colors">Glossary</Link>
           <span className="text-muted-foreground/50">|</span>
           <Link href="/blog" className="hover:text-foreground hover:underline transition-colors">Blog</Link>

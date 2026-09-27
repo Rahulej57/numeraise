@@ -18,6 +18,8 @@ import { RelatedArticles } from '@/components/calculators/related-articles';
 import { StructuredData } from '@/components/seo/structured-data';
 import { CalculatorHeader } from '@/components/calculators/calculator-header';
 import { SmartInsights } from '@/components/calculators/smart-insights';
+import { ChevronRight } from 'lucide-react';
+import { PROGRAMMATIC_EMI_SCENARIOS } from '@/config/programmatic-emi';
 
 export default function EMICalculatorPage() {
   const { format, currency } = useCurrency();
@@ -314,6 +316,29 @@ Calculate your own: ${shareUrl}`;
           the actual APR (Annual Percentage Rate) to know the true cost of your loan.
         </p>
       </CalculatorContent>
+
+      <div className="space-y-4 pt-6 border-t border-border">
+        <div>
+          <h2 className="text-xl md:text-2xl font-bold tracking-tight text-foreground">
+            Popular Loan EMI Scenarios
+          </h2>
+          <p className="text-sm text-muted-foreground mt-0.5">
+            Pre-calculated monthly EMI and amortization breakdowns for home, car, and personal loans
+          </p>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+          {PROGRAMMATIC_EMI_SCENARIOS.slice(0, 16).map((scenario) => (
+            <Link
+              key={scenario.slug}
+              href={`/emi/${scenario.slug}`}
+              className="p-3 rounded-lg border border-border/80 hover:border-primary/60 hover:bg-muted/40 transition-colors text-xs font-medium text-foreground flex items-center justify-between group"
+            >
+              <span className="truncate">{scenario.headline}</span>
+              <ChevronRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+            </Link>
+          ))}
+        </div>
+      </div>
 
       <FAQAccordion faqs={faqs} />
 

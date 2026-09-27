@@ -19,6 +19,8 @@ import { StructuredData } from '@/components/seo/structured-data';
 import { CalculatorHeader } from '@/components/calculators/calculator-header';
 import { GoalPresets } from '@/components/calculators/goal-presets';
 import { SmartInsights } from '@/components/calculators/smart-insights';
+import { ChevronRight } from 'lucide-react';
+import { PROGRAMMATIC_SIP_SCENARIOS } from '@/config/programmatic-sip';
 
 export default function SIPCalculatorPage() {
   const { format, currency } = useCurrency();
@@ -443,6 +445,29 @@ Calculate your own: ${shareUrl}`;
           path rather than a forecast, and size your plan with room to be wrong.
         </p>
       </CalculatorContent>
+
+      <div className="space-y-4 pt-6 border-t border-border">
+        <div>
+          <h2 className="text-xl md:text-2xl font-bold tracking-tight text-foreground">
+            Popular SIP Investment Scenarios
+          </h2>
+          <p className="text-sm text-muted-foreground mt-0.5">
+            Pre-calculated compounding schedules and wealth projections for standard monthly amounts
+          </p>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+          {PROGRAMMATIC_SIP_SCENARIOS.slice(0, 16).map((scenario) => (
+            <Link
+              key={scenario.slug}
+              href={`/sip/${scenario.slug}`}
+              className="p-3 rounded-lg border border-border/80 hover:border-primary/60 hover:bg-muted/40 transition-colors text-xs font-medium text-foreground flex items-center justify-between group"
+            >
+              <span className="truncate">{scenario.headline}</span>
+              <ChevronRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+            </Link>
+          ))}
+        </div>
+      </div>
 
       <FAQAccordion faqs={faqs} />
 
